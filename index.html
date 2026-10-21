@@ -12,8 +12,12 @@
         .logo h1 { font-size: 1.2rem; color: #fff; }
         .logo p { font-size: 0.8rem; color: #8fbc8f; margin-top: 2px; }
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .whatsapp-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; }
+        .cart-btn, .whatsapp-btn, .control-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; }
         .whatsapp-btn { background-color: #285038; }
+        
+        /* زر لوحة التحكم: مخفي افتراضياً عن الكل */
+        #adminBtn { display: none; background-color: #3b704e; border-color: #4da66a; }
+
         .hero { padding: 40px 20px; text-align: center; background: #121814; border-bottom: 1px solid #1f2c23; }
         .hero h2 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
         .hero p { color: #aaa; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
@@ -23,10 +27,6 @@
         .card h3 { color: #fff; font-size: 1.2rem; }
         .card p { color: #bbb; font-size: 0.95rem; line-height: 1.5; }
         .badge { background-color: #285038; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; width: fit-content; }
-        
-        /* زر مخفي خاص فيك أنت وحدك في أسفل الصفحة على الزاوية */
-        .secret-admin { position: fixed; bottom: 10px; left: 10px; background: transparent; color: #0f1210; font-size: 10px; text-decoration: none; z-index: 999; }
-        .secret-admin:hover { color: #285038; }
     </style>
 </head>
 <body>
@@ -36,6 +36,8 @@
             <p>صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
         <div class="header-left">
+            <!-- هذا الزر سيظهر لك أنت وحدك فقط -->
+            <a href="admin.html" id="adminBtn" class="control-btn">لوحة التحكم</a>
             <a href="#" class="cart-btn">السلة</a>
             <a href="https://wa.me/966556843732" class="whatsapp-btn">واتساب للأعمال</a>
         </div>
@@ -66,7 +68,11 @@
         </div>
     </div>
 
-    <!-- رابط مخفي تماماً في أزل زاوية الشاشة لا يراه الزوار، وإذا ضغطت عليه يوديك للوحة التحكم أو صفحة الإدارة -->
-    <a href="admin.html" class="secret-admin">إدارة</a>
+    <script>
+        // هذه السطر البسيط يخلي الزر يظهر عندك أنت وحدك في متصفحك، ولا يظهر لأي زائر آخر
+        if (localStorage.getItem('myAdminMode') === 'active') {
+            document.getElementById('adminBtn').style.display = 'inline-block';
+        }
+    </script>
 </body>
 </html>
