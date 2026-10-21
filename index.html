@@ -23,6 +23,10 @@
         .card h3 { color: #fff; font-size: 1.2rem; }
         .card p { color: #bbb; font-size: 0.95rem; line-height: 1.5; }
         .badge { background-color: #285038; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; width: fit-content; }
+        
+        /* زر مخفي خاص فيك أنت وحدك في أسفل الصفحة على الزاوية */
+        .secret-admin { position: fixed; bottom: 10px; left: 10px; background: transparent; color: #0f1210; font-size: 10px; text-decoration: none; z-index: 999; }
+        .secret-admin:hover { color: #285038; }
     </style>
 </head>
 <body>
@@ -61,5 +65,8 @@
             <p>تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.</p>
         </div>
     </div>
+
+    <!-- رابط مخفي تماماً في أزل زاوية الشاشة لا يراه الزوار، وإذا ضغطت عليه يوديك للوحة التحكم أو صفحة الإدارة -->
+    <a href="admin.html" class="secret-admin">إدارة</a>
 </body>
 </html>
