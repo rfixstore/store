@@ -8,21 +8,56 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: #0f1210; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; }
-        header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .whatsapp-btn { background-color: #285038; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; }
-        .main-content { padding: 40px 20px; text-align: center; }
-        h1 { margin-bottom: 15px; color: #fff; }
-        p { color: #aaa; font-size: 1.1rem; }
+        header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logo h1 { font-size: 1.3rem; color: #fff; }
+        .logo p { font-size: 0.85rem; color: #8fbc8f; margin-top: 2px; }
+        .nav-links { display: flex; gap: 15px; }
+        .whatsapp-btn { background-color: #285038; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.95rem; }
+        .hero { padding: 40px 20px; text-align: center; background: #121814; border-bottom: 1px solid #1f2c23; }
+        .hero h2 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
+        .hero p { color: #aaa; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+        .section-title { padding: 30px 20px 10px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.4rem; color: #fff; border-right: 4px solid #285038; padding-right: 15px; margin-top: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .card { background-color: #161f18; border: 1px solid #223528; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .card h3 { color: #fff; font-size: 1.2rem; }
+        .card p { color: #bbb; font-size: 0.95rem; line-height: 1.5; }
+        .badge { background-color: #285038; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; width: fit-content; }
     </style>
 </head>
 <body>
     <header>
-        <h1>المتخصصون في صيانة الأجهزة الرقمية</h1>
-        <a href="https://wa.me/966556843732" class="whatsapp-btn">واتساب للأعمال: 0556843732</a>
+        <div class="logo">
+            <h1>المتخصصون في صيانة الأجهزة الرقمية</h1>
+            <p>صيانة أجهزة • خدمات رقمية وحكومية</p>
+        </div>
+        <div class="nav-links">
+            <a href="https://wa.me/966556843732" class="whatsapp-btn">واتساب للأعمال: 0556843732</a>
+        </div>
     </header>
-    <div class="main-content">
-        <h1>متجرك للخدمات التقنية والصيانة والقطع</h1>
+
+    <div class="hero">
+        <h2>متجرك للخدمات التقنية والصيانة والقطع</h2>
         <p>عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.</p>
+    </div>
+
+    <h3 class="section-title">المنتجات والخدمات المعروضة</h3>
+
+    <div class="grid">
+        <div class="card">
+            <span class="badge">إكسسوارات</span>
+            <h3>كيبل HDMI عالي السرعة 4K</h3>
+            <p>كيبل ممتاز لتوصيل الشاشات وأجهزة البي سي والبلستيشن بجودة عالية.</p>
+        </div>
+        <div class="card">
+            <span class="badge">صيانة عن بُعد</span>
+            <h3>فورمات وتنظيف وتسريع البي سي</h3>
+            <p>إزالة الفيروسات، تثبيت الويندوز والبرامج، وحل البطء عبر AnyDesk و TeamViewer.</p>
+        </div>
+        <div class="card">
+            <span class="badge">خدمات رقمية</span>
+            <h3>إدارة وتنظيم حسابات أبشر ونفاذ</h3>
+            <p>تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.</p>
+        </div>
     </div>
 </body>
 </html>
