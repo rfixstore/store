@@ -11,8 +11,10 @@
         header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .logo h1 { font-size: 1.3rem; color: #fff; }
         .logo p { font-size: 0.85rem; color: #8fbc8f; margin-top: 2px; }
-        .nav-links { display: flex; gap: 15px; }
-        .whatsapp-btn { background-color: #285038; color: #fff; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.95rem; }
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .control-btn, .cart-btn, .whatsapp-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; transition: 0.2s; }
+        .control-btn:hover, .cart-btn:hover, .whatsapp-btn:hover { background-color: #285038; }
+        .whatsapp-btn { background-color: #285038; }
         .hero { padding: 40px 20px; text-align: center; background: #121814; border-bottom: 1px solid #1f2c23; }
         .hero h2 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
         .hero p { color: #aaa; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
@@ -30,8 +32,10 @@
             <h1>المتخصصون في صيانة الأجهزة الرقمية</h1>
             <p>صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
-        <div class="nav-links">
-            <a href="https://wa.me/966556843732" class="whatsapp-btn">واتساب للأعمال: 0556843732</a>
+        <div class="header-left">
+            <a href="#" class="control-btn">لوحة التحكم</a>
+            <a href="#" class="cart-btn">السلة</a>
+            <a href="https://wa.me/966556843732" class="whatsapp-btn">واتساب للأعمال</a>
         </div>
     </header>
 
