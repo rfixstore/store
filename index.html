@@ -8,11 +8,11 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: #0f1210; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; }
-        header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
         .logo h1 { font-size: 1.2rem; color: #fff; }
         .logo p { font-size: 0.8rem; color: #8fbc8f; margin-top: 2px; }
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .whatsapp-btn, .control-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; }
+        .cart-btn, .whatsapp-btn, .control-btn, .lang-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; }
         .whatsapp-btn { background-color: #285038; }
         
         #adminBtn { display: none; background-color: #3b704e; border-color: #4da66a; }
@@ -20,7 +20,15 @@
         .hero { padding: 40px 20px; text-align: center; background: #121814; border-bottom: 1px solid #1f2c23; }
         .hero h2 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
         .hero p { color: #aaa; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
-        .section-title { padding: 30px 20px 10px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.4rem; color: #fff; border-right: 4px solid #285038; padding-right: 15px; margin-top: 20px; }
+        
+        /* قسم الأقسام */
+        .categories-container { max-width: 1200px; margin: 25px auto 10px; padding: 0 20px; width: 100%; }
+        .categories-title { font-size: 1.2rem; color: #8fbc8f; margin-bottom: 12px; font-weight: bold; }
+        .categories-grid { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; flex-wrap: wrap; }
+        .category-btn { background-color: #161f18; color: #e0e0e0; border: 1px solid #223528; padding: 10px 18px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: 0.2s; white-space: nowrap; }
+        .category-btn:hover, .category-btn.active { background-color: #285038; color: #fff; border-color: #3b704e; }
+
+        .section-title { padding: 15px 20px 10px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.4rem; color: #fff; border-right: 4px solid #285038; padding-right: 15px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; width: 100%; }
         .card { background-color: #161f18; border: 1px solid #223528; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
         .card h3 { color: #fff; font-size: 1.2rem; }
@@ -39,58 +47,124 @@
 <body>
     <header>
         <div class="logo">
-            <h1>المتخصصون في صيانة الأجهزة الرقمية</h1>
-            <p>صيانة أجهزة • خدمات رقمية وحكومية</p>
+            <h1 id="txt-logo-title">المتخصصون في صيانة الأجهزة الرقمية</h1>
+            <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
         <div class="header-left">
+            <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
             <a href="admin.html" id="adminBtn" class="control-btn">لوحة التحكم</a>
-            <!-- إضافة خاصية الضغط لإظهار السلة -->
-            <button onclick="toggleCart()" class="cart-btn">السلة</button>
-            <a href="https://wa.me/966556843732" class="whatsapp-btn">التواصل والاستفسارات</a>
+            <button onclick="toggleCart()" id="cartBtn" class="cart-btn">السلة</button>
+            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">التواصل والاستفسارات</a>
         </div>
     </header>
 
     <div class="hero">
-        <h2>المتخصصون في صيانة الأجهزة</h2>
-        <p>عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.</p>
+        <h2 id="txt-hero-title">المتخصصون في صيانة الأجهزة</h2>
+        <p id="txt-hero-desc">عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.</p>
     </div>
 
-    <h3 class="section-title">المنتجات والخدمات المعروضة</h3>
-
-    <div class="grid">
-        <div class="card">
-            <span class="badge">صيانة عن بُعد</span>
-            <h3>فورمات وتنظيف وتسريع البي سي</h3>
-            <p>إزالة الفيروسات، تثبيت الويندوز والبرامج، وحل البطء عبر AnyDesk و TeamViewer.</p>
-        </div>
-        <div class="card">
-            <span class="badge">خدمات رقمية</span>
-            <h3>إدارة وتنظيم حسابات أبشر ونفاذ</h3>
-            <p>تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.</p>
+    <!-- شريط الأقسام بالتسميات المطلوبة -->
+    <div class="categories-container">
+        <div class="categories-title" id="txt-cat-title">الأقسام:</div>
+        <div class="categories-grid">
+            <button class="category-btn active" onclick="filterCategory('all', this)" id="cat-all">الكل</button>
+            <button class="category-btn" onclick="filterCategory('pc-laptops', this)" id="cat-pc">قسم بيع الأجهزة واللابتوبات والكمبيوترات</button>
+            <button class="category-btn" onclick="filterCategory('gov-services', this)" id="cat-gov">المنتجات والخدمات الحكومية</button>
+            <button class="category-btn" onclick="filterCategory('remote-repair', this)" id="cat-remote">صيانة عن بُعد</button>
+            <button class="category-btn" onclick="filterCategory('phones', this)" id="cat-phones">قسم بيع الجوالات</button>
         </div>
     </div>
 
-    <!-- قائمة السلة الجانبية -->
+    <h3 class="section-title" id="txt-products-title">المنتجات والخدمات المعروضة</h3>
+
+    <div class="grid" id="productsGrid">
+        <div class="card" data-category="remote-repair">
+            <span class="badge" id="badge-remote">صيانة عن بُعد</span>
+            <h3 id="p1-title">فورمات وتنظيف وتسريع البي سي</h3>
+            <p id="p1-desc">إزالة الفيروسات، تثبيت الويندوز والبرامج، وحل البطء عبر AnyDesk و TeamViewer.</p>
+        </div>
+        <div class="card" data-category="gov-services">
+            <span class="badge" id="badge-gov">خدمات حكومية</span>
+            <h3 id="p2-title">إدارة وتنظيم حسابات أبشر ونفاذ</h3>
+            <p id="p2-desc">تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.</p>
+        </div>
+    </div>
+
+    <!-- نافذة السلة -->
     <div id="cartModal" class="cart-modal">
         <div class="cart-content">
             <div class="cart-header">
-                <h3>سلة المشتريات</h3>
+                <h3 id="txt-cart-title">سلة المشتريات</h3>
                 <button onclick="toggleCart()" class="close-cart">&times;</button>
             </div>
             <div class="cart-items">
-                <p>السلة فارغة حالياً</p>
+                <p id="txt-cart-empty">السلة فارغة حالياً</p>
             </div>
         </div>
     </div>
 
     <script>
-        // إظهار وإخفاء السلة
+        function filterCategory(cat, btn) {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            let cards = document.querySelectorAll('#productsGrid .card');
+            cards.forEach(card => {
+                if (cat === 'all' || card.getAttribute('data-category') === cat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
         function toggleCart() {
             let cart = document.getElementById('cartModal');
-            if (cart.style.display === 'flex') {
-                cart.style.display = 'none';
+            cart.style.display = (cart.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        let currentLang = 'ar';
+        function toggleLanguage() {
+            if (currentLang === 'ar') {
+                currentLang = 'en';
+                document.documentElement.lang = 'en';
+                document.documentElement.dir = 'ltr';
+                document.getElementById('langBtn').innerText = '🌐 عربي';
+                document.getElementById('cartBtn').innerText = 'Cart';
+                document.getElementById('contactBtn').innerText = 'Contact Us';
+                document.getElementById('txt-logo-title').innerText = 'Digital Hardware Specialists';
+                document.getElementById('txt-logo-sub').innerText = 'Hardware Repair • Digital & Gov Services';
+                document.getElementById('txt-hero-title').innerText = 'Hardware Maintenance Specialists';
+                document.getElementById('txt-hero-desc').innerText = 'Buy parts & accessories, remote PC repair, and fast government digital solutions.';
+                document.getElementById('txt-cat-title').innerText = 'Categories:';
+                document.getElementById('cat-all').innerText = 'All';
+                document.getElementById('cat-pc').innerText = 'PCs & Laptops Section';
+                document.getElementById('cat-gov').innerText = 'Gov Products & Services';
+                document.getElementById('cat-remote').innerText = 'Remote Repair';
+                document.getElementById('cat-phones').innerText = 'Mobiles Section';
+                document.getElementById('txt-products-title').innerText = 'Featured Products & Services';
+                document.getElementById('txt-cart-title').innerText = 'Shopping Cart';
+                document.getElementById('txt-cart-empty').innerText = 'Cart is empty';
             } else {
-                cart.style.display = 'flex';
+                currentLang = 'ar';
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+                document.getElementById('langBtn').innerText = '🌐 EN';
+                document.getElementById('cartBtn').innerText = 'السلة';
+                document.getElementById('contactBtn').innerText = 'التواصل والاستفسارات';
+                document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة الأجهزة الرقمية';
+                document.getElementById('txt-logo-sub').innerText = 'صيانة أجهزة • خدمات رقمية وحكومية';
+                document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
+                document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
+                document.getElementById('txt-cat-title').innerText = 'الأقسام:';
+                document.getElementById('cat-all').innerText = 'الكل';
+                document.getElementById('cat-pc').innerText = 'قسم بيع الأجهزة واللابتوبات والكمبيوترات';
+                document.getElementById('cat-gov').innerText = 'المنتجات والخدمات الحكومية';
+                document.getElementById('cat-remote').innerText = 'صيانة عن بُعد';
+                document.getElementById('cat-phones').innerText = 'قسم بيع الجوالات';
+                document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
+                document.getElementById('txt-cart-title').innerText = 'سلة المشتريات';
+                document.getElementById('txt-cart-empty').innerText = 'السلة فارغة حالياً';
             }
         }
 
