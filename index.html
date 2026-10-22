@@ -12,7 +12,7 @@
         .logo h1 { font-size: 1.2rem; color: #fff; }
         .logo p { font-size: 0.8rem; color: #8fbc8f; margin-top: 2px; }
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .whatsapp-btn, .control-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; }
+        .cart-btn, .whatsapp-btn, .control-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; }
         .whatsapp-btn { background-color: #285038; }
         
         #adminBtn { display: none; background-color: #3b704e; border-color: #4da66a; }
@@ -26,6 +26,14 @@
         .card h3 { color: #fff; font-size: 1.2rem; }
         .card p { color: #bbb; font-size: 0.95rem; line-height: 1.5; }
         .badge { background-color: #285038; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; width: fit-content; }
+
+        /* نافذة السلة الجانبية */
+        .cart-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: flex-start; }
+        .cart-content { background: #142219; width: 320px; height: 100%; padding: 20px; border-left: 2px solid #285038; display: flex; flex-direction: column; gap: 20px; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #285038; padding-bottom: 10px; }
+        .cart-header h3 { color: #fff; }
+        .close-cart { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+        .cart-items { flex-grow: 1; color: #aaa; text-align: center; padding-top: 40px; }
     </style>
 </head>
 <body>
@@ -36,7 +44,8 @@
         </div>
         <div class="header-left">
             <a href="admin.html" id="adminBtn" class="control-btn">لوحة التحكم</a>
-            <a href="#" class="cart-btn">السلة</a>
+            <!-- إضافة خاصية الضغط لإظهار السلة -->
+            <button onclick="toggleCart()" class="cart-btn">السلة</button>
             <a href="https://wa.me/966556843732" class="whatsapp-btn">التواصل والاستفسارات</a>
         </div>
     </header>
@@ -61,7 +70,30 @@
         </div>
     </div>
 
+    <!-- قائمة السلة الجانبية -->
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>سلة المشتريات</h3>
+                <button onclick="toggleCart()" class="close-cart">&times;</button>
+            </div>
+            <div class="cart-items">
+                <p>السلة فارغة حالياً</p>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // إظهار وإخفاء السلة
+        function toggleCart() {
+            let cart = document.getElementById('cartModal');
+            if (cart.style.display === 'flex') {
+                cart.style.display = 'none';
+            } else {
+                cart.style.display = 'flex';
+            }
+        }
+
         if (localStorage.getItem('myAdminMode') === 'active') {
             document.getElementById('adminBtn').style.display = 'inline-block';
         }
