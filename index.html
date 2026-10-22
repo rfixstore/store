@@ -9,12 +9,12 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: #0f1210; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; }
         header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+        .logo { cursor: pointer; user-select: none; }
         .logo h1 { font-size: 1.2rem; color: #fff; }
         .logo p { font-size: 0.8rem; color: #8fbc8f; margin-top: 2px; }
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .whatsapp-btn, .lang-btn, .admin-open-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; }
+        .cart-btn, .whatsapp-btn, .lang-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; }
         .whatsapp-btn { background-color: #285038; }
-        .admin-open-btn { background-color: #23422e; border-color: #3b704e; }
 
         .hero { padding: 40px 20px; text-align: center; background: #121814; border-bottom: 1px solid #1f2c23; }
         .hero h2 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
@@ -42,6 +42,12 @@
         .close-cart { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
         .cart-items { flex-grow: 1; color: #aaa; text-align: center; padding-top: 40px; }
 
+        /* نافذة إدخال الرمز السرية الأنيقة */
+        .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1200; justify-content: center; align-items: center; padding: 20px; }
+        .pass-box { background: #142219; width: 100%; max-width: 350px; padding: 25px; border-radius: 12px; border: 2px solid #285038; display: flex; flex-direction: column; gap: 15px; text-align: center; }
+        .pass-box h3 { color: #fff; font-size: 1.2rem; }
+        .pass-box input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #285038; background: #0f1210; color: #fff; font-size: 1rem; text-align: center; letter-spacing: 3px; }
+
         /* نافذة لوحة التحكم */
         .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1100; justify-content: center; align-items: center; padding: 20px; }
         .admin-box { background: #142219; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; border: 2px solid #285038; display: flex; flex-direction: column; gap: 20px; }
@@ -59,13 +65,13 @@
 </head>
 <body>
     <header>
-        <div class="logo">
+        <!-- اضغط 5 مرات متتالية هنا لفتح نافذة الرمز -->
+        <div class="logo" onclick="logoClicksTrigger()">
             <h1 id="txt-logo-title">المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</h1>
             <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
-            <button onclick="openAdminWithPassword()" class="admin-open-btn">لوحة التحكم</button>
             <button onclick="toggleCart()" id="cartBtn" class="cart-btn">السلة</button>
             <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">التواصل والاستفسارات</a>
         </div>
@@ -100,6 +106,17 @@
             <div class="cart-items">
                 <p id="txt-cart-empty">السلة فارغة حالياً</p>
             </div>
+        </div>
+    </div>
+
+    <!-- نافذة إدخال الرمز السرية الأنيقة -->
+    <div id="passModal" class="pass-modal">
+        <div class="pass-box">
+            <h3>🔒 لوحة التحكم السرية</h3>
+            <p style="font-size: 0.85rem; color: #aaa;">الرجاء إدخال رمز الدخول:</p>
+            <input type="password" id="adminPassInput" placeholder="****">
+            <button onclick="checkAdminPassword()" class="admin-btn">دخول</button>
+            <button onclick="closePasswordModal()" style="background: none; border: none; color: #8fbc8f; cursor: pointer; font-size: 0.85rem;">إلغاء</button>
         </div>
     </div>
 
@@ -158,7 +175,6 @@
     </div>
 
     <script>
-        // كلمة السر المحدثة للوحة التحكم
         const ADMIN_PASSWORD = "3732";
 
         const defaultCategories = [
@@ -323,12 +339,38 @@
             }
         }
 
-        function openAdminWithPassword() {
-            let pass = prompt("أدخل رمز دخول لوحة التحكم:");
+        // حساب الضغطات 5 مرات متتالية على الشعار العلوي
+        let count = 0;
+        let timer = null;
+        function logoClicksTrigger() {
+            count++;
+            if (count === 1) {
+                timer = setTimeout(() => { count = 0; }, 1200);
+            } else if (count === 5) {
+                clearTimeout(timer);
+                count = 0;
+                openPasswordModal();
+            }
+        }
+
+        function openPasswordModal() {
+            document.getElementById('passModal').style.display = 'flex';
+            document.getElementById('adminPassInput').value = '';
+            document.getElementById('adminPassInput').focus();
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passModal').style.display = 'none';
+        }
+
+        function checkAdminPassword() {
+            let pass = document.getElementById('adminPassInput').value;
             if (pass === ADMIN_PASSWORD) {
+                closePasswordModal();
                 toggleAdminModal();
-            } else if (pass !== null) {
+            } else {
                 alert("رمز الدخول غير صحيح!");
+                document.getElementById('adminPassInput').value = '';
             }
         }
 
