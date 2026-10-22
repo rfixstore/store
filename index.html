@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المتخصصون في صيانة الأجهزة الرقمية</title>
+    <title>المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
@@ -42,17 +42,31 @@
         .cart-header h3 { color: #fff; }
         .close-cart { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
         .cart-items { flex-grow: 1; color: #aaa; text-align: center; padding-top: 40px; }
+
+        /* نافذة لوحة التحكم المنبثقة (Modal) */
+        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1100; justify-content: center; align-items: center; padding: 20px; }
+        .admin-box { background: #142219; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; border: 2px solid #285038; display: flex; flex-direction: column; gap: 20px; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #285038; padding-bottom: 10px; }
+        .admin-header h3 { color: #fff; font-size: 1.3rem; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #8fbc8f; font-weight: bold; font-size: 0.9rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #285038; background: #0f1210; color: #fff; font-size: 0.9rem; }
+        .admin-btn { background-color: #285038; color: #fff; border: none; padding: 10px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
+        .admin-btn:hover { background-color: #3b704e; }
+        .item-row { background: #161f18; padding: 10px; border-radius: 6px; border: 1px solid #223528; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .del-btn { background: #8b0000; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">
-            <h1 id="txt-logo-title">المتخصصون في صيانة الأجهزة الرقمية</h1>
+            <h1 id="txt-logo-title">المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</h1>
             <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
-            <a href="admin.html" id="adminBtn" class="control-btn">لوحة التحكم</a>
+            <!-- زر لوحة التحكم يفتح النافذة مباشرة بنفس الصفحة -->
+            <button onclick="toggleAdminModal()" id="adminBtn" class="control-btn">لوحة التحكم</button>
             <button onclick="toggleCart()" id="cartBtn" class="cart-btn">السلة</button>
             <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">التواصل والاستفسارات</a>
         </div>
@@ -63,7 +77,7 @@
         <p id="txt-hero-desc">عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.</p>
     </div>
 
-    <!-- شريط الأقسام بالتسميات المطلوبة -->
+    <!-- شريط الأقسام -->
     <div class="categories-container">
         <div class="categories-title" id="txt-cat-title">الأقسام:</div>
         <div class="categories-grid">
@@ -78,19 +92,10 @@
     <h3 class="section-title" id="txt-products-title">المنتجات والخدمات المعروضة</h3>
 
     <div class="grid" id="productsGrid">
-        <div class="card" data-category="remote-repair">
-            <span class="badge" id="badge-remote">صيانة عن بُعد</span>
-            <h3 id="p1-title">فورمات وتنظيف وتسريع البي سي</h3>
-            <p id="p1-desc">إزالة الفيروسات، تثبيت الويندوز والبرامج، وحل البطء عبر AnyDesk و TeamViewer.</p>
-        </div>
-        <div class="card" data-category="gov-services">
-            <span class="badge" id="badge-gov">خدمات حكومية</span>
-            <h3 id="p2-title">إدارة وتنظيم حسابات أبشر ونفاذ</h3>
-            <p id="p2-desc">تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.</p>
-        </div>
+        <!-- يتم تعبئة المنتجات هنا تلقائياً -->
     </div>
 
-    <!-- نافذة السلة -->
+    <!-- نافذة السلة الجانبية -->
     <div id="cartModal" class="cart-modal">
         <div class="cart-content">
             <div class="cart-header">
@@ -103,7 +108,146 @@
         </div>
     </div>
 
+    <!-- نافذة لوحة التحكم المنبثقة داخل نفس الصفحة -->
+    <div id="adminModal" class="admin-modal">
+        <div class="admin-box">
+            <div class="admin-header">
+                <h3>لوحة التحكم السريعة</h3>
+                <button onclick="toggleAdminModal()" class="close-cart">&times;</button>
+            </div>
+            
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label>عنوان المنتج / الخدمة:</label>
+                    <input type="text" id="pTitle" required placeholder="مثال: صيانة لابتوب">
+                </div>
+                <div class="form-group">
+                    <label>القسم:</label>
+                    <select id="pCategory" required>
+                        <option value="pc-laptops">قسم بيع الأجهزة واللابتوبات والكمبيوترات</option>
+                        <option value="gov-services">المنتجات والخدمات الحكومية</option>
+                        <option value="remote-repair">صيانة عن بُعد</option>
+                        <option value="phones">قسم بيع الجوالات</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الشارة (Badge):</label>
+                    <input type="text" id="pBadge" placeholder="مثال: صيانة عن بعد">
+                </div>
+                <div class="form-group">
+                    <label>الوصف:</label>
+                    <textarea id="pDesc" rows="2" required placeholder="وصف المنتج..."></textarea>
+                </div>
+                <button type="submit" class="admin-btn">إضافة المنتج للمتجر</button>
+            </form>
+
+            <div style="margin-top: 15px;">
+                <h4 style="color: #fff; margin-bottom: 10px; font-size: 1rem;">المنتجات الحالية (إدارة وحذف):</h4>
+                <div id="adminItemsList" style="max-height: 180px; overflow-y: auto;"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // إظهار زر لوحة التحكم في متصفحك تلقائياً
+        if (!localStorage.getItem('myAdminMode')) {
+            localStorage.setItem('myAdminMode', 'active');
+        }
+        document.getElementById('adminBtn').style.display = 'inline-block';
+
+        // المنتجات الأساسية الافتراضية
+        const defaultProducts = [
+            { id: 1, title: 'فورمات وتنظيف وتسريع البي سي', category: 'remote-repair', badge: 'صيانة عن بُعد', desc: 'حل جميع المشاكل فقط وخلاص' },
+            { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', badge: 'خدمات حكومية', desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
+        ];
+
+        function getProducts() {
+            const saved = localStorage.getItem('storeProducts');
+            return saved ? JSON.parse(saved) : defaultProducts;
+        }
+
+        function saveProducts(products) {
+            localStorage.setItem('storeProducts', JSON.stringify(products));
+            renderProducts();
+            renderAdminList();
+        }
+
+        // عرض المنتجات في الصفحة الرئيسية
+        function renderProducts() {
+            const products = getProducts();
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            if (products.length === 0) {
+                grid.innerHTML = '<p style="color:#aaa; text-align:center; grid-column: 1/-1;">لا توجد منتجات معروضة حالياً.</p>';
+                return;
+            }
+
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-category', p.category);
+                card.innerHTML = `
+                    <span class="badge">${p.badge}</span>
+                    <h3>${p.title}</h3>
+                    <p>${p.desc}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // عرض المنتجات داخل نافذة لوحة التحكم للحذف
+        function renderAdminList() {
+            const products = getProducts();
+            const list = document.getElementById('adminItemsList');
+            list.innerHTML = '';
+
+            products.forEach(p => {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.innerHTML = `
+                    <span style="font-size: 0.85rem; color:#fff;">${p.title}</span>
+                    <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        // إضافة منتج جديد من النافذة
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const products = getProducts();
+            const newProduct = {
+                id: Date.now(),
+                title: document.getElementById('pTitle').value,
+                category: document.getElementById('pCategory').value,
+                badge: document.getElementById('pBadge').value || 'خدمة',
+                desc: document.getElementById('pDesc').value
+            };
+            products.push(newProduct);
+            saveProducts(products);
+            this.reset();
+            alert('تمت إضافة المنتج بنجاح!');
+        });
+
+        // حذف منتج
+        function deleteProduct(id) {
+            if (confirm('هل متأكد من حذف هذا المنتج؟')) {
+                let products = getProducts();
+                products = products.filter(p => p.id !== id);
+                saveProducts(products);
+            }
+        }
+
+        // فتح وإغلاق نافذة لوحة التحكم
+        function toggleAdminModal() {
+            let modal = document.getElementById('adminModal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+            if (modal.style.display === 'flex') {
+                renderAdminList();
+            }
+        }
+
         function filterCategory(cat, btn) {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -132,6 +276,7 @@
                 document.getElementById('langBtn').innerText = '🌐 عربي';
                 document.getElementById('cartBtn').innerText = 'Cart';
                 document.getElementById('contactBtn').innerText = 'Contact Us';
+                document.getElementById('adminBtn').innerText = 'Control Panel';
                 document.getElementById('txt-logo-title').innerText = 'Digital Hardware Specialists';
                 document.getElementById('txt-logo-sub').innerText = 'Hardware Repair • Digital & Gov Services';
                 document.getElementById('txt-hero-title').innerText = 'Hardware Maintenance Specialists';
@@ -152,7 +297,8 @@
                 document.getElementById('langBtn').innerText = '🌐 EN';
                 document.getElementById('cartBtn').innerText = 'السلة';
                 document.getElementById('contactBtn').innerText = 'التواصل والاستفسارات';
-                document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة الأجهزة الرقمية';
+                document.getElementById('adminBtn').innerText = 'لوحة التحكم';
+                document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية';
                 document.getElementById('txt-logo-sub').innerText = 'صيانة أجهزة • خدمات رقمية وحكومية';
                 document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
                 document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
@@ -168,9 +314,8 @@
             }
         }
 
-        if (localStorage.getItem('myAdminMode') === 'active') {
-            document.getElementById('adminBtn').style.display = 'inline-block';
-        }
+        // تشغيل عرض المنتجات عند فتح الصفحة
+        renderProducts();
     </script>
 </body>
 </html>
