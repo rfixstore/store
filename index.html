@@ -36,10 +36,10 @@
             <p>صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
         <div class="header-left">
-            <!-- هذا الزر سيظهر لك أنت وحدك فقط -->
+            <!-- هذا الزر سيظهر لك أنت وحدك فقط عند التفعيل -->
             <a href="admin.html" id="adminBtn" class="control-btn">لوحة التحكم</a>
             <a href="#" class="cart-btn">السلة</a>
-            <a href="https://wa.me/966556843732" class="whatsapp-btn">واتساب للأعمال</a>
+            <a href="https://wa.me/966556843732" class="whatsapp-btn">التواصل والاستفسارات 0556843732</a>
         </div>
     </header>
 
@@ -51,11 +51,6 @@
     <h3 class="section-title">المنتجات والخدمات المعروضة</h3>
 
     <div class="grid">
-        <div class="card">
-            <span class="badge">إكسسوارات</span>
-            <h3>كيبل HDMI عالي السرعة 4K</h3>
-            <p>كيبل ممتاز لتوصيل الشاشات وأجهزة البي سي والبلستيشن بجودة عالية.</p>
-        </div>
         <div class="card">
             <span class="badge">صيانة عن بُعد</span>
             <h3>فورمات وتنظيف وتسريع البي سي</h3>
@@ -69,7 +64,7 @@
     </div>
 
     <script>
-        // هذه السطر البسيط يخلي الزر يظهر عندك أنت وحدك في متصفحك، ولا يظهر لأي زائر آخر
+        // هذا السطر يخلي الزر يظهر عندك أنت وحدك إذا تفعل الخيار بمتصفحك
         if (localStorage.getItem('myAdminMode') === 'active') {
             document.getElementById('adminBtn').style.display = 'inline-block';
         }
