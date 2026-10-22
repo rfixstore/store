@@ -9,15 +9,12 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: #0f1210; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; }
         header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-        .logo { cursor: pointer; user-select: none; }
         .logo h1 { font-size: 1.2rem; color: #fff; }
         .logo p { font-size: 0.8rem; color: #8fbc8f; margin-top: 2px; }
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .whatsapp-btn, .control-btn, .lang-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; }
+        .cart-btn, .whatsapp-btn, .lang-btn, .admin-open-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; }
         .whatsapp-btn { background-color: #285038; }
-        
-        /* الزر مخفي تماماً عن الزوار */
-        #adminBtn { display: none; background-color: #3b704e; border-color: #4da66a; }
+        .admin-open-btn { background-color: #23422e; border-color: #3b704e; }
 
         .hero { padding: 40px 20px; text-align: center; background: #121814; border-bottom: 1px solid #1f2c23; }
         .hero h2 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
@@ -45,11 +42,12 @@
         .close-cart { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
         .cart-items { flex-grow: 1; color: #aaa; text-align: center; padding-top: 40px; }
 
-        /* نافذة لوحة التحكم المنبثقة */
+        /* نافذة لوحة التحكم */
         .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1100; justify-content: center; align-items: center; padding: 20px; }
-        .admin-box { background: #142219; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; border: 2px solid #285038; display: flex; flex-direction: column; gap: 20px; }
+        .admin-box { background: #142219; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; border: 2px solid #285038; display: flex; flex-direction: column; gap: 20px; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #285038; padding-bottom: 10px; }
         .admin-header h3 { color: #fff; font-size: 1.3rem; }
+        .admin-sec-title { color: #8fbc8f; font-size: 1.1rem; border-bottom: 1px dashed #285038; padding-bottom: 5px; margin-top: 10px; }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; margin-bottom: 5px; color: #8fbc8f; font-weight: bold; font-size: 0.9rem; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #285038; background: #0f1210; color: #fff; font-size: 0.9rem; }
@@ -61,13 +59,13 @@
 </head>
 <body>
     <header>
-        <!-- اضغط هنا 3 مرات متتالية لتفتح لك لوحة التحكم -->
-        <div class="logo" onclick="secretAdminOpen()">
+        <div class="logo">
             <h1 id="txt-logo-title">المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</h1>
             <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
+            <button onclick="openAdminWithPassword()" class="admin-open-btn">لوحة التحكم</button>
             <button onclick="toggleCart()" id="cartBtn" class="cart-btn">السلة</button>
             <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">التواصل والاستفسارات</a>
         </div>
@@ -81,22 +79,18 @@
     <!-- شريط الأقسام -->
     <div class="categories-container">
         <div class="categories-title" id="txt-cat-title">الأقسام:</div>
-        <div class="categories-grid">
-            <button class="category-btn active" onclick="filterCategory('all', this)" id="cat-all">الكل</button>
-            <button class="category-btn" onclick="filterCategory('pc-laptops', this)" id="cat-pc">قسم بيع الأجهزة واللابتوبات والكمبيوترات</button>
-            <button class="category-btn" onclick="filterCategory('gov-services', this)" id="cat-gov">المنتجات والخدمات الحكومية</button>
-            <button class="category-btn" onclick="filterCategory('remote-repair', this)" id="cat-remote">صيانة عن بُعد</button>
-            <button class="category-btn" onclick="filterCategory('phones', this)" id="cat-phones">قسم بيع الجوالات</button>
+        <div class="categories-grid" id="categoriesBar">
+            <!-- الأقسام -->
         </div>
     </div>
 
     <h3 class="section-title" id="txt-products-title">المنتجات والخدمات المعروضة</h3>
 
     <div class="grid" id="productsGrid">
-        <!-- المنتجات المعروضة -->
+        <!-- المنتجات -->
     </div>
 
-    <!-- نافذة السلة الجانبية -->
+    <!-- نافذة السلة -->
     <div id="cartModal" class="cart-modal">
         <div class="cart-content">
             <div class="cart-header">
@@ -109,26 +103,40 @@
         </div>
     </div>
 
-    <!-- نافذة لوحة التحكم السرية -->
+    <!-- نافذة لوحة التحكم -->
     <div id="adminModal" class="admin-modal">
         <div class="admin-box">
             <div class="admin-header">
-                <h3>لوحة التحكم السريعة</h3>
+                <h3>لوحة التحكم والإدارة</h3>
                 <button onclick="toggleAdminModal()" class="close-cart">&times;</button>
             </div>
             
+            <!-- 1. قسم إدارة الأقسام -->
+            <h4 class="admin-sec-title">📁 إدارة الأقسام (إضافة / حذف)</h4>
+            <form id="addCategoryForm">
+                <div class="form-group">
+                    <label>اسم القسم الجديد:</label>
+                    <input type="text" id="catName" required placeholder="مثال: قسم صيانة البلايستيشن">
+                </div>
+                <button type="submit" class="admin-btn" style="background-color: #1c3325; border: 1px solid #285038;">إضافة القسم للمتجر</button>
+            </form>
+
+            <div>
+                <label style="color:#aaa; font-size:0.85rem; display:block; margin-bottom:5px;">الأقسام الحالية:</label>
+                <div id="adminCatsList" style="max-height: 120px; overflow-y: auto;"></div>
+            </div>
+
+            <!-- 2. قسم إدارة المنتجات -->
+            <h4 class="admin-sec-title">📦 إدارة المنتجات والخدمات</h4>
             <form id="addProductForm">
                 <div class="form-group">
                     <label>عنوان المنتج / الخدمة:</label>
                     <input type="text" id="pTitle" required placeholder="مثال: صيانة لابتوب">
                 </div>
                 <div class="form-group">
-                    <label>القسم:</label>
+                    <label>اختر القسم:</label>
                     <select id="pCategory" required>
-                        <option value="pc-laptops">قسم بيع الأجهزة واللابتوبات والكمبيوترات</option>
-                        <option value="gov-services">المنتجات والخدمات الحكومية</option>
-                        <option value="remote-repair">صيانة عن بُعد</option>
-                        <option value="phones">قسم بيع الجوالات</option>
+                        <!-- الأقسام -->
                     </select>
                 </div>
                 <div class="form-group">
@@ -142,18 +150,40 @@
                 <button type="submit" class="admin-btn">إضافة المنتج للمتجر</button>
             </form>
 
-            <div style="margin-top: 15px;">
-                <h4 style="color: #fff; margin-bottom: 10px; font-size: 1rem;">المنتجات الحالية (إدارة وحذف):</h4>
-                <div id="adminItemsList" style="max-height: 180px; overflow-y: auto;"></div>
+            <div>
+                <label style="color:#aaa; font-size:0.85rem; display:block; margin-bottom:5px;">المنتجات الحالية:</label>
+                <div id="adminItemsList" style="max-height: 150px; overflow-y: auto;"></div>
             </div>
         </div>
     </div>
 
     <script>
+        // كلمة السر المحدثة للوحة التحكم
+        const ADMIN_PASSWORD = "3732";
+
+        const defaultCategories = [
+            { id: 'pc-laptops', name: 'قسم بيع الأجهزة واللابتوبات والكمبيوترات' },
+            { id: 'gov-services', name: 'المنتجات والخدمات الحكومية' },
+            { id: 'remote-repair', name: 'صيانة عن بُعد' },
+            { id: 'phones', name: 'قسم بيع الجوالات' }
+        ];
+
         const defaultProducts = [
             { id: 1, title: 'فورمات وتنظيف وتسريع البي سي', category: 'remote-repair', badge: 'صيانة عن بُعد', desc: 'حل جميع المشاكل فقط وخلاص' },
             { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', badge: 'خدمات حكومية', desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
         ];
+
+        function getCategories() {
+            const saved = localStorage.getItem('storeCategories');
+            return saved ? JSON.parse(saved) : defaultCategories;
+        }
+
+        function saveCategories(cats) {
+            localStorage.setItem('storeCategories', JSON.stringify(cats));
+            renderCategoriesBar();
+            renderAdminCats();
+            updateCategorySelectOptions();
+        }
 
         function getProducts() {
             const saved = localStorage.getItem('storeProducts');
@@ -163,7 +193,21 @@
         function saveProducts(products) {
             localStorage.setItem('storeProducts', JSON.stringify(products));
             renderProducts();
-            renderAdminList();
+            renderAdminProducts();
+        }
+
+        function renderCategoriesBar() {
+            const cats = getCategories();
+            const container = document.getElementById('categoriesBar');
+            container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)" id="cat-all">الكل</button>';
+
+            cats.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                btn.innerText = c.name;
+                btn.onclick = function() { filterCategory(c.id, btn); };
+                container.appendChild(btn);
+            });
         }
 
         function renderProducts() {
@@ -189,7 +233,35 @@
             });
         }
 
-        function renderAdminList() {
+        function updateCategorySelectOptions() {
+            const cats = getCategories();
+            const select = document.getElementById('pCategory');
+            select.innerHTML = '';
+            cats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.innerText = c.name;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderAdminCats() {
+            const cats = getCategories();
+            const list = document.getElementById('adminCatsList');
+            list.innerHTML = '';
+
+            cats.forEach(c => {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.innerHTML = `
+                    <span style="font-size: 0.85rem; color:#fff;">${c.name}</span>
+                    <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف القسم</button>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function renderAdminProducts() {
             const products = getProducts();
             const list = document.getElementById('adminItemsList');
             list.innerHTML = '';
@@ -199,10 +271,32 @@
                 row.className = 'item-row';
                 row.innerHTML = `
                     <span style="font-size: 0.85rem; color:#fff;">${p.title}</span>
-                    <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
+                    <button class="del-btn" onclick="deleteProduct(${p.id})">حذف المنتج</button>
                 `;
                 list.appendChild(row);
             });
+        }
+
+        document.getElementById('addCategoryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const cats = getCategories();
+            const nameInput = document.getElementById('catName').value;
+            const newCat = {
+                id: 'cat-' + Date.now(),
+                name: nameInput
+            };
+            cats.push(newCat);
+            saveCategories(cats);
+            this.reset();
+            alert('تمت إضافة القسم بنجاح!');
+        });
+
+        function deleteCategory(id) {
+            if (confirm('هل أنت تأكد من حذف هذا القسم؟')) {
+                let cats = getCategories();
+                cats = cats.filter(c => c.id !== id);
+                saveCategories(cats);
+            }
         }
 
         document.getElementById('addProductForm').addEventListener('submit', function(e) {
@@ -229,17 +323,12 @@
             }
         }
 
-        // تفعيل الضغط 3 مرات على الشعار لفتح لوحة التحكم
-        let clickCount = 0;
-        let clickTimer = null;
-        function secretAdminOpen() {
-            clickCount++;
-            if (clickCount === 1) {
-                clickTimer = setTimeout(() => { clickCount = 0; }, 600);
-            } else if (clickCount === 3) {
-                clearTimeout(clickTimer);
-                clickCount = 0;
+        function openAdminWithPassword() {
+            let pass = prompt("أدخل رمز دخول لوحة التحكم:");
+            if (pass === ADMIN_PASSWORD) {
                 toggleAdminModal();
+            } else if (pass !== null) {
+                alert("رمز الدخول غير صحيح!");
             }
         }
 
@@ -247,7 +336,9 @@
             let modal = document.getElementById('adminModal');
             modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
             if (modal.style.display === 'flex') {
-                renderAdminList();
+                renderAdminCats();
+                renderAdminProducts();
+                updateCategorySelectOptions();
             }
         }
 
@@ -284,11 +375,6 @@
                 document.getElementById('txt-hero-title').innerText = 'Hardware Maintenance Specialists';
                 document.getElementById('txt-hero-desc').innerText = 'Buy parts & accessories, remote PC repair, and fast government digital solutions.';
                 document.getElementById('txt-cat-title').innerText = 'Categories:';
-                document.getElementById('cat-all').innerText = 'All';
-                document.getElementById('cat-pc').innerText = 'PCs & Laptops Section';
-                document.getElementById('cat-gov').innerText = 'Gov Products & Services';
-                document.getElementById('cat-remote').innerText = 'Remote Repair';
-                document.getElementById('cat-phones').innerText = 'Mobiles Section';
                 document.getElementById('txt-products-title').innerText = 'Featured Products & Services';
                 document.getElementById('txt-cart-title').innerText = 'Shopping Cart';
                 document.getElementById('txt-cart-empty').innerText = 'Cart is empty';
@@ -304,18 +390,15 @@
                 document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
                 document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
                 document.getElementById('txt-cat-title').innerText = 'الأقسام:';
-                document.getElementById('cat-all').innerText = 'الكل';
-                document.getElementById('cat-pc').innerText = 'قسم بيع الأجهزة واللابتوبات والكمبيوترات';
-                document.getElementById('cat-gov').innerText = 'المنتجات والخدمات الحكومية';
-                document.getElementById('cat-remote').innerText = 'صيانة عن بُعد';
-                document.getElementById('cat-phones').innerText = 'قسم بيع الجوالات';
                 document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
                 document.getElementById('txt-cart-title').innerText = 'سلة المشتريات';
                 document.getElementById('txt-cart-empty').innerText = 'السلة فارغة حالياً';
             }
         }
 
+        renderCategoriesBar();
         renderProducts();
+        updateCategorySelectOptions();
     </script>
 </body>
 </html>
