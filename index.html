@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</title>
+    <title>المتخصصون في صيانة الأجهزة الرقمية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: #0f1210; color: #e0e0e0; min-height: 100vh; display: flex; flex-direction: column; }
-        header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-        .logo h1 { font-size: 1.1rem; color: #fff; }
+        header { background-color: #142219; border-bottom: 2px solid #285038; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .logo h1 { font-size: 1.2rem; color: #fff; }
         .logo p { font-size: 0.8rem; color: #8fbc8f; margin-top: 2px; }
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .whatsapp-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; }
+        .cart-btn, .whatsapp-btn, .control-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; }
         .whatsapp-btn { background-color: #285038; }
+        
+        /* زر لوحة التحكم: مخفي افتراضياً عن الكل */
+        #adminBtn { display: none; background-color: #3b704e; border-color: #4da66a; }
+
         .hero { padding: 40px 20px; text-align: center; background: #121814; border-bottom: 1px solid #1f2c23; }
         .hero h2 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
         .hero p { color: #aaa; font-size: 1.1rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
@@ -23,28 +27,19 @@
         .card h3 { color: #fff; font-size: 1.2rem; }
         .card p { color: #bbb; font-size: 0.95rem; line-height: 1.5; }
         .badge { background-color: #285038; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; width: fit-content; }
-        
-        /* تصميم لوحة التحكم المدمجة في نفس الصفحة (تكون مخفية عن الزوار ولا تظهر إلا لك) */
-        #adminPanel { max-width: 800px; margin: 40px auto; padding: 25px; background: #161f18; border: 2px dashed #285038; border-radius: 12px; width: 90%; display: none; }
-        #adminPanel h3 { color: #fff; margin-bottom: 15px; font-size: 1.3rem; border-right: 4px solid #285038; padding-right: 10px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 6px; color: #bbb; font-weight: bold; font-size: 0.9rem; }
-        input, textarea { width: 100%; padding: 10px; border-radius: 8px; background: #0f1210; border: 1px solid #285038; color: #fff; font-size: 0.95rem; }
-        textarea { resize: vertical; height: 80px; }
-        .submit-btn { background-color: #285038; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%; }
-        .submit-btn:hover { background-color: #3b704e; }
-        .admin-toggle-btn { background: transparent; border: none; color: #0f1210; cursor: pointer; font-size: 11px; padding: 20px; display: block; margin: 0 auto; }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">
-            <h1>المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</h1>
+            <h1>المتخصصون في صيانة الأجهزة الرقمية</h1>
             <p>صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
         <div class="header-left">
+            <!-- هذا الزر سيظهر لك أنت وحدك فقط -->
+            <a href="admin.html" id="adminBtn" class="control-btn">لوحة التحكم</a>
             <a href="#" class="cart-btn">السلة</a>
-            <a href="https://wa.me/966556843732" class="whatsapp-btn">التواصل والاستفسارات</a>
+            <a href="https://wa.me/966556843732" class="whatsapp-btn">واتساب للأعمال</a>
         </div>
     </header>
 
@@ -55,75 +50,28 @@
 
     <h3 class="section-title">المنتجات والخدمات المعروضة</h3>
 
-    <!-- شبكة المنتجات -->
-    <div class="grid" id="productsGrid">
+    <div class="grid">
+        <div class="card">
+            <span class="badge">إكسسوارات</span>
+            <h3>كيبل HDMI عالي السرعة 4K</h3>
+            <p>كيبل ممتاز لتوصيل الشاشات وأجهزة البي سي والبلستيشن بجودة عالية.</p>
+        </div>
         <div class="card">
             <span class="badge">صيانة عن بُعد</span>
             <h3>فورمات وتنظيف وتسريع البي سي</h3>
-            <p>حل جميع المشاكل فقط وخلاص</p>
+            <p>إزالة الفيروسات، تثبيت الويندوز والبرامج، وحل البطء عبر AnyDesk و TeamViewer.</p>
         </div>
         <div class="card">
-            <span class="badge">خدمات حكومية</span>
+            <span class="badge">خدمات رقمية</span>
             <h3>إدارة وتنظيم حسابات أبشر ونفاذ</h3>
             <p>تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.</p>
         </div>
     </div>
 
-    <!-- لوحة التحكم المدمجة (مخفية عن الزوار) -->
-    <div id="adminPanel">
-        <h3>لوحة الإدارة السريعة (خاصة بك وحدك)</h3>
-        <form id="addProductForm" onsubmit="addNewProduct(event)">
-            <div class="form-group">
-                <label>التصنيف (مثال: إكسسوارات، صيانة، خدمات حكومية)</label>
-                <input type="text" id="prodBadge" required placeholder="أدخل التصنيف...">
-            </div>
-            <div class="form-group">
-                <label>عنوان المنتج أو الخدمة</label>
-                <input type="text" id="prodTitle" required placeholder="أدخل العنوان...">
-            </div>
-            <div class="form-group">
-                <label>الوصف والتفاصيل</label>
-                <textarea id="prodDesc" required placeholder="أدخل التفاصيل..."></textarea>
-            </div>
-            <button type="submit" class="submit-btn">إضافة المنتج للمتجر فوراً</button>
-        </form>
-    </div>
-
-    <!-- زر خفي جداً في أسفل الصفحة تضغط عليه مرتين عشان تظهر لك لوحة الإدارة -->
-    <button class="admin-toggle-btn" onclick="toggleAdmin()">تفعيل الإدارة</button>
-
     <script>
-        // دالة لإظهار لوحة التحكم الخاصة بك عند الضغط على الزر المخفي بالأسفل
-        function toggleAdmin() {
-            let panel = document.getElementById('adminPanel');
-            if (panel.style.display === 'block') {
-                panel.style.display = 'none';
-            } else {
-                panel.style.display = 'block';
-                panel.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        // دالة لإضافة المنتج الجديد مباشرة في الصفحة
-        function addNewProduct(event) {
-            event.preventDefault();
-            let badge = document.getElementById('prodBadge').value;
-            let title = document.getElementById('prodTitle').value;
-            let desc = document.getElementById('prodDesc').value;
-
-            let grid = document.getElementById('productsGrid');
-            let newCard = document.createElement('div');
-            newCard.className = 'card';
-            newCard.innerHTML = `
-                <span class="badge">${badge}</span>
-                <h3>${title}</h3>
-                <p>${desc}</p>
-            `;
-            grid.appendChild(newCard);
-
-            // تفريغ الحقول بعد الإضافة
-            document.getElementById('addProductForm').reset();
-            alert('تمت إضافة المنتج بنجاح في متجرك!');
+        // هذه السطر البسيط يخلي الزر يظهر عندك أنت وحدك في متصفحك، ولا يظهر لأي زائر آخر
+        if (localStorage.getItem('myAdminMode') === 'active') {
+            document.getElementById('adminBtn').style.display = 'inline-block';
         }
     </script>
 </body>
