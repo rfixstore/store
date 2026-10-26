@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</title>
+    <title>المتخصصون في صيانة الأجهزة</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         body { background-color: #f4f4f4; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* هيدر بنمط نون (أصفر وغامق) */
-        header { background-color: #fee600; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        /* هيدر بنمط نون مرتب ومنسق */
+        header { background-color: #fee600; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .logo { cursor: pointer; user-select: none; }
-        .logo h1 { font-size: 1.1rem; color: #111; font-weight: 800; }
-        .logo p { font-size: 0.75rem; color: #555; }
+        .logo h1 { font-size: 1.3rem; color: #111; font-weight: 800; line-height: 1.2; }
+        .logo p { font-size: 0.78rem; color: #444; margin-top: 2px; font-weight: 500; }
+        
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
         .cart-btn, .whatsapp-btn, .lang-btn { background-color: #fff; color: #111; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.85rem; border: 1px solid #ddd; white-space: nowrap; cursor: pointer; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .whatsapp-btn { background-color: #25d366; color: #fff; border: none; }
@@ -59,7 +60,7 @@
         .add-to-cart-btn:hover { background-color: #f3dc00; }
         .badge { background-color: #eef8ff; color: #0073e6; border: 1px solid #b3d7ff; padding: 2px 6px; border-radius: 3px; font-size: 0.68rem; width: fit-content; font-weight: 600; }
 
-        /* نافذة تفاصيل الإعلان (ستايل نون) */
+        /* نافذة تفاصيل الإعلان */
         .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1300; justify-content: center; align-items: center; padding: 15px; }
         .details-box { background: #fff; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 8px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
         .details-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -108,7 +109,7 @@
 <body>
     <header>
         <div class="logo" onclick="logoClicksTrigger()">
-            <h1 id="txt-logo-title">المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</h1>
+            <h1 id="txt-logo-title">المتخصصون في صيانة الأجهزة</h1>
             <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
         <div class="header-left">
@@ -135,7 +136,7 @@
 
     <div class="grid" id="productsGrid"></div>
 
-    <!-- نافذة تفاصيل الإعلان (ستايل نون) -->
+    <!-- نافذة تفاصيل الإعلان -->
     <div id="detailsModal" class="details-modal">
         <div class="details-box">
             <div class="admin-header">
@@ -426,7 +427,6 @@
             saveCart(cart);
         }
 
-        // تفاصيل المنتج (ستايل نون)
         function openDetailsModal(p) {
             document.getElementById('detTitle').innerText = p.title;
             document.getElementById('detBadge').innerText = p.badge;
@@ -647,7 +647,7 @@
                 document.documentElement.lang = 'en';
                 document.documentElement.dir = 'ltr';
                 document.getElementById('langBtn').innerText = '🌐 عربي';
-                document.getElementById('txt-logo-title').innerText = 'Digital Hardware Specialists';
+                document.getElementById('txt-logo-title').innerText = 'Hardware Maintenance Specialists';
                 document.getElementById('txt-logo-sub').innerText = 'Hardware Repair • Digital & Gov Services';
                 document.getElementById('txt-hero-title').innerText = 'Hardware Maintenance Specialists';
                 document.getElementById('txt-hero-desc').innerText = 'Buy parts & accessories, remote PC repair, and fast government digital solutions.';
@@ -658,9 +658,9 @@
                 currentLang = 'ar';
                 document.documentElement.lang = 'ar';
                 document.documentElement.dir = 'rtl';
-                document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية';
+                document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة الأجهزة';
                 document.getElementById('txt-logo-sub').innerText = 'صيانة أجهزة • خدمات رقمية وحكومية';
-                document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة أجهزة';
+                document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
                 document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
                 document.getElementById('txt-cat-title').innerText = 'الأقسام:';
                 document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
