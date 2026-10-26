@@ -30,6 +30,7 @@
         .section-title { padding: 15px 20px 10px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.4rem; color: #fff; border-right: 4px solid #285038; padding-right: 15px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; width: 100%; }
         .card { background-color: #161f18; border: 1px solid #223528; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .card img { width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 5px; border: 1px solid #223528; }
         .card h3 { color: #fff; font-size: 1.2rem; }
         .card p { color: #bbb; font-size: 0.95rem; line-height: 1.5; }
         .badge { background-color: #285038; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; width: fit-content; }
@@ -42,7 +43,7 @@
         .close-cart { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
         .cart-items { flex-grow: 1; color: #aaa; text-align: center; padding-top: 40px; }
 
-        /* نافذة إدخال الرمز السرية الأنيقة */
+        /* نافذة إدخال الرمز السرية */
         .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1200; justify-content: center; align-items: center; padding: 20px; }
         .pass-box { background: #142219; width: 100%; max-width: 350px; padding: 25px; border-radius: 12px; border: 2px solid #285038; display: flex; flex-direction: column; gap: 15px; text-align: center; }
         .pass-box h3 { color: #fff; font-size: 1.2rem; }
@@ -65,7 +66,6 @@
 </head>
 <body>
     <header>
-        <!-- اضغط 5 مرات متتالية هنا لفتح نافذة الرمز -->
         <div class="logo" onclick="logoClicksTrigger()">
             <h1 id="txt-logo-title">المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية</h1>
             <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
@@ -109,7 +109,7 @@
         </div>
     </div>
 
-    <!-- نافذة إدخال الرمز السرية الأنيقة -->
+    <!-- نافذة إدخال الرمز السرية -->
     <div id="passModal" class="pass-modal">
         <div class="pass-box">
             <h3>🔒 لوحة التحكم السرية</h3>
@@ -128,7 +128,7 @@
                 <button onclick="toggleAdminModal()" class="close-cart">&times;</button>
             </div>
             
-            <!-- 1. قسم إدارة الأقسام -->
+            <!-- 1. إدارة الأقسام -->
             <h4 class="admin-sec-title">📁 إدارة الأقسام (إضافة / حذف)</h4>
             <form id="addCategoryForm">
                 <div class="form-group">
@@ -143,12 +143,12 @@
                 <div id="adminCatsList" style="max-height: 120px; overflow-y: auto;"></div>
             </div>
 
-            <!-- 2. قسم إدارة المنتجات -->
+            <!-- 2. إدارة المنتجات -->
             <h4 class="admin-sec-title">📦 إدارة المنتجات والخدمات</h4>
             <form id="addProductForm">
                 <div class="form-group">
                     <label>عنوان المنتج / الخدمة:</label>
-                    <input type="text" id="pTitle" required placeholder="مثال: صيانة لابتوب">
+                    <input type="text" id="pTitle" required placeholder="مثال: بي سي قيمنق">
                 </div>
                 <div class="form-group">
                     <label>اختر القسم:</label>
@@ -158,11 +158,15 @@
                 </div>
                 <div class="form-group">
                     <label>الشارة (Badge):</label>
-                    <input type="text" id="pBadge" placeholder="مثال: صيانة عن بعد">
+                    <input type="text" id="pBadge" placeholder="مثال: بيع الأجهزة">
+                </div>
+                <div class="form-group">
+                    <label>رابط صورة المنتج (اختياري):</label>
+                    <input type="url" id="pImage" placeholder="ضع رابط الصورة هنا (مثل رابط مباشر)">
                 </div>
                 <div class="form-group">
                     <label>الوصف:</label>
-                    <textarea id="pDesc" rows="2" required placeholder="وصف المنتج..."></textarea>
+                    <textarea id="pDesc" rows="2" required placeholder="اكتب المواصفات والتفاصيل..."></textarea>
                 </div>
                 <button type="submit" class="admin-btn">إضافة المنتج للمتجر</button>
             </form>
@@ -185,8 +189,8 @@
         ];
 
         const defaultProducts = [
-            { id: 1, title: 'فورمات وتنظيف وتسريع البي سي', category: 'remote-repair', badge: 'صيانة عن بُعد', desc: 'حل جميع المشاكل فقط وخلاص' },
-            { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', badge: 'خدمات حكومية', desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
+            { id: 1, title: 'فورمات وتنظيف وتسريع البي سي', category: 'remote-repair', badge: 'صيانة عن بُعد', image: '', desc: 'حل جميع المشاكل فقط وخلاص' },
+            { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', badge: 'خدمات حكومية', image: '', desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
         ];
 
         function getCategories() {
@@ -240,7 +244,11 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.setAttribute('data-category', p.category);
+                
+                let imgTag = p.image ? `<img src="${p.image}" alt="${p.title}">` : '';
+
                 card.innerHTML = `
+                    ${imgTag}
                     <span class="badge">${p.badge}</span>
                     <h3>${p.title}</h3>
                     <p>${p.desc}</p>
@@ -323,12 +331,13 @@
                 title: document.getElementById('pTitle').value,
                 category: document.getElementById('pCategory').value,
                 badge: document.getElementById('pBadge').value || 'خدمة',
+                image: document.getElementById('pImage').value,
                 desc: document.getElementById('pDesc').value
             };
             products.push(newProduct);
             saveProducts(products);
             this.reset();
-            alert('تمت إضافة المنتج بنجاح!');
+            alert('تمت إضافة المنتج مع الصورة بنجاح!');
         });
 
         function deleteProduct(id) {
@@ -339,7 +348,6 @@
             }
         }
 
-        // حساب الضغطات 5 مرات متتالية على الشعار العلوي
         let count = 0;
         let timer = null;
         function logoClicksTrigger() {
@@ -364,8 +372,10 @@
         }
 
         function checkAdminPassword() {
-            let pass = document.getElementById('adminPassInput').value;
-            if (pass === ADMIN_PASSWORD) {
+            let pass = document.getElementById('adminPassInput5') || document.getElementById('adminPassInput').value;
+            // correction for input id
+            let inputVal = document.getElementById('adminPassInput').value;
+            if (inputVal === ADMIN_PASSWORD) {
                 closePasswordModal();
                 toggleAdminModal();
             } else {
