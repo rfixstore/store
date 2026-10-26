@@ -10,21 +10,32 @@
         body { background-color: #f0f4f8; color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; }
         
         /* هيدر بنمط تقني فخم بالأزرق الملكي */
-        header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15); border-bottom: 2px solid #3b82f6; }
+        header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15); border-bottom: 2px solid #3b82f6; }
         .logo { cursor: pointer; user-select: none; }
-        .logo h1 { font-size: 1.3rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
-        .logo p { font-size: 0.78rem; color: #93c5fd; margin-top: 3px; font-weight: 500; }
+        .logo h1 { font-size: 1.2rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
+        .logo p { font-size: 0.75rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
         
-        .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 15px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; cursor: pointer; position: relative; backdrop-filter: blur(5px); transition: 0.2s; }
+        /* شريط البحث في الهيدر */
+        .search-container { position: relative; flex-grow: 1; max-width: 450px; margin: 0 15px; }
+        .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: 40px; }
+        .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.9rem; color: #0f172a; text-align: right; }
+        .search-box input::placeholder { color: #94a3b8; }
+        .search-icon { color: #64748b; font-size: 1.1rem; cursor: pointer; }
+        
+        /* قائمة الاقتراحات المنسدلة للبحث */
+        .search-suggestions { display: none; position: absolute; top: 45px; left: 0; right: 0; background: #ffffff; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); z-index: 1400; max-height: 250px; overflow-y: auto; border: 1px solid #e2e8f0; }
+        .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
+        .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
+
+        .header-left { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.82rem; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; cursor: pointer; position: relative; backdrop-filter: blur(5px); transition: 0.2s; }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
         .whatsapp-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
-        .whatsapp-btn:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
         .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 1px 6px; font-size: 0.7rem; position: absolute; top: -6px; right: -6px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
-        .hero { padding: 30px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-        .hero h2 { font-size: 1.6rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
-        .hero p { color: #64748b; font-size: 0.95rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
+        .hero { padding: 25px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .hero h2 { font-size: 1.5rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
+        .hero p { color: #64748b; font-size: 0.92rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
         
         /* شريط الأقسام */
         .categories-container { max-width: 1200px; margin: 18px auto 5px; padding: 0 15px; width: 100%; }
@@ -36,7 +47,7 @@
 
         .section-title { padding: 18px 15px 6px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.2rem; color: #0f172a; font-weight: 800; }
         
-        /* شبكة المنتجات (ستايل أنيق وجديد) */
+        /* شبكة المنتجات */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 14px; padding: 12px; max-width: 1200px; margin: 0 auto; width: 100%; }
         .card { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: 0.25s; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
         .card:hover { box-shadow: 0 8px 20px rgba(30, 58, 138, 0.08); transform: translateY(-3px); border-color: #cbd5e1; }
@@ -116,6 +127,16 @@
             <h1 id="txt-logo-title">المتخصصون في صيانة الأجهزة</h1>
             <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
         </div>
+
+        <!-- شريط البحث الذكي -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ما الذي تبحث عنه؟" oninput="handleSearchInput()" autocomplete="off">
+                <span class="search-icon">🔍</span>
+            </div>
+            <div id="searchSuggestions" class="search-suggestions"></div>
+        </div>
+
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
             <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
@@ -351,14 +372,14 @@
             });
         }
 
-        function renderProducts() {
-            const products = getProducts();
+        function renderProducts(filterList = null) {
+            const products = filterList || getProducts();
             const wishlist = getWishlist();
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
 
             if (products.length === 0) {
-                grid.innerHTML = '<p style="color:#64748b; text-align:center; grid-column: 1/-1;">لا توجد منتجات معروضة حالياً.</p>';
+                grid.innerHTML = '<p style="color:#64748b; text-align:center; grid-column: 1/-1;">لا توجد منتجات مطابقة لبحثك.</p>';
                 return;
             }
 
@@ -398,6 +419,51 @@
                 grid.appendChild(card);
             });
         }
+
+        /* دالة البحث التفاعلي واظهار الاقتراحات */
+        function handleSearchInput() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            const suggestionsBox = document.getElementById('searchSuggestions');
+            const products = getProducts();
+
+            if (query === '') {
+                suggestionsBox.style.display = 'none';
+                renderProducts();
+                return;
+            }
+
+            const matched = products.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+
+            // تصفية المنتجات في الصفحة مباشرة
+            renderProducts(matched);
+
+            // عرض الاقتراحات المنسدلة
+            if (matched.length > 0) {
+                suggestionsBox.innerHTML = '';
+                matched.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    div.innerHTML = `<span>${item.title}</span> <span style="color:#2563eb; font-weight:bold;">${item.price} ر.س</span>`;
+                    div.onclick = function() {
+                        document.getElementById('searchInput').value = item.title;
+                        suggestionsBox.style.display = 'none';
+                        openDetailsModal(item);
+                    };
+                    suggestionsBox.appendChild(div);
+                });
+                suggestionsBox.style.display = 'block';
+            } else {
+                suggestionsBox.innerHTML = '<div style="padding:10px; color:#64748b; text-align:center;">لا توجد نتائج مطابقة</div>';
+                suggestionsBox.style.display = 'block';
+            }
+        }
+
+        // إخفاء صندوق الاقتراحات عند النقر خارجه‌
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                document.getElementById('searchSuggestions').style.display = 'none';
+            }
+        });
 
         function addToCart(p) {
             let cart = getCart();
@@ -716,6 +782,7 @@
                 document.getElementById('txt-cat-title').innerText = 'Categories:';
                 document.getElementById('txt-products-title').innerText = 'Featured Products & Services';
                 document.getElementById('txt-cart-title').innerText = 'Shopping Cart';
+                document.getElementById('searchInput').placeholder = 'What are you looking for?';
             } else {
                 currentLang = 'ar';
                 document.documentElement.lang = 'ar';
@@ -727,6 +794,7 @@
                 document.getElementById('txt-cat-title').innerText = 'الأقسام:';
                 document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
                 document.getElementById('txt-cart-title').innerText = 'سلة المشتريات';
+                document.getElementById('searchInput').placeholder = 'ما الذي تبحث عنه؟';
             }
         }
 
