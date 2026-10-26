@@ -13,8 +13,9 @@
         .logo h1 { font-size: 1.2rem; color: #fff; }
         .logo p { font-size: 0.8rem; color: #8fbc8f; margin-top: 2px; }
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .whatsapp-btn, .lang-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; }
+        .cart-btn, .whatsapp-btn, .lang-btn { background-color: #1c3325; color: #fff; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; border: 1px solid #285038; white-space: nowrap; cursor: pointer; position: relative; }
         .whatsapp-btn { background-color: #285038; }
+        .cart-badge { background: #8b0000; color: #fff; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; position: absolute; top: -5px; right: -5px; }
 
         .hero { padding: 40px 20px; text-align: center; background: #121814; border-bottom: 1px solid #1f2c23; }
         .hero h2 { font-size: 1.8rem; color: #fff; margin-bottom: 15px; }
@@ -29,19 +30,40 @@
 
         .section-title { padding: 15px 20px 10px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.4rem; color: #fff; border-right: 4px solid #285038; padding-right: 15px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; width: 100%; }
-        .card { background-color: #161f18; border: 1px solid #223528; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 10px; }
-        .card img { width: 100%; height: 160px; object-fit: cover; border-radius: 6px; margin-bottom: 5px; border: 1px solid #223528; }
-        .card h3 { color: #fff; font-size: 1.2rem; }
-        .card p { color: #bbb; font-size: 0.95rem; line-height: 1.5; }
-        .badge { background-color: #285038; color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; width: fit-content; }
+        
+        /* كرت المنتج زي نون */
+        .card { background-color: #161f18; border: 1px solid #223528; border-radius: 10px; padding: 15px; display: flex; flex-direction: column; gap: 10px; transition: 0.2s; position: relative; }
+        .card:hover { border-color: #3b704e; transform: translateY(-3px); }
+        .card-img-wrap { width: 100%; height: 160px; background: #0f1210; border-radius: 6px; overflow: hidden; cursor: pointer; border: 1px solid #223528; display: flex; align-items: center; justify-content: center; }
+        .card img { width: 100%; height: 100%; object-fit: cover; }
+        .card h3 { color: #fff; font-size: 1.1rem; cursor: pointer; }
+        .card h3:hover { color: #8fbc8f; }
+        .card p { color: #bbb; font-size: 0.9rem; line-height: 1.4; flex-grow: 1; }
+        
+        .card-footer { display: flex; gap: 10px; margin-top: 5px; align-items: center; }
+        .add-to-cart-btn { background-color: #285038; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; flex-grow: 1; transition: 0.2s; }
+        .add-to-cart-btn:hover { background-color: #3b704e; }
+        .badge { background-color: #1c3325; color: #8fbc8f; border: 1px solid #285038; padding: 3px 8px; border-radius: 6px; font-size: 0.75rem; width: fit-content; }
 
-        /* نافذة السلة الجانبية */
+        /* نافذة تفاصيل الإعلان */
+        .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1300; justify-content: center; align-items: center; padding: 20px; }
+        .details-box { background: #142219; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; border: 2px solid #285038; display: flex; flex-direction: column; gap: 15px; }
+        .details-img-container { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 10px; }
+        .details-img-container img { width: 100%; max-height: 300px; object-fit: contain; border-radius: 8px; background: #0f1210; border: 1px solid #223528; }
+
+        /* نافذة السلة الجانبية زي نون */
         .cart-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: flex-start; }
-        .cart-content { background: #142219; width: 320px; height: 100%; padding: 20px; border-left: 2px solid #285038; display: flex; flex-direction: column; gap: 20px; }
+        .cart-content { background: #142219; width: 350px; height: 100%; padding: 20px; border-left: 2px solid #285038; display: flex; flex-direction: column; gap: 20px; }
         .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #285038; padding-bottom: 10px; }
         .cart-header h3 { color: #fff; }
         .close-cart { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
-        .cart-items { flex-grow: 1; color: #aaa; text-align: center; padding-top: 40px; }
+        .cart-items-list { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .cart-item-card { background: #161f18; padding: 10px; border-radius: 6px; border: 1px solid #223528; display: flex; justify-content: space-between; align-items: center; }
+        .cart-item-info h4 { color: #fff; font-size: 0.9rem; }
+        .cart-item-info p { color: #8fbc8f; font-size: 0.8rem; }
+        .del-cart-item { background: #8b0000; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+        .checkout-btn { background-color: #285038; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 1rem; }
+        .checkout-btn:hover { background-color: #3b704e; }
 
         /* نافذة إدخال الرمز السرية */
         .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1200; justify-content: center; align-items: center; padding: 20px; }
@@ -72,7 +94,9 @@
         </div>
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
-            <button onclick="toggleCart()" id="cartBtn" class="cart-btn">السلة</button>
+            <button onclick="toggleCart()" id="cartBtn" class="cart-btn">
+                🛒 السلة <span id="cartCount" class="cart-badge">0</span>
+            </button>
             <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">التواصل والاستفسارات</a>
         </div>
     </header>
@@ -96,15 +120,36 @@
         <!-- المنتجات -->
     </div>
 
-    <!-- نافذة السلة -->
+    <!-- نافذة تفاصيل الإعلان عند الضغط على الصورة أو العنوان -->
+    <div id="detailsModal" class="details-modal">
+        <div class="details-box">
+            <div class="admin-header">
+                <h3 id="detTitle" style="color:#fff;">تفاصيل الإعلان</h3>
+                <button onclick="closeDetailsModal()" class="close-cart">&times;</button>
+            </div>
+            <div class="details-img-container" id="detImagesContainer">
+                <!-- الصور -->
+            </div>
+            <div>
+                <span id="detBadge" class="badge" style="margin-bottom: 10px;"></span>
+                <p id="detDesc" style="color: #ccc; font-size: 1.05rem; line-height: 1.6; white-space: pre-wrap; margin-top: 10px;"></p>
+            </div>
+            <button id="detAddToCartBtn" class="admin-btn" style="background-color: #285038; margin-top: 10px;">إضافة إلى السلة</button>
+        </div>
+    </div>
+
+    <!-- نافذة السلة (زي نون) -->
     <div id="cartModal" class="cart-modal">
         <div class="cart-content">
             <div class="cart-header">
                 <h3 id="txt-cart-title">سلة المشتريات</h3>
                 <button onclick="toggleCart()" class="close-cart">&times;</button>
             </div>
-            <div class="cart-items">
-                <p id="txt-cart-empty">السلة فارغة حالياً</p>
+            <div class="cart-items-list" id="cartItemsList">
+                <p id="txt-cart-empty" style="color:#aaa; text-align:center; margin-top:40px;">السلة فارغة حالياً</p>
+            </div>
+            <div id="cartFooter" style="display:none; border-top: 1px solid #285038; padding-top: 15px;">
+                <a id="checkoutWhatsappBtn" href="#" target="_blank" class="checkout-btn">إتمام الطلب عبر الواتساب</a>
             </div>
         </div>
     </div>
@@ -161,12 +206,12 @@
                     <input type="text" id="pBadge" placeholder="مثال: بيع الأجهزة">
                 </div>
                 <div class="form-group">
-                    <label>رابط صورة المنتج (اختياري):</label>
-                    <input type="url" id="pImage" placeholder="ضع رابط الصورة هنا (مثل رابط مباشر)">
+                    <label>اختر الصور من الاستوديو:</label>
+                    <input type="file" id="pImageFiles" accept="image/*" multiple style="color:#fff;">
                 </div>
                 <div class="form-group">
                     <label>الوصف:</label>
-                    <textarea id="pDesc" rows="2" required placeholder="اكتب المواصفات والتفاصيل..."></textarea>
+                    <textarea id="pDesc" rows="3" required placeholder="اكتب المواصفات والتفاصيل..."></textarea>
                 </div>
                 <button type="submit" class="admin-btn">إضافة المنتج للمتجر</button>
             </form>
@@ -189,8 +234,8 @@
         ];
 
         const defaultProducts = [
-            { id: 1, title: 'فورمات وتنظيف وتسريع البي سي', category: 'remote-repair', badge: 'صيانة عن بُعد', image: '', desc: 'حل جميع المشاكل فقط وخلاص' },
-            { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', badge: 'خدمات حكومية', image: '', desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
+            { id: 1, title: 'فورمات وتنظيف وتسريع البي سي', category: 'remote-repair', badge: 'صيانة عن بُعد', images: [], desc: 'حل جميع المشاكل فقط وخلاص' },
+            { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', badge: 'خدمات حكومية', images: [], desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
         ];
 
         function getCategories() {
@@ -214,6 +259,16 @@
             localStorage.setItem('storeProducts', JSON.stringify(products));
             renderProducts();
             renderAdminProducts();
+        }
+
+        function getCart() {
+            const saved = localStorage.getItem('storeCart');
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('storeCart', JSON.stringify(cart));
+            renderCart();
         }
 
         function renderCategoriesBar() {
@@ -244,17 +299,115 @@
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.setAttribute('data-category', p.category);
-                
-                let imgTag = p.image ? `<img src="${p.image}" alt="${p.title}">` : '';
+
+                let imgTag = '';
+                let imgsList = p.images || [];
+                if (imgsList.length > 0) {
+                    imgTag = `<img src="${imgsList[0]}" alt="${p.title}">`;
+                } else {
+                    imgTag = `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#555; font-size:0.85rem;">بدون صورة</div>`;
+                }
 
                 card.innerHTML = `
-                    ${imgTag}
+                    <div class="card-img-wrap" onclick='openDetailsModal(${JSON.stringify(p)})'>
+                        ${imgTag}
+                    </div>
                     <span class="badge">${p.badge}</span>
-                    <h3>${p.title}</h3>
-                    <p>${p.desc}</p>
+                    <h3 onclick='openDetailsModal(${JSON.stringify(p)})'>${p.title}</h3>
+                    <p>${p.desc.substring(0, 60)}...</p>
+                    <div class="card-footer">
+                        <button class="add-to-cart-btn" onclick='addToCart(${JSON.stringify(p)})'>أضف للسلة 🛒</button>
+                    </div>
                 `;
                 grid.appendChild(card);
             });
+        }
+
+        // إضافة المنتج للسلة
+        function addToCart(p) {
+            let cart = getCart();
+            cart.push(p);
+            saveCart(cart);
+            alert(`تمت إضافة "${p.title}" إلى السلة بنجاح!`);
+        }
+
+        // عرض محتويات السلة
+        function renderCart() {
+            let cart = getCart();
+            let list = document.getElementById('cartItemsList');
+            let countBadge = document.getElementById('cartCount');
+            let footer = document.getElementById('cartFooter');
+            
+            countBadge.innerText = cart.length;
+            list.innerHTML = '';
+
+            if (cart.length === 0) {
+                list.innerHTML = '<p id="txt-cart-empty" style="color:#aaa; text-align:center; margin-top:40px;">السلة فارغة حالياً</p>';
+                footer.style.display = 'none';
+                return;
+            }
+
+            footer.style.display = 'block';
+            let cartTextDetails = "";
+
+            cart.forEach((item, index) => {
+                cartTextDetails += `- ${item.title}\n`;
+                let div = document.createElement('div');
+                div.className = 'cart-item-card';
+                div.innerHTML = `
+                    <div class="cart-item-info">
+                        <h4>${item.title}</h4>
+                        <p>${item.badge}</p>
+                    </div>
+                    <button class="del-cart-item" onclick="removeFromCart(${index})">حذف</button>
+                `;
+                list.appendChild(div);
+            });
+
+            // تجهيز رسالة الواتساب الموحدة للمنتجات اللي بالسلة
+            let fullMsg = encodeURIComponent(`السلام عليكم، أرغب في طلب المنتجات التالية من متجرك:\n\n${cartTextDetails}`);
+            document.getElementById('checkoutWhatsappBtn').href = `https://wa.me/966556843732?text=${fullMsg}`;
+        }
+
+        function removeFromCart(index) {
+            let cart = getCart();
+            cart.splice(index, 1);
+            saveCart(cart);
+        }
+
+        // تفاصيل الإعلان
+        function openDetailsModal(p) {
+            document.getElementById('detTitle').innerText = p.title;
+            document.getElementById('detBadge').innerText = p.badge;
+            document.getElementById('detDesc').innerText = p.desc;
+            
+            let imgsContainer = document.getElementById('detImagesContainer');
+            imgsContainer.innerHTML = '';
+            let imgsList = p.images || [];
+            
+            if (imgsList.length > 0) {
+                imgsList.forEach(imgSrc => {
+                    let img = document.createElement('img');
+                    img.src = imgSrc;
+                    imgsContainer.appendChild(img);
+                });
+                imgsContainer.style.display = 'flex';
+            } else {
+                imgsContainer.style.display = 'none';
+            }
+
+            // زر الإضافة للسلة من داخل نافذة التفاصيل
+            let addBtn = document.getElementById('detAddToCartBtn');
+            addBtn.onclick = function() {
+                addToCart(p);
+                closeDetailsModal();
+            };
+
+            document.getElementById('detailsModal').style.display = 'flex';
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('detailsModal').style.display = 'none';
         }
 
         function updateCategorySelectOptions() {
@@ -325,20 +478,44 @@
 
         document.getElementById('addProductForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const fileInput = document.getElementById('pImageFiles');
+            const files = fileInput.files;
+            
+            if (files.length > 0) {
+                let imagesArray = [];
+                let processed = 0;
+                
+                for (let i = 0; i < files.length; i++) {
+                    let reader = new FileReader();
+                    reader.onload = function(event) {
+                        imagesArray.push(event.target.result);
+                        processed++;
+                        if (processed === files.length) {
+                            saveNewProductWithImages(imagesArray);
+                        }
+                    };
+                    reader.readAsDataURL(files[i]);
+                }
+            } else {
+                saveNewProductWithImages([]);
+            }
+        });
+
+        function saveNewProductWithImages(imagesArray) {
             const products = getProducts();
             const newProduct = {
                 id: Date.now(),
                 title: document.getElementById('pTitle').value,
                 category: document.getElementById('pCategory').value,
                 badge: document.getElementById('pBadge').value || 'خدمة',
-                image: document.getElementById('pImage').value,
+                images: imagesArray,
                 desc: document.getElementById('pDesc').value
             };
             products.push(newProduct);
             saveProducts(products);
-            this.reset();
-            alert('تمت إضافة المنتج مع الصورة بنجاح!');
-        });
+            document.getElementById('addProductForm').reset();
+            alert('تمت إضافة الإعلان مع الصور بنجاح!');
+        }
 
         function deleteProduct(id) {
             if (confirm('هل متأكد من حذف هذا المنتج؟')) {
@@ -372,10 +549,8 @@
         }
 
         function checkAdminPassword() {
-            let pass = document.getElementById('adminPassInput5') || document.getElementById('adminPassInput').value;
-            // correction for input id
-            let inputVal = document.getElementById('adminPassInput').value;
-            if (inputVal === ADMIN_PASSWORD) {
+            let pass = document.getElementById('adminPassInput').value;
+            if (pass === ADMIN_PASSWORD) {
                 closePasswordModal();
                 toggleAdminModal();
             } else {
@@ -420,8 +595,6 @@
                 document.documentElement.lang = 'en';
                 document.documentElement.dir = 'ltr';
                 document.getElementById('langBtn').innerText = '🌐 عربي';
-                document.getElementById('cartBtn').innerText = 'Cart';
-                document.getElementById('contactBtn').innerText = 'Contact Us';
                 document.getElementById('txt-logo-title').innerText = 'Digital Hardware Specialists';
                 document.getElementById('txt-logo-sub').innerText = 'Hardware Repair • Digital & Gov Services';
                 document.getElementById('txt-hero-title').innerText = 'Hardware Maintenance Specialists';
@@ -429,27 +602,24 @@
                 document.getElementById('txt-cat-title').innerText = 'Categories:';
                 document.getElementById('txt-products-title').innerText = 'Featured Products & Services';
                 document.getElementById('txt-cart-title').innerText = 'Shopping Cart';
-                document.getElementById('txt-cart-empty').innerText = 'Cart is empty';
             } else {
                 currentLang = 'ar';
                 document.documentElement.lang = 'ar';
                 document.documentElement.dir = 'rtl';
                 document.getElementById('langBtn').innerText = '🌐 EN';
-                document.getElementById('cartBtn').innerText = 'السلة';
-                document.getElementById('contactBtn').innerText = 'التواصل والاستفسارات';
                 document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة أجهزة وبيع وشراء و خدمات رقمية وحكومية';
                 document.getElementById('txt-logo-sub').innerText = 'صيانة أجهزة • خدمات رقمية وحكومية';
-                document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
+                document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة أجهزة';
                 document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
                 document.getElementById('txt-cat-title').innerText = 'الأقسام:';
                 document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
                 document.getElementById('txt-cart-title').innerText = 'سلة المشتريات';
-                document.getElementById('txt-cart-empty').innerText = 'السلة فارغة حالياً';
             }
         }
 
         renderCategoriesBar();
         renderProducts();
+        renderCart();
         updateCategorySelectOptions();
     </script>
 </body>
