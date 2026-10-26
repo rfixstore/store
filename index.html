@@ -7,103 +7,107 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: #f4f4f4; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        body { background-color: #f0f4f8; color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* هيدر بنمط نون مرتب ومنسق */
-        header { background-color: #fee600; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        /* هيدر بنمط تقني فخم بالأزرق الملكي */
+        header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 14px 22px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15); border-bottom: 2px solid #3b82f6; }
         .logo { cursor: pointer; user-select: none; }
-        .logo h1 { font-size: 1.3rem; color: #111; font-weight: 800; line-height: 1.2; }
-        .logo p { font-size: 0.78rem; color: #444; margin-top: 2px; font-weight: 500; }
+        .logo h1 { font-size: 1.3rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
+        .logo p { font-size: 0.78rem; color: #93c5fd; margin-top: 3px; font-weight: 500; }
         
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: #fff; color: #111; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.85rem; border: 1px solid #ddd; white-space: nowrap; cursor: pointer; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .whatsapp-btn { background-color: #25d366; color: #fff; border: none; }
-        .cart-badge, .wishlist-badge { background: #ff5722; color: #fff; border-radius: 50%; padding: 1px 5px; font-size: 0.7rem; position: absolute; top: -5px; right: -5px; }
+        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 15px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; cursor: pointer; position: relative; backdrop-filter: blur(5px); transition: 0.2s; }
+        .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
+        .whatsapp-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
+        .whatsapp-btn:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+        .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 1px 6px; font-size: 0.7rem; position: absolute; top: -6px; right: -6px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
-        .hero { padding: 25px 15px; text-align: center; background: #fff; border-bottom: 1px solid #e0e0e0; }
-        .hero h2 { font-size: 1.5rem; color: #111; margin-bottom: 8px; font-weight: 700; }
-        .hero p { color: #666; font-size: 0.95rem; max-width: 700px; margin: 0 auto; line-height: 1.4; }
+        .hero { padding: 30px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .hero h2 { font-size: 1.6rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
+        .hero p { color: #64748b; font-size: 0.95rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
         
         /* شريط الأقسام */
-        .categories-container { max-width: 1200px; margin: 15px auto 5px; padding: 0 15px; width: 100%; }
-        .categories-title { font-size: 1rem; color: #444; margin-bottom: 8px; font-weight: bold; }
+        .categories-container { max-width: 1200px; margin: 18px auto 5px; padding: 0 15px; width: 100%; }
+        .categories-title { font-size: 1rem; color: #334155; margin-bottom: 10px; font-weight: bold; }
         .categories-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; flex-wrap: wrap; }
-        .category-btn { background-color: #fff; color: #333; border: 1px solid #ccc; padding: 6px 14px; border-radius: 16px; font-weight: 600; font-size: 0.82rem; cursor: pointer; transition: 0.2s; white-space: nowrap; }
-        .category-btn:hover, .category-btn.active { background-color: #111; color: #fee600; border-color: #111; }
+        .category-btn { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 7px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+        .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #93c5fd; }
+        .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25); }
 
-        .section-title { padding: 15px 15px 5px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.2rem; color: #111; font-weight: 700; }
+        .section-title { padding: 18px 15px 6px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.2rem; color: #0f172a; font-weight: 800; }
         
-        /* شبكة المنتجات (ستايل نون) */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; padding: 12px; max-width: 1200px; margin: 0 auto; width: 100%; }
-        .card { background-color: #fff; border: 1px solid #e0e0e0; border-radius: 6px; padding: 10px; display: flex; flex-direction: column; gap: 6px; transition: 0.2s; position: relative; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-        .card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); transform: translateY(-2px); }
+        /* شبكة المنتجات (ستايل أنيق وجديد) */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 14px; padding: 12px; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .card { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: 0.25s; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
+        .card:hover { box-shadow: 0 8px 20px rgba(30, 58, 138, 0.08); transform: translateY(-3px); border-color: #cbd5e1; }
         
         /* زر المفضلة (القلب) */
-        .wishlist-btn { position: absolute; top: 12px; left: 12px; background: #fff; border: 1px solid #ddd; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; z-index: 2; transition: 0.2s; }
-        .wishlist-btn:hover { background: #fff0f0; border-color: #ff5722; color: #ff5722; }
-        .wishlist-btn.active { color: #ff5722; }
+        .wishlist-btn { position: absolute; top: 12px; left: 12px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; z-index: 2; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .wishlist-btn:hover { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
+        .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
 
-        .card-img-wrap { width: 100%; height: 140px; background: #f9f9f9; border-radius: 4px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .card-img-wrap { width: 100%; height: 145px; background: #f8fafc; border-radius: 6px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; }
         .card img { width: 100%; height: 100%; object-fit: contain; }
-        .card h3 { color: #222; font-size: 0.95rem; cursor: pointer; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .card h3:hover { color: #007600; }
+        .card h3 { color: #1e293b; font-size: 0.95rem; cursor: pointer; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
+        .card h3:hover { color: #2563eb; }
         
         .card-price { display: flex; align-items: baseline; gap: 5px; margin-top: 2px; }
-        .price-currency { font-size: 0.75rem; color: #333; font-weight: bold; }
-        .price-amount { font-size: 1.1rem; color: #111; font-weight: 800; }
+        .price-currency { font-size: 0.75rem; color: #475569; font-weight: bold; }
+        .price-amount { font-size: 1.15rem; color: #0f172a; font-weight: 800; }
         
-        .card-rating { font-size: 0.75rem; color: #666; display: flex; align-items: center; gap: 4px; }
-        .stars { color: #ffa41c; }
+        .card-rating { font-size: 0.75rem; color: #64748b; display: flex; align-items: center; gap: 4px; }
+        .stars { color: #f59e0b; }
 
         .card-footer { display: flex; gap: 6px; margin-top: 4px; }
-        .add-to-cart-btn { background-color: #fee600; color: #111; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 0.8rem; flex-grow: 1; transition: 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .add-to-cart-btn:hover { background-color: #f3dc00; }
-        .badge { background-color: #eef8ff; color: #0073e6; border: 1px solid #b3d7ff; padding: 2px 6px; border-radius: 3px; font-size: 0.68rem; width: fit-content; font-weight: 600; }
+        .add-to-cart-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 7px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.82rem; flex-grow: 1; transition: 0.2s; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2); }
+        .add-to-cart-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
+        .badge { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; width: fit-content; font-weight: 700; }
 
         /* نافذة تفاصيل الإعلان */
-        .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1300; justify-content: center; align-items: center; padding: 15px; }
-        .details-box { background: #fff; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 8px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
+        .details-box { background: #ffffff; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .details-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media(max-width: 600px) { .details-content-grid { grid-template-columns: 1fr; } }
         
-        .details-img-container img { width: 100%; max-height: 280px; object-fit: contain; border-radius: 6px; background: #f9f9f9; border: 1px solid #eee; }
+        .details-img-container img { width: 100%; max-height: 280px; object-fit: contain; border-radius: 8px; background: #f8fafc; border: 1px solid #e2e8f0; }
         .thumbnails { display: flex; gap: 6px; margin-top: 8px; overflow-x: auto; }
-        .thumbnails img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd; }
-        .thumbnails img.active { border-color: #fee600; border-width: 2px; }
+        .thumbnails img { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #cbd5e1; }
+        .thumbnails img.active { border-color: #2563eb; border-width: 2px; }
 
         /* نافذة السلة والمفضلة الجانبية */
-        .cart-modal, .wishlist-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: flex-start; }
-        .cart-content, .wishlist-content { background: #fff; width: 350px; height: 100%; padding: 20px; border-left: 1px solid #ddd; display: flex; flex-direction: column; gap: 15px; box-shadow: -4px 0 15px rgba(0,0,0,0.1); }
-        .cart-header, .wishlist-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .cart-header h3, .wishlist-header h3 { color: #111; font-size: 1.1rem; }
-        .close-cart, .close-wishlist { background: none; border: none; color: #333; font-size: 1.5rem; cursor: pointer; }
-        .cart-items-list, .wishlist-items-list { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-        .cart-item-card, .wishlist-item-card { background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .cart-item-info h4, .wishlist-item-info h4 { color: #111; font-size: 0.85rem; font-weight: 600; }
-        .cart-item-info p, .wishlist-item-info p { color: #666; font-size: 0.75rem; }
-        .del-cart-item, .del-wishlist-item { background: #ff5722; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
-        .checkout-btn { background-color: #fee600; color: #111; border: none; padding: 12px; border-radius: 6px; font-weight: 800; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.95rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .checkout-btn:hover { background-color: #f3dc00; }
+        .cart-modal, .wishlist-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); z-index: 1000; justify-content: flex-start; backdrop-filter: blur(2px); }
+        .cart-content, .wishlist-content { background: #ffffff; width: 360px; height: 100%; padding: 22px; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 15px; box-shadow: -6px 0 20px rgba(0,0,0,0.15); }
+        .cart-header, .wishlist-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
+        .cart-header h3, .wishlist-header h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; }
+        .close-cart, .close-wishlist { background: none; border: none; color: #64748b; font-size: 1.6rem; cursor: pointer; transition: 0.2s; }
+        .close-cart:hover, .close-wishlist:hover { color: #ef4444; }
+        .cart-items-list, .wishlist-items-list { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .cart-item-card, .wishlist-item-card { background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
+        .cart-item-info h4, .wishlist-item-info h4 { color: #0f172a; font-size: 0.88rem; font-weight: 700; }
+        .cart-item-info p, .wishlist-item-info p { color: #2563eb; font-size: 0.8rem; font-weight: 700; }
+        .del-cart-item, .del-wishlist-item { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; font-weight: 700; }
+        .checkout-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 13px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+        .checkout-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
 
         /* نافذة إدخال الرمز السرية */
-        .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1200; justify-content: center; align-items: center; padding: 15px; }
-        .pass-box { background: #fff; width: 100%; max-width: 320px; padding: 25px; border-radius: 8px; display: flex; flex-direction: column; gap: 15px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
-        .pass-box h3 { color: #111; font-size: 1.1rem; }
-        .pass-box input { width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; background: #fff; color: #111; font-size: 1rem; text-align: center; letter-spacing: 3px; }
+        .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 1200; justify-content: center; align-items: center; padding: 15px; }
+        .pass-box { background: #ffffff; width: 100%; max-width: 320px; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .pass-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; }
+        .pass-box input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 1rem; text-align: center; letter-spacing: 3px; }
 
         /* نافذة لوحة التحكم */
-        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1100; justify-content: center; align-items: center; padding: 15px; }
-        .admin-box { background: #fff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 8px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .admin-header h3 { color: #111; font-size: 1.2rem; }
-        .admin-sec-title { color: #0073e6; font-size: 1rem; border-bottom: 1px dashed #ccc; padding-bottom: 4px; margin-top: 10px; font-weight: 700; }
+        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1100; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); }
+        .admin-box { background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
+        .admin-header h3 { color: #0f172a; font-size: 1.2rem; font-weight: 800; }
+        .admin-sec-title { color: #2563eb; font-size: 1rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px; margin-top: 10px; font-weight: 700; }
         .form-group { margin-bottom: 10px; }
-        .form-group label { display: block; margin-bottom: 4px; color: #444; font-weight: 600; font-size: 0.85rem; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; background: #fff; color: #111; font-size: 0.85rem; }
-        .admin-btn { background-color: #fee600; color: #111; border: none; padding: 10px 15px; border-radius: 4px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.9rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .admin-btn:hover { background-color: #f3dc00; }
-        .item-row { background: #f9f9f9; padding: 8px; border-radius: 4px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .del-btn { background: #ff5722; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+        .form-group label { display: block; margin-bottom: 4px; color: #475569; font-weight: 600; font-size: 0.85rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.85rem; }
+        .admin-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 11px 15px; border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.9rem; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
+        .admin-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
+        .item-row { background: #f8fafc; padding: 9px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .del-btn { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -143,7 +147,7 @@
     <div id="detailsModal" class="details-modal">
         <div class="details-box">
             <div class="admin-header">
-                <h3 id="detTitle" style="color:#111;">تفاصيل الإعلان</h3>
+                <h3 id="detTitle" style="color:#0f172a;">تفاصيل الإعلان</h3>
                 <button onclick="closeDetailsModal()" class="close-cart">&times;</button>
             </div>
             <div class="details-content-grid">
@@ -159,7 +163,7 @@
                         <span class="price-currency">ر.س.‏</span>
                         <span id="detPrice" class="price-amount" style="font-size: 1.5rem;"></span>
                     </div>
-                    <p id="detDesc" style="color: #444; font-size: 0.9rem; line-height: 1.5; white-space: pre-wrap;"></p>
+                    <p id="detDesc" style="color: #475569; font-size: 0.9rem; line-height: 1.5; white-space: pre-wrap;"></p>
                     <button id="detAddToCartBtn" class="admin-btn" style="margin-top: auto;">أضف إلى السلة 🛒</button>
                 </div>
             </div>
@@ -174,7 +178,7 @@
                 <button onclick="toggleWishlistModal()" class="close-wishlist">&times;</button>
             </div>
             <div class="wishlist-items-list" id="wishlistItemsList">
-                <p style="color:#666; text-align:center; margin-top:30px;">قائمة المفضلة فارغة</p>
+                <p style="color:#64748b; text-align:center; margin-top:30px;">قائمة المفضلة فارغة</p>
             </div>
         </div>
     </div>
@@ -187,9 +191,9 @@
                 <button onclick="toggleCart()" class="close-cart">&times;</button>
             </div>
             <div class="cart-items-list" id="cartItemsList">
-                <p id="txt-cart-empty" style="color:#666; text-align:center; margin-top:30px;">السلة فارغة حالياً</p>
+                <p id="txt-cart-empty" style="color:#64748b; text-align:center; margin-top:30px;">السلة فارغة حالياً</p>
             </div>
-            <div id="cartFooter" style="display:none; border-top: 1px solid #eee; padding-top: 12px;">
+            <div id="cartFooter" style="display:none; border-top: 2px solid #f1f5f9; padding-top: 14px;">
                 <a id="checkoutWhatsappBtn" href="#" target="_blank" class="checkout-btn">إتمام الطلب عبر الواتساب</a>
             </div>
         </div>
@@ -199,10 +203,10 @@
     <div id="passModal" class="pass-modal">
         <div class="pass-box">
             <h3>🔒 لوحة التحكم السرية</h3>
-            <p style="font-size: 0.8rem; color: #666;">الرجاء إدخال رمز الدخول:</p>
+            <p style="font-size: 0.8rem; color: #64748b;">الرجاء إدخال رمز الدخول:</p>
             <input type="password" id="adminPassInput" placeholder="****">
             <button onclick="checkAdminPassword()" class="admin-btn">دخول</button>
-            <button onclick="closePasswordModal()" style="background: none; border: none; color: #0073e6; cursor: pointer; font-size: 0.8rem; margin-top: 5px;">إلغاء</button>
+            <button onclick="closePasswordModal()" style="background: none; border: none; color: #2563eb; cursor: pointer; font-size: 0.8rem; margin-top: 5px; font-weight:700;">إلغاء</button>
         </div>
     </div>
 
@@ -220,10 +224,10 @@
                     <label>اسم القسم الجديد:</label>
                     <input type="text" id="catName" required placeholder="مثال: قسم صيانة البلايستيشن">
                 </div>
-                <button type="submit" class="admin-btn" style="background-color: #fee600;">إضافة القسم للمتجر</button>
+                <button type="submit" class="admin-btn">إضافة القسم للمتجر</button>
             </form>
             <div>
-                <label style="color:#666; font-size:0.8rem; display:block; margin-bottom:4px;">الأقسام الحالية:</label>
+                <label style="color:#64748b; font-size:0.8rem; display:block; margin-bottom:4px;">الأقسام الحالية:</label>
                 <div id="adminCatsList" style="max-height: 90px; overflow-y: auto;"></div>
             </div>
 
@@ -256,7 +260,7 @@
                 <button type="submit" class="admin-btn">إضافة المنتج للمتجر</button>
             </form>
             <div>
-                <label style="color:#666; font-size:0.8rem; display:block; margin-bottom:4px;">المنتجات الحالية:</label>
+                <label style="color:#64748b; font-size:0.8rem; display:block; margin-bottom:4px;">المنتجات الحالية:</label>
                 <div id="adminItemsList" style="max-height: 110px; overflow-y: auto;"></div>
             </div>
         </div>
@@ -354,7 +358,7 @@
             grid.innerHTML = '';
 
             if (products.length === 0) {
-                grid.innerHTML = '<p style="color:#666; text-align:center; grid-column: 1/-1;">لا توجد منتجات معروضة حالياً.</p>';
+                grid.innerHTML = '<p style="color:#64748b; text-align:center; grid-column: 1/-1;">لا توجد منتجات معروضة حالياً.</p>';
                 return;
             }
 
@@ -368,7 +372,7 @@
                 if (imgsList.length > 0) {
                     imgTag = `<img src="${imgsList[0]}" alt="${p.title}">`;
                 } else {
-                    imgTag = `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#999; font-size:0.75rem;">بدون صورة</div>`;
+                    imgTag = `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.75rem;">بدون صورة</div>`;
                 }
 
                 let isLiked = wishlist.some(item => item.id === p.id);
@@ -412,7 +416,7 @@
             list.innerHTML = '';
 
             if (cart.length === 0) {
-                list.innerHTML = '<p id="txt-cart-empty" style="color:#666; text-align:center; margin-top:30px;">السلة فارغة حالياً</p>';
+                list.innerHTML = '<p id="txt-cart-empty" style="color:#64748b; text-align:center; margin-top:30px;">السلة فارغة حالياً</p>';
                 footer.style.display = 'none';
                 return;
             }
@@ -453,7 +457,7 @@
             list.innerHTML = '';
 
             if (wishlist.length === 0) {
-                list.innerHTML = '<p style="color:#666; text-align:center; margin-top:30px;">قائمة المفضلة فارغة</p>';
+                list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:30px;">قائمة المفضلة فارغة</p>';
                 return;
             }
 
@@ -466,7 +470,7 @@
                         <p>${item.price} ر.س</p>
                     </div>
                     <div style="display:flex; gap:5px;">
-                        <button class="add-to-cart-btn" style="padding:4px 8px; font-size:0.75rem;" onclick='addToCart(${JSON.stringify(item)}); toggleWishlistModal();'>أضف للسلة</button>
+                        <button class="add-to-cart-btn" style="padding:5px 9px; font-size:0.75rem;" onclick='addToCart(${JSON.stringify(item)}); toggleWishlistModal();'>أضف للسلة</button>
                         <button class="del-wishlist-item" onclick="removeWishlistIndex(${index})">حذف</button>
                     </div>
                 `;
@@ -547,7 +551,7 @@
                 const row = document.createElement('div');
                 row.className = 'item-row';
                 row.innerHTML = `
-                    <span style="font-size: 0.8rem; color:#111;">${c.name}</span>
+                    <span style="font-size: 0.8rem; color:#0f172a;">${c.name}</span>
                     <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
                 `;
                 list.appendChild(row);
@@ -563,7 +567,7 @@
                 const row = document.createElement('div');
                 row.className = 'item-row';
                 row.innerHTML = `
-                    <span style="font-size: 0.8rem; color:#111;">${p.title}</span>
+                    <span style="font-size: 0.8rem; color:#0f172a;">${p.title}</span>
                     <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
                 `;
                 list.appendChild(row);
