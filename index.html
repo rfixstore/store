@@ -16,9 +16,9 @@
         .logo p { font-size: 0.78rem; color: #444; margin-top: 2px; font-weight: 500; }
         
         .header-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .cart-btn, .whatsapp-btn, .lang-btn { background-color: #fff; color: #111; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.85rem; border: 1px solid #ddd; white-space: nowrap; cursor: pointer; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: #fff; color: #111; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.85rem; border: 1px solid #ddd; white-space: nowrap; cursor: pointer; position: relative; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .whatsapp-btn { background-color: #25d366; color: #fff; border: none; }
-        .cart-badge { background: #ff5722; color: #fff; border-radius: 50%; padding: 1px 5px; font-size: 0.7rem; position: absolute; top: -5px; right: -5px; }
+        .cart-badge, .wishlist-badge { background: #ff5722; color: #fff; border-radius: 50%; padding: 1px 5px; font-size: 0.7rem; position: absolute; top: -5px; right: -5px; }
 
         .hero { padding: 25px 15px; text-align: center; background: #fff; border-bottom: 1px solid #e0e0e0; }
         .hero h2 { font-size: 1.5rem; color: #111; margin-bottom: 8px; font-weight: 700; }
@@ -71,17 +71,17 @@
         .thumbnails img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 1px solid #ddd; }
         .thumbnails img.active { border-color: #fee600; border-width: 2px; }
 
-        /* نافذة السلة الجانبية */
-        .cart-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: flex-start; }
-        .cart-content { background: #fff; width: 350px; height: 100%; padding: 20px; border-left: 1px solid #ddd; display: flex; flex-direction: column; gap: 15px; box-shadow: -4px 0 15px rgba(0,0,0,0.1); }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .cart-header h3 { color: #111; font-size: 1.1rem; }
-        .close-cart { background: none; border: none; color: #333; font-size: 1.5rem; cursor: pointer; }
-        .cart-items-list { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-        .cart-item-card { background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .cart-item-info h4 { color: #111; font-size: 0.85rem; font-weight: 600; }
-        .cart-item-info p { color: #666; font-size: 0.75rem; }
-        .del-cart-item { background: #ff5722; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+        /* نافذة السلة والمفضلة الجانبية */
+        .cart-modal, .wishlist-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: flex-start; }
+        .cart-content, .wishlist-content { background: #fff; width: 350px; height: 100%; padding: 20px; border-left: 1px solid #ddd; display: flex; flex-direction: column; gap: 15px; box-shadow: -4px 0 15px rgba(0,0,0,0.1); }
+        .cart-header, .wishlist-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .cart-header h3, .wishlist-header h3 { color: #111; font-size: 1.1rem; }
+        .close-cart, .close-wishlist { background: none; border: none; color: #333; font-size: 1.5rem; cursor: pointer; }
+        .cart-items-list, .wishlist-items-list { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .cart-item-card, .wishlist-item-card { background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .cart-item-info h4, .wishlist-item-info h4 { color: #111; font-size: 0.85rem; font-weight: 600; }
+        .cart-item-info p, .wishlist-item-info p { color: #666; font-size: 0.75rem; }
+        .del-cart-item, .del-wishlist-item { background: #ff5722; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
         .checkout-btn { background-color: #fee600; color: #111; border: none; padding: 12px; border-radius: 6px; font-weight: 800; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.95rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .checkout-btn:hover { background-color: #f3dc00; }
 
@@ -114,7 +114,10 @@
         </div>
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
-            <button onclick="toggleCart()" id="cartBtn" class="cart-btn">
+            <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
+                🤍 المفضلة <span id="wishlistCount" class="wishlist-badge">0</span>
+            </button>
+            <button onclick="toggleCart()" class="cart-btn">
                 🛒 السلة <span id="cartCount" class="cart-badge">0</span>
             </button>
             <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">تواصل واتساب</a>
@@ -159,6 +162,19 @@
                     <p id="detDesc" style="color: #444; font-size: 0.9rem; line-height: 1.5; white-space: pre-wrap;"></p>
                     <button id="detAddToCartBtn" class="admin-btn" style="margin-top: auto;">أضف إلى السلة 🛒</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة المفضلة الجانبية -->
+    <div id="wishlistModal" class="wishlist-modal">
+        <div class="wishlist-content">
+            <div class="wishlist-header">
+                <h3>🤍 المنتجات المفضلة</h3>
+                <button onclick="toggleWishlistModal()" class="close-wishlist">&times;</button>
+            </div>
+            <div class="wishlist-items-list" id="wishlistItemsList">
+                <p style="color:#666; text-align:center; margin-top:30px;">قائمة المفضلة فارغة</p>
             </div>
         </div>
     </div>
@@ -301,19 +317,20 @@
 
         function saveWishlist(list) {
             localStorage.setItem('storeWishlist', JSON.stringify(list));
+            renderWishlist();
+            renderProducts();
         }
 
-        function toggleWishlist(id, event) {
+        function toggleWishlist(product, event) {
             event.stopPropagation();
             let wishlist = getWishlist();
-            let index = wishlist.indexOf(id);
+            let index = wishlist.findIndex(item => item.id === product.id);
             if (index > -1) {
                 wishlist.splice(index, 1);
             } else {
-                wishlist.push(id);
+                wishlist.push(product);
             }
             saveWishlist(wishlist);
-            renderProducts();
         }
 
         function renderCategoriesBar() {
@@ -354,10 +371,10 @@
                     imgTag = `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#999; font-size:0.75rem;">بدون صورة</div>`;
                 }
 
-                let isLiked = wishlist.includes(p.id);
+                let isLiked = wishlist.some(item => item.id === p.id);
 
                 card.innerHTML = `
-                    <div class="wishlist-btn ${isLiked ? 'active' : ''}" onclick="toggleWishlist(${p.id}, event)">${isLiked ? '❤️' : '🤍'}</div>
+                    <div class="wishlist-btn ${isLiked ? 'active' : ''}" onclick='toggleWishlist(${JSON.stringify(p)}, event)'>${isLiked ? '❤️' : '🤍'}</div>
                     <div class="card-img-wrap" onclick='openDetailsModal(${JSON.stringify(p)})'>
                         ${imgTag}
                     </div>
@@ -425,6 +442,47 @@
             let cart = getCart();
             cart.splice(index, 1);
             saveCart(cart);
+        }
+
+        function renderWishlist() {
+            let wishlist = getWishlist();
+            let list = document.getElementById('wishlistItemsList');
+            let countBadge = document.getElementById('wishlistCount');
+            
+            countBadge.innerText = wishlist.length;
+            list.innerHTML = '';
+
+            if (wishlist.length === 0) {
+                list.innerHTML = '<p style="color:#666; text-align:center; margin-top:30px;">قائمة المفضلة فارغة</p>';
+                return;
+            }
+
+            wishlist.forEach((item, index) => {
+                let div = document.createElement('div');
+                div.className = 'wishlist-item-card';
+                div.innerHTML = `
+                    <div class="wishlist-item-info">
+                        <h4>${item.title}</h4>
+                        <p>${item.price} ر.س</p>
+                    </div>
+                    <div style="display:flex; gap:5px;">
+                        <button class="add-to-cart-btn" style="padding:4px 8px; font-size:0.75rem;" onclick='addToCart(${JSON.stringify(item)}); toggleWishlistModal();'>أضف للسلة</button>
+                        <button class="del-wishlist-item" onclick="removeWishlistIndex(${index})">حذف</button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function removeWishlistIndex(index) {
+            let wishlist = getWishlist();
+            wishlist.splice(index, 1);
+            saveWishlist(wishlist);
+        }
+
+        function toggleWishlistModal() {
+            let modal = document.getElementById('wishlistModal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
         }
 
         function openDetailsModal(p) {
@@ -671,6 +729,7 @@
         renderCategoriesBar();
         renderProducts();
         renderCart();
+        renderWishlist();
         updateCategorySelectOptions();
     </script>
 </body>
