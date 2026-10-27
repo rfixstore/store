@@ -630,6 +630,7 @@
 
             footer.style.display = 'block';
             let cartTextDetails = "";
+            let storeLink = window.location.href;
 
             cart.forEach((item, index) => {
                 cartTextDetails += `- ${item.title} (${item.price} ر.س)\n`;
@@ -645,7 +646,7 @@
                 list.appendChild(div);
             });
 
-            let fullMsg = encodeURIComponent(`السلام عليكم، أرغب في طلب المنتجات التالية:\n\n${cartTextDetails}`);
+            let fullMsg = encodeURIComponent(`السلام عليكم، أرغب في طلب المنتجات التالية:\n\n${cartTextDetails}\nرابط المتجر:\n${storeLink}`);
             document.getElementById('checkoutWhatsappBtn').href = `https://wa.me/966556843732?text=${fullMsg}`;
         }
 
