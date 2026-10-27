@@ -630,10 +630,13 @@
 
             footer.style.display = 'block';
             let cartTextDetails = "";
-            let storeLink = window.location.href;
+            let baseUrl = window.location.href.split('?')[0];
 
             cart.forEach((item, index) => {
-                cartTextDetails += `- ${item.title} (${item.price} ر.س)\n`;
+                // توليد رابط مباشر خاص بالمنتج مع معرّفه (ID)
+                let itemDirectLink = `${baseUrl}?product_id=${item.id}`;
+                cartTextDetails += `📦 المنتج: ${item.title}\n💰 السعر: ${item.price} ر.س\n🔗 رابط الإعلان المباشر:\n${itemDirectLink}\n------------------\n`;
+                
                 let div = document.createElement('div');
                 div.className = 'cart-item-card';
                 div.innerHTML = `
@@ -646,8 +649,24 @@
                 list.appendChild(div);
             });
 
-            let fullMsg = encodeURIComponent(`السلام عليكم، أرغب في طلب المنتجات التالية:\n\n${cartTextDetails}\nرابط المتجر:\n${storeLink}`);
+            let fullMsg = encodeURIComponent(`السلام عليكم، أرغب في طلب المنتجات التالية:\n\n${cartTextDetails}`);
             document.getElementById('checkoutWhatsappBtn').href = `https://wa.me/966556843732?text=${fullMsg}`;
+        }
+
+        // فحص ما إذا فتح الزبون رابط منتج معين ليتم فتح تفاصيله تلقائياً
+        function checkURLForProduct() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('product_id');
+            if (productId) {
+                getProducts(products => {
+                    if (products && Array.isArray(products)) {
+                        let targetProduct = products.find(p => p.id == productId);
+                        if (targetProduct) {
+                            openDetailsModal(targetProduct);
+                        }
+                    }
+                });
+            }
         }
 
         function removeFromCart(index) {
@@ -968,6 +987,7 @@
         renderCart();
         renderWishlist();
         updateCategorySelectOptions();
+        checkURLForProduct(); // التحقق إذا كان الرابط يحتوي على منتج مباشر فتحه تلقائياً
     </script>
 </body>
 </html>
