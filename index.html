@@ -409,15 +409,11 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // جلب الأقسام مع منع عودتها تلقائياً عند الحذف
+        // جلب الأقسام
         function getCategories(callback) {
             db.ref('categories').once('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) {
-                    callback(data);
-                } else {
-                    callback({});
-                }
+                callback(data ? data : {});
             });
         }
 
@@ -429,16 +425,36 @@
             });
         }
 
-        // جلب المنتجات مع منع عودتها تلقائياً عند الحذف
+        // جلب المنتجات مع الفحص والتنظيف التلقائي للسلة والمفضلة
         function getProducts(callback) {
             db.ref('products').once('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) {
-                    callback(data);
-                } else {
-                    callback([]);
-                }
+                const productsArray = data ? data : [];
+                
+                // تنظيف تلقائي للسلة والمفضلة من أي منتج تم حذفه من قاعدة البيانات
+                cleanupCartAndWishlist(productsArray);
+
+                callback(productsArray);
             });
+        }
+
+        // دالة تنظيف السلة والمفضلة من المنتجات المحذوفة
+        function cleanupCartAndWishlist(serverProducts) {
+            let cart = getCart();
+            let wishlist = getWishlist();
+
+            let validCart = cart.filter(cartItem => serverProducts.some(p => p.id == cartItem.id));
+            let validWishlist = wishlist.filter(wishItem => serverProducts.some(p => p.id == wishItem.id));
+
+            if (validCart.length !== cart.length) {
+                localStorage.setItem('storeCart', JSON.stringify(validCart));
+                renderCart();
+            }
+
+            if (validWishlist.length !== wishlist.length) {
+                localStorage.setItem('storeWishlist', JSON.stringify(validWishlist));
+                renderWishlist();
+            }
         }
 
         function saveProductsToCloud(products) {
@@ -633,7 +649,6 @@
             let baseUrl = window.location.href.split('?')[0];
 
             cart.forEach((item, index) => {
-                // توليد رابط مباشر خاص بالمنتج لتضمنه في رسالة الواتساب للتاكيد والضمان
                 let itemDirectLink = `${baseUrl}?product_id=${item.id}`;
                 cartTextDetails += `📦 المنتج: ${item.title} (${item.price} ر.س)\n🔗 رابط الإعلان: ${itemDirectLink}\n------------------\n`;
                 
@@ -653,7 +668,6 @@
             document.getElementById('checkoutWhatsappBtn').href = `https://wa.me/966556843732?text=${fullMsg}`;
         }
 
-        // فحص الرابط عند فتح الموقع لعرض تفاصيل المنتج المباشر تلقائياً
         function checkURLForProduct() {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('product_id');
@@ -971,7 +985,7 @@
                 document.documentElement.dir = 'rtl';
                 document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة الأجهزة';
                 document.getElementById('txt-logo-sub').innerText = 'صيانة أجهزة • خدمات رقمية وحكومية';
-                document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
+                document.getElementById('txt-hero-title').innerText, document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
                 document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
                 document.getElementById('txt-cat-title').innerText = 'الأقسام:';
                 document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
@@ -981,7 +995,7 @@
             }
         }
 
-        // تشغيل واجهة المتجر وجلب البيانات السحابية مباشرة
+        // تشغيل واجهة المتجر وجلب البيانات السحابية مع التنظيف التلقائي
         renderCategoriesBar();
         renderProducts();
         renderCart();
