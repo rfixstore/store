@@ -20,7 +20,7 @@
             padding: 0;
         }
         
-        /* هيدر مرتب ومحكم يمنع خروج العناصر */
+        /* هيدر متناسق وممتد من الحافة للحافة */
         header { 
             background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); 
             padding: 15px; 
@@ -56,14 +56,16 @@
         .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
-        /* صف الأزرار السريعة داخل الهيدر بانتظام */
-        .header-left { display: flex; align-items: center; gap: 6px; overflow-x: auto; width: 100%; padding-bottom: 2px; }
-        .header-left::-webkit-scrollbar { display: none; } /* إخفاء شريط التمرير للأزرار */
+        /* الأزرار العلوية مع إعطاء مساحة كافية للعدادات لإظهارها بشكل كامل */
+        .header-left { display: flex; align-items: center; gap: 8px; overflow-x: auto; width: 100%; padding: 6px 2px 2px 2px; }
+        .header-left::-webkit-scrollbar { display: none; }
 
-        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.78rem; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; cursor: pointer; position: relative; backdrop-filter: blur(5px); transition: 0.2s; flex-shrink: 0; }
+        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.78rem; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; cursor: pointer; position: relative; backdrop-filter: blur(5px); transition: 0.2s; flex-shrink: 0; }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
         .whatsapp-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
-        .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 1px 5px; font-size: 0.65rem; position: absolute; top: -5px; right: -5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        
+        /* تعديل الشارات (العدادات) لتبان واضحة وبدقة بدون قص */
+        .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 2px 6px; font-size: 0.68rem; position: absolute; top: -8px; right: -6px; box-shadow: 0 2px 4px rgba(0,0,0,0.3); font-weight: bold; z-index: 5; }
 
         .hero { padding: 25px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); width: 100%; }
         .hero h2 { font-size: 1.35rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
@@ -189,16 +191,16 @@
             <div id="searchSuggestions" class="search-suggestions"></div>
         </div>
 
-        <!-- الأزرار السريعة مرتبة داخل الهيدر تماماً -->
+        <!-- الأزرار السريعة: ترتيب دقيق (EN، المفضلة، السلة، ويزينهم زر الواتساب كآخر زر على اليسار) مع ظهور العدادات بوضوح -->
         <div class="header-left">
-            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">تواصل واتساب</a>
-            <button onclick="toggleCart()" class="cart-btn">
-                🛒 السلة <span id="cartCount" class="cart-badge">0</span>
-            </button>
+            <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
             <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
                 🤍 المفضلة <span id="wishlistCount" class="wishlist-badge">0</span>
             </button>
-            <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
+            <button onclick="toggleCart()" class="cart-btn">
+                🛒 السلة <span id="cartCount" class="cart-badge">0</span>
+            </button>
+            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">تواصل واتساب</a>
         </div>
     </header>
 
