@@ -56,7 +56,7 @@
         .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
-        /* شريط الأزرار: ترتيب مرن يضمن وضع زر الواتساب أقصى اليسار وباقي الأزرار بجانبه */
+        /* شريط الأزرار */
         .header-left { 
             display: flex; 
             align-items: center; 
@@ -90,7 +90,7 @@
         }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
         
-        /* زر الواتساب الأخضر في أقصى اليسار تماماً */
+        /* زر الواتساب في أقصى اليسار تماماً */
         .whatsapp-btn { 
             background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
             color: #fff; 
@@ -100,7 +100,7 @@
         }
         .whatsapp-btn:hover { background: linear-gradient(135deg, #059669 100%, #047857 100%); }
         
-        /* ضبط العدادات لتظهر بوضوح تام فوق الأزرار */
+        /* العدادات */
         .cart-badge, .wishlist-badge { 
             background: #ef4444; 
             color: #fff; 
@@ -219,6 +219,9 @@
         .admin-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
         .item-row { background: #f8fafc; padding: 9px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .del-btn { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
+
+        /* نافذة التنبيهات المخصصة النظيفة والمصممة خصيصاً للمتجر */
+        .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 0.88rem; z-index: 2000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
     </style>
 </head>
 <body>
@@ -239,7 +242,7 @@
             <div id="searchSuggestions" class="search-suggestions"></div>
         </div>
 
-        <!-- أزرار الهيدر مرتبة: EN، المفضلة، السلة، وزر الواتساب في أقصى اليسار تماماً -->
+        <!-- أزرار الهيدر -->
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
             <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
@@ -266,6 +269,9 @@
     <h3 class="section-title" id="txt-products-title">المنتجات والخدمات المعروضة</h3>
 
     <div class="grid" id="productsGrid"></div>
+
+    <!-- تنبيه مخصص يظهر أسفل الشاشة بشكل فخم بدلاً من رسائل المتصفح المزعجة -->
+    <div id="customToast" class="custom-toast">رسالة تنبيه</div>
 
     <!-- تذييل الصفحة -->
     <footer class="site-footer">
@@ -418,6 +424,15 @@
             { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', price: '150', badge: 'خدمات حكومية', images: [], desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
         ];
 
+        function showToast(message) {
+            let toast = document.getElementById('customToast');
+            toast.innerText = message;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+
         function getCategories() {
             const saved = localStorage.getItem('storeCategories');
             return saved ? JSON.parse(saved) : defaultCategories;
@@ -468,8 +483,10 @@
             let index = wishlist.findIndex(item => item.id === product.id);
             if (index > -1) {
                 wishlist.splice(index, 1);
+                showToast('تمت الإزالة من المفضلة');
             } else {
                 wishlist.push(product);
+                showToast('تمت الإضافة إلى المفضلة 🤍');
             }
             saveWishlist(wishlist);
         }
@@ -581,7 +598,7 @@
             let cart = getCart();
             cart.push(p);
             saveCart(cart);
-            alert(`تمت إضافة "${p.title}" إلى السلة بنجاح!`);
+            showToast(`تمت إضافة "${p.title}" إلى السلة 🛒`);
         }
 
         function renderCart() {
@@ -624,6 +641,7 @@
             let cart = getCart();
             cart.splice(index, 1);
             saveCart(cart);
+            showToast('تم حذف المنتج من السلة');
         }
 
         function renderWishlist() {
@@ -759,14 +777,13 @@
             cats.push({ id: 'cat-' + Date.now(), name: nameInput });
             saveCategories(cats);
             this.reset();
-            alert('تمت إضافة القسم بنجاح!');
+            showToast('تمت إضافة القسم بنجاح ✔️');
         });
 
         function deleteCategory(id) {
-            if (confirm('هل أنت تأكد من حذف هذا القسم؟')) {
-                let cats = getCategories().filter(c => c.id !== id);
-                saveCategories(cats);
-            }
+            let cats = getCategories().filter(c => c.id !== id);
+            saveCategories(cats);
+            showToast('تم حذف القسم بنجاح');
         }
 
         document.getElementById('addProductForm').addEventListener('submit', function(e) {
@@ -807,14 +824,13 @@
             products.push(newProduct);
             saveProducts(products);
             document.getElementById('addProductForm').reset();
-            alert('تمت إضافة المنتج بنجاح!');
+            showToast('تمت إضافة المنتج بنجاح ✔️');
         }
 
         function deleteProduct(id) {
-            if (confirm('هل متأكد من حذف هذا المنتج؟')) {
-                let products = getProducts().filter(p => p.id !== id);
-                saveProducts(products);
-            }
+            let products = getProducts().filter(p => p.id !== id);
+            saveProducts(products);
+            showToast('تم حذف المنتج بنجاح');
         }
 
         let count = 0;
@@ -846,7 +862,7 @@
                 closePasswordModal();
                 toggleAdminModal();
             } else {
-                alert("رمز الدخول غير صحيح!");
+                showToast('رمز الدخول غير صحيح!');
                 document.getElementById('adminPassInput').value = '';
             }
         }
