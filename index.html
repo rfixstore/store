@@ -633,15 +633,15 @@
             let baseUrl = window.location.href.split('?')[0];
 
             cart.forEach((item, index) => {
-                // توليد رابط مباشر خاص بالمنتج مع معرّفه (ID)
+                // توليد رابط مباشر خاص بالمنتج لتضمنه في رسالة الواتساب للتاكيد والضمان
                 let itemDirectLink = `${baseUrl}?product_id=${item.id}`;
-                cartTextDetails += `📦 المنتج: ${item.title}\n💰 السعر: ${item.price} ر.س\n🔗 رابط الإعلان المباشر:\n${itemDirectLink}\n------------------\n`;
+                cartTextDetails += `📦 المنتج: ${item.title} (${item.price} ر.س)\n🔗 رابط الإعلان: ${itemDirectLink}\n------------------\n`;
                 
                 let div = document.createElement('div');
                 div.className = 'cart-item-card';
                 div.innerHTML = `
                     <div class="cart-item-info">
-                        <h4>${item.title}</h4>
+                        <h4 style="cursor:pointer; color:#2563eb;" onclick='openDetailsModal(${JSON.stringify(item)})'>${item.title} 🔍</h4>
                         <p>${item.price} ر.س</p>
                     </div>
                     <button class="del-cart-item" onclick="removeFromCart(${index})">حذف</button>
@@ -653,7 +653,7 @@
             document.getElementById('checkoutWhatsappBtn').href = `https://wa.me/966556843732?text=${fullMsg}`;
         }
 
-        // فحص ما إذا فتح الزبون رابط منتج معين ليتم فتح تفاصيله تلقائياً
+        // فحص الرابط عند فتح الموقع لعرض تفاصيل المنتج المباشر تلقائياً
         function checkURLForProduct() {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('product_id');
@@ -987,7 +987,7 @@
         renderCart();
         renderWishlist();
         updateCategorySelectOptions();
-        checkURLForProduct(); // التحقق إذا كان الرابط يحتوي على منتج مباشر فتحه تلقائياً
+        checkURLForProduct();
     </script>
 </body>
 </html>
