@@ -7,17 +7,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-        body { background-color: #f0f4f8; color: #1e293b; min-height: 100vh; display: flex; flex-direction: column; }
         
-        /* هيدر بنمط تقني فخم بالأزرق الملكي */
-        header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15); border-bottom: 2px solid #3b82f6; }
+        /* تعديل الجذر والجسم لضمان امتداد كامل بدون فراغات جانبية بيضاء */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            background-color: #f0f4f8;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* هيدر بنمط تقني فخم بالأزرق الملكي يمتد من الحافة للحافة */
+        header { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); 
+            padding: 14px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15); 
+            border-bottom: 2px solid #3b82f6; 
+            width: 100%;
+            margin: 0;
+        }
         .logo { cursor: pointer; user-select: none; }
         .logo h1 { font-size: 1.2rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
         .logo p { font-size: 0.75rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
         
         /* شريط البحث في الهيدر */
         .search-container { position: relative; flex-grow: 1; max-width: 450px; margin: 0 15px; }
-        .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: 40px; }
+        .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: 40px; width: 100%; }
         .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.9rem; color: #0f172a; text-align: right; }
         .search-box input::placeholder { color: #94a3b8; }
         .search-icon { color: #64748b; font-size: 1.1rem; cursor: pointer; }
@@ -33,7 +57,7 @@
         .whatsapp-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
         .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 1px 6px; font-size: 0.7rem; position: absolute; top: -6px; right: -6px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
-        .hero { padding: 25px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .hero { padding: 25px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); width: 100%; }
         .hero h2 { font-size: 1.5rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
         .hero p { color: #64748b; font-size: 0.92rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
         
@@ -49,7 +73,6 @@
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
         }
-        /* إخفاء شريط التمرير الافتراضي لكن مع إبقاء الإمكانية */
         .categories-grid::-webkit-scrollbar { height: 6px; }
         .categories-grid::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
         .categories-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -62,7 +85,7 @@
         .section-title { padding: 18px 15px 6px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.2rem; color: #0f172a; font-weight: 800; }
         
         /* شبكة المنتجات */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 14px; padding: 12px; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 14px; padding: 12px 15px; max-width: 1200px; margin: 0 auto; width: 100%; }
         .card { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: 0.25s; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
         .card:hover { box-shadow: 0 8px 20px rgba(30, 58, 138, 0.08); transform: translateY(-3px); border-color: #cbd5e1; }
         
@@ -88,8 +111,8 @@
         .add-to-cart-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
         .badge { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; width: fit-content; font-weight: 700; }
 
-        /* تذييل الصفحة (Footer) - تواصل معنا */
-        .site-footer { background: #0f172a; color: #94a3b8; padding: 30px 20px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; }
+        /* تذييل الصفحة (Footer) */
+        .site-footer { background: #0f172a; color: #94a3b8; padding: 30px 20px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; width: 100%; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .footer-title { color: #ffffff; font-size: 1.1rem; font-weight: 700; }
         .footer-social { display: flex; gap: 15px; align-items: center; justify-content: center; }
@@ -456,7 +479,6 @@
             });
         }
 
-        /* دالة البحث التفاعلي واظهار الاقتراحات (بدون سعر) */
         function handleSearchInput() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
             const suggestionsBox = document.getElementById('searchSuggestions');
@@ -470,10 +492,8 @@
 
             const matched = products.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
 
-            // تصفية المنتجات في الصفحة مباشرة
             renderProducts(matched);
 
-            // عرض الاقتراحات المنسدلة (اسم المنتج فقط بدون سعر)
             if (matched.length > 0) {
                 suggestionsBox.innerHTML = '';
                 matched.forEach(item => {
@@ -494,7 +514,6 @@
             }
         }
 
-        // إخفاء صندوق الاقتراحات عند النقر خارجه
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.search-container')) {
                 document.getElementById('searchSuggestions').style.display = 'none';
