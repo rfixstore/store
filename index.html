@@ -427,11 +427,9 @@
                 const data = snapshot.val();
                 if (data) {
                     callback(data);
-                } else {
-                    db.ref('categories').set(defaultCategories);
-                    callback(defaultCategories);
-                }
-            });
+              } else {
+        callback({});
+    }
         }
 
         function saveCategoriesToCloud(cats) {
