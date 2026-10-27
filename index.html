@@ -37,11 +37,25 @@
         .hero h2 { font-size: 1.5rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
         .hero p { color: #64748b; font-size: 0.92rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
         
-        /* شريط الأقسام */
+        /* شريط الأقسام القابل للتمرير يمين ويسار */
         .categories-container { max-width: 1200px; margin: 18px auto 5px; padding: 0 15px; width: 100%; }
         .categories-title { font-size: 1rem; color: #334155; margin-bottom: 10px; font-weight: bold; }
-        .categories-grid { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; flex-wrap: wrap; }
-        .category-btn { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 7px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+        .categories-grid { 
+            display: flex; 
+            gap: 10px; 
+            overflow-x: auto; 
+            padding-bottom: 8px; 
+            white-space: nowrap; 
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* إخفاء شريط التمرير الافتراضي لكن مع إبقاء الإمكانية */
+        .categories-grid::-webkit-scrollbar { height: 6px; }
+        .categories-grid::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
+        .categories-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .categories-grid::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .category-btn { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 8px 18px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
         .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #93c5fd; }
         .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25); }
 
@@ -73,6 +87,15 @@
         .add-to-cart-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 7px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.82rem; flex-grow: 1; transition: 0.2s; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2); }
         .add-to-cart-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
         .badge { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; width: fit-content; font-weight: 700; }
+
+        /* تذييل الصفحة (Footer) - تواصل معنا */
+        .site-footer { background: #0f172a; color: #94a3b8; padding: 30px 20px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .footer-title { color: #ffffff; font-size: 1.1rem; font-weight: 700; }
+        .footer-social { display: flex; gap: 15px; align-items: center; justify-content: center; }
+        .social-icon-btn { background: #25d366; color: #ffffff; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); transition: 0.2s; }
+        .social-icon-btn:hover { background: #22bf5b; transform: translateY(-2px); }
+        .footer-copy { font-size: 0.8rem; color: #64748b; margin-top: 10px; }
 
         /* نافذة تفاصيل الإعلان */
         .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
@@ -154,7 +177,7 @@
         <p id="txt-hero-desc">عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.</p>
     </div>
 
-    <!-- شريط الأقسام -->
+    <!-- شريط الأقسام القابل للتمرير يمين ويسار -->
     <div class="categories-container">
         <div class="categories-title" id="txt-cat-title">الأقسام:</div>
         <div class="categories-grid" id="categoriesBar"></div>
@@ -163,6 +186,19 @@
     <h3 class="section-title" id="txt-products-title">المنتجات والخدمات المعروضة</h3>
 
     <div class="grid" id="productsGrid"></div>
+
+    <!-- تذييل الصفحة (Footer) - تواصل معنا -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h4 class="footer-title">تواصل معنا</h4>
+            <div class="footer-social">
+                <a href="https://wa.me/966556843732" target="_blank" class="social-icon-btn">
+                    💬 مراسلة واتساب 
+                </a>
+            </div>
+            <p class="footer-copy">جميع الحقوق محفوظة © المتخصصون في صيانة الأجهزة</p>
+        </div>
+    </footer>
 
     <!-- نافذة تفاصيل الإعلان -->
     <div id="detailsModal" class="details-modal">
