@@ -20,7 +20,6 @@
             padding: 0;
         }
         
-        /* الهيدر الأزرق الممتد والمنظم */
         header { 
             background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); 
             padding: 15px; 
@@ -44,19 +43,16 @@
         .logo h1 { font-size: 1.1rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
         .logo p { font-size: 0.72rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
         
-        /* شريط البحث */
         .search-container { position: relative; width: 100%; }
         .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: 40px; width: 100%; }
         .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.9rem; color: #0f172a; text-align: right; }
         .search-box input::placeholder { color: #94a3b8; }
         .search-icon { color: #64748b; font-size: 1.1rem; cursor: pointer; }
         
-        /* قائمة الاقتراحات للبحث */
         .search-suggestions { display: none; position: absolute; top: 45px; left: 0; right: 0; background: #ffffff; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); z-index: 1400; max-height: 250px; overflow-y: auto; border: 1px solid #e2e8f0; }
         .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
-        /* شريط الأزرار */
         .header-left { 
             display: flex; 
             align-items: center; 
@@ -90,7 +86,6 @@
         }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
         
-        /* زر الواتساب في أقصى اليسار تماماً */
         .whatsapp-btn { 
             background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
             color: #fff; 
@@ -100,7 +95,6 @@
         }
         .whatsapp-btn:hover { background: linear-gradient(135deg, #059669 100%, #047857 100%); }
         
-        /* العدادات */
         .cart-badge, .wishlist-badge { 
             background: #ef4444; 
             color: #fff; 
@@ -120,7 +114,6 @@
         .hero h2 { font-size: 1.35rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
         .hero p { color: #64748b; font-size: 0.88rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
         
-        /* شريط الأقسام */
         .categories-container { max-width: 1200px; margin: 18px auto 5px; padding: 0 15px; width: 100%; }
         .categories-title { font-size: 1rem; color: #334155; margin-bottom: 10px; font-weight: bold; }
         .categories-grid { 
@@ -136,13 +129,12 @@
         .categories-grid::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
         .categories-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-        .category-btn { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 8px 18px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+        .category-btn { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 8px 20px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); min-width: max-content; }
         .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #93c5fd; }
         .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25); }
 
         .section-title { padding: 18px 15px 6px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.15rem; color: #0f172a; font-weight: 800; }
         
-        /* شبكة المنتجات */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 14px; padding: 12px 15px; max-width: 1200px; margin: 0 auto; width: 100%; }
         .card { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: 0.25s; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
         .card:hover { box-shadow: 0 8px 20px rgba(30, 58, 138, 0.08); transform: translateY(-3px); border-color: #cbd5e1; }
@@ -168,7 +160,6 @@
         .add-to-cart-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
         .badge { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; width: fit-content; font-weight: 700; }
 
-        /* تذييل الصفحة */
         .site-footer { background: #0f172a; color: #94a3b8; padding: 30px 20px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; width: 100%; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .footer-title { color: #ffffff; font-size: 1.1rem; font-weight: 700; }
@@ -177,7 +168,6 @@
         .social-icon-btn:hover { background: #22bf5b; transform: translateY(-2px); }
         .footer-copy { font-size: 0.8rem; color: #64748b; margin-top: 10px; }
 
-        /* نوافذ التفاعل */
         .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .details-box { background: #ffffff; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .details-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -220,7 +210,6 @@
         .item-row { background: #f8fafc; padding: 9px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .del-btn { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
 
-        /* نافذة التنبيهات المخصصة النظيفة والمصممة خصيصاً للمتجر */
         .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 0.88rem; z-index: 2000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
     </style>
 </head>
@@ -233,7 +222,6 @@
             </div>
         </div>
 
-        <!-- شريط البحث الذكي -->
         <div class="search-container">
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="ما الذي تبحث عنه؟" oninput="handleSearchInput()" autocomplete="off">
@@ -242,7 +230,6 @@
             <div id="searchSuggestions" class="search-suggestions"></div>
         </div>
 
-        <!-- أزرار الهيدر -->
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
             <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
@@ -260,7 +247,6 @@
         <p id="txt-hero-desc">عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.</p>
     </div>
 
-    <!-- شريط الأقسام -->
     <div class="categories-container">
         <div class="categories-title" id="txt-cat-title">الأقسام:</div>
         <div class="categories-grid" id="categoriesBar"></div>
@@ -270,10 +256,8 @@
 
     <div class="grid" id="productsGrid"></div>
 
-    <!-- تنبيه مخصص يظهر أسفل الشاشة بشكل فخم بدلاً من رسائل المتصفح المزعجة -->
     <div id="customToast" class="custom-toast">رسالة تنبيه</div>
 
-    <!-- تذييل الصفحة -->
     <footer class="site-footer">
         <div class="footer-content">
             <h4 class="footer-title">تواصل معنا</h4>
@@ -286,7 +270,6 @@
         </div>
     </footer>
 
-    <!-- نافذة تفاصيل الإعلان -->
     <div id="detailsModal" class="details-modal">
         <div class="details-box">
             <div class="admin-header">
@@ -313,7 +296,6 @@
         </div>
     </div>
 
-    <!-- نافذة المفضلة الجانبية -->
     <div id="wishlistModal" class="wishlist-modal">
         <div class="wishlist-content">
             <div class="wishlist-header">
@@ -326,7 +308,6 @@
         </div>
     </div>
 
-    <!-- نافذة السلة -->
     <div id="cartModal" class="cart-modal">
         <div class="cart-content">
             <div class="cart-header">
@@ -342,7 +323,6 @@
         </div>
     </div>
 
-    <!-- نافذة إدخال الرمز السرية -->
     <div id="passModal" class="pass-modal">
         <div class="pass-box">
             <h3>🔒 لوحة التحكم السرية</h3>
@@ -353,7 +333,6 @@
         </div>
     </div>
 
-    <!-- نافذة لوحة التحكم -->
     <div id="adminModal" class="admin-modal">
         <div class="admin-box">
             <div class="admin-header">
@@ -409,7 +388,18 @@
         </div>
     </div>
 
+    <!-- استدعاء مكتبة Firebase السحابية المجانية -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
     <script>
+        // إعدادات قاعدة البيانات السحابية الخاصة بمتجرك
+        const firebaseConfig = {
+            databaseURL: "https://rfixstore-default-rtdb.firebaseio.com/"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         const ADMIN_PASSWORD = "3732";
 
         const defaultCategories = [
@@ -428,32 +418,47 @@
             let toast = document.getElementById('customToast');
             toast.innerText = message;
             toast.style.display = 'block';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 2500);
+            setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        function getCategories() {
-            const saved = localStorage.getItem('storeCategories');
-            return saved ? JSON.parse(saved) : defaultCategories;
+        // جلب البيانات من السحابة بشكل مباشر ومزامن لكل الأجهزة فوراً
+        function getCategories(callback) {
+            db.ref('categories').once('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    callback(data);
+                } else {
+                    db.ref('categories').set(defaultCategories);
+                    callback(defaultCategories);
+                }
+            });
         }
 
-        function saveCategories(cats) {
-            localStorage.setItem('storeCategories', JSON.stringify(cats));
-            renderCategoriesBar();
-            renderAdminCats();
-            updateCategorySelectOptions();
+        function saveCategoriesToCloud(cats) {
+            db.ref('categories').set(cats).then(() => {
+                renderCategoriesBar();
+                renderAdminCats();
+                updateCategorySelectOptions();
+            });
         }
 
-        function getProducts() {
-            const saved = localStorage.getItem('storeProducts');
-            return saved ? JSON.parse(saved) : defaultProducts;
+        function getProducts(callback) {
+            db.ref('products').once('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    callback(data);
+                } else {
+                    db.ref('products').set(defaultProducts);
+                    callback(defaultProducts);
+                }
+            });
         }
 
-        function saveProducts(products) {
-            localStorage.setItem('storeProducts', JSON.stringify(products));
-            renderProducts();
-            renderAdminProducts();
+        function saveProductsToCloud(products) {
+            db.ref('products').set(products).then(() => {
+                renderProducts();
+                renderAdminProducts();
+            });
         }
 
         function getCart() {
@@ -474,7 +479,9 @@
         function saveWishlist(list) {
             localStorage.setItem('storeWishlist', JSON.stringify(list));
             renderWishlist();
-            renderProducts();
+            getCategories(cats => {
+                getProducts(prods => renderProductsList(prods, list));
+            });
         }
 
         function toggleWishlist(product, event) {
@@ -492,26 +499,36 @@
         }
 
         function renderCategoriesBar() {
-            const cats = getCategories();
-            const container = document.getElementById('categoriesBar');
-            container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)" id="cat-all">الكل</button>';
+            getCategories(cats => {
+                const container = document.getElementById('categoriesBar');
+                container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)" id="cat-all">الكل</button>';
 
-            cats.forEach(c => {
-                const btn = document.createElement('button');
-                btn.className = 'category-btn';
-                btn.innerText = c.name;
-                btn.onclick = function() { filterCategory(c.id, btn); };
-                container.appendChild(btn);
+                cats.forEach(c => {
+                    const btn = document.createElement('button');
+                    btn.className = 'category-btn';
+                    btn.innerText = c.name;
+                    btn.onclick = function() { filterCategory(c.id, btn); };
+                    container.appendChild(btn);
+                });
             });
         }
 
         function renderProducts(filterList = null) {
-            const products = filterList || getProducts();
             const wishlist = getWishlist();
+            if (filterList) {
+                renderProductsList(filterList, wishlist);
+            } else {
+                getProducts(products => {
+                    renderProductsList(products, wishlist);
+                });
+            }
+        }
+
+        function renderProductsList(products, wishlist) {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
 
-            if (products.length === 0) {
+            if (!products || products.length === 0) {
                 grid.innerHTML = '<p style="color:#64748b; text-align:center; grid-column: 1/-1;">لا توجد منتجات مطابقة لبحثك.</p>';
                 return;
             }
@@ -556,36 +573,36 @@
         function handleSearchInput() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
             const suggestionsBox = document.getElementById('searchSuggestions');
-            const products = getProducts();
+            
+            getProducts(products => {
+                if (query === '') {
+                    suggestionsBox.style.display = 'none';
+                    renderProducts(products);
+                    return;
+                }
 
-            if (query === '') {
-                suggestionsBox.style.display = 'none';
-                renderProducts();
-                return;
-            }
+                const matched = products.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+                renderProducts(matched);
 
-            const matched = products.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
-
-            renderProducts(matched);
-
-            if (matched.length > 0) {
-                suggestionsBox.innerHTML = '';
-                matched.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'suggestion-item';
-                    div.innerText = item.title;
-                    div.onclick = function() {
-                        document.getElementById('searchInput').value = item.title;
-                        suggestionsBox.style.display = 'none';
-                        openDetailsModal(item);
-                    };
-                    suggestionsBox.appendChild(div);
-                });
-                suggestionsBox.style.display = 'block';
-            } else {
-                suggestionsBox.innerHTML = '<div style="padding:10px; color:#64748b; text-align:center;">لا توجد نتائج مطابقة</div>';
-                suggestionsBox.style.display = 'block';
-            }
+                if (matched.length > 0) {
+                    suggestionsBox.innerHTML = '';
+                    matched.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'suggestion-item';
+                        div.innerText = item.title;
+                        div.onclick = function() {
+                            document.getElementById('searchInput').value = item.title;
+                            suggestionsBox.style.display = 'none';
+                            openDetailsModal(item);
+                        };
+                        suggestionsBox.appendChild(div);
+                    });
+                    suggestionsBox.style.display = 'block';
+                } else {
+                    suggestionsBox.innerHTML = '<div style="padding:10px; color:#64748b; text-align:center;">لا توجد نتائج مطابقة</div>';
+                    suggestionsBox.style.display = 'block';
+                }
+            });
         }
 
         document.addEventListener('click', function(e) {
@@ -727,63 +744,69 @@
         }
 
         function updateCategorySelectOptions() {
-            const cats = getCategories();
-            const select = document.getElementById('pCategory');
-            select.innerHTML = '';
-            cats.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.id;
-                opt.innerText = c.name;
-                select.appendChild(opt);
+            getCategories(cats => {
+                const select = document.getElementById('pCategory');
+                select.innerHTML = '';
+                cats.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.innerText = c.name;
+                    select.appendChild(opt);
+                });
             });
         }
 
         function renderAdminCats() {
-            const cats = getCategories();
-            const list = document.getElementById('adminCatsList');
-            list.innerHTML = '';
+            getCategories(cats => {
+                const list = document.getElementById('adminCatsList');
+                list.innerHTML = '';
 
-            cats.forEach(c => {
-                const row = document.createElement('div');
-                row.className = 'item-row';
-                row.innerHTML = `
-                    <span style="font-size: 0.8rem; color:#0f172a;">${c.name}</span>
-                    <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
-                `;
-                list.appendChild(row);
+                cats.forEach(c => {
+                    const row = document.createElement('div');
+                    row.className = 'item-row';
+                    row.innerHTML = `
+                        <span style="font-size: 0.8rem; color:#0f172a;">${c.name}</span>
+                        <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
+                    `;
+                    list.appendChild(row);
+                });
             });
         }
 
         function renderAdminProducts() {
-            const products = getProducts();
-            const list = document.getElementById('adminItemsList');
-            list.innerHTML = '';
+            getProducts(products => {
+                const list = document.getElementById('adminItemsList');
+                list.innerHTML = '';
 
-            products.forEach(p => {
-                const row = document.createElement('div');
-                row.className = 'item-row';
-                row.innerHTML = `
-                    <span style="font-size: 0.8rem; color:#0f172a;">${p.title}</span>
-                    <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
-                `;
-                list.appendChild(row);
+                products.forEach(p => {
+                    const row = document.createElement('div');
+                    row.className = 'item-row';
+                    row.innerHTML = `
+                        <span style="font-size: 0.8rem; color:#0f172a;">${p.title}</span>
+                        <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
+                    `;
+                    list.appendChild(row);
+                });
             });
         }
 
         document.getElementById('addCategoryForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const cats = getCategories();
             const nameInput = document.getElementById('catName').value;
-            cats.push({ id: 'cat-' + Date.now(), name: nameInput });
-            saveCategories(cats);
-            this.reset();
-            showToast('تمت إضافة القسم بنجاح ✔️');
+            getCategories(cats => {
+                cats.push({ id: 'cat-' + Date.now(), name: nameInput });
+                saveCategoriesToCloud(cats);
+                this.reset();
+                showToast('تمت إضافة القسم السحابي بنجاح ✔️');
+            });
         });
 
         function deleteCategory(id) {
-            let cats = getCategories().filter(c => c.id !== id);
-            saveCategories(cats);
-            showToast('تم حذف القسم بنجاح');
+            getCategories(cats => {
+                let updatedCats = cats.filter(c => c.id !== id);
+                saveCategoriesToCloud(updatedCats);
+                showToast('تم حذف القسم بنجاح');
+            });
         }
 
         document.getElementById('addProductForm').addEventListener('submit', function(e) {
@@ -800,37 +823,40 @@
                         imagesArray.push(event.target.result);
                         processed++;
                         if (processed === files.length) {
-                            saveNewProduct(imagesArray);
+                            saveNewProductToCloud(imagesArray);
                         }
                     };
                     reader.readAsDataURL(files[i]);
                 }
             } else {
-                saveNewProduct([]);
+                saveNewProductToCloud([]);
             }
         });
 
-        function saveNewProduct(imagesArray) {
-            const products = getProducts();
-            const newProduct = {
-                id: Date.now(),
-                title: document.getElementById('pTitle').value,
-                category: document.getElementById('pCategory').value,
-                price: document.getElementById('pPrice').value,
-                badge: document.getElementById('pBadge').value || 'إكسبرس',
-                images: imagesArray,
-                desc: document.getElementById('pDesc').value
-            };
-            products.push(newProduct);
-            saveProducts(products);
-            document.getElementById('addProductForm').reset();
-            showToast('تمت إضافة المنتج بنجاح ✔️');
+        function saveNewProductToCloud(imagesArray) {
+            getProducts(products => {
+                const newProduct = {
+                    id: Date.now(),
+                    title: document.getElementById('pTitle').value,
+                    category: document.getElementById('pCategory').value,
+                    price: document.getElementById('pPrice').value,
+                    badge: document.getElementById('pBadge').value || 'إكسبرس',
+                    images: imagesArray,
+                    desc: document.getElementById('pDesc').value
+                };
+                products.push(newProduct);
+                saveProductsToCloud(products);
+                document.getElementById('addProductForm').reset();
+                showToast('تمت إضافة المنتج سحابياً بنجاح ✔️');
+            });
         }
 
         function deleteProduct(id) {
-            let products = getProducts().filter(p => p.id !== id);
-            saveProducts(products);
-            showToast('تم حذف المنتج بنجاح');
+            getProducts(products => {
+                let updatedProducts = products.filter(p => p.id !== id);
+                saveProductsToCloud(updatedProducts);
+                showToast('تم حذف المنتج بنجاح');
+            });
         }
 
         let count = 0;
@@ -928,6 +954,7 @@
             }
         }
 
+        // تشغيل واجهة المتجر وجلب البيانات السحابية مباشرة
         renderCategoriesBar();
         renderProducts();
         renderCart();
