@@ -56,22 +56,63 @@
         .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
-        /* الأزرار العلوية مع إعطاء مساحة كافية للعدادات لإظهارها بشكل كامل */
-        .header-left { display: flex; align-items: center; gap: 8px; overflow-x: auto; width: 100%; padding: 6px 2px 2px 2px; }
+        /* شريط الأزرار العلوية بنفس التصميم والمقاس الموحد */
+        .header-left { display: flex; align-items: center; gap: 8px; overflow-x: auto; width: 100%; padding: 8px 4px 4px 4px; }
         .header-left::-webkit-scrollbar { display: none; }
 
-        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.78rem; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; cursor: pointer; position: relative; backdrop-filter: blur(5px); transition: 0.2s; flex-shrink: 0; }
+        /* توحيد المستطيلات تماماً لكل الأزرار */
+        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { 
+            background-color: rgba(255, 255, 255, 0.1); 
+            color: #fff; 
+            padding: 7px 12px; 
+            border-radius: 6px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 0.78rem; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            white-space: nowrap; 
+            cursor: pointer; 
+            position: relative; 
+            backdrop-filter: blur(5px); 
+            transition: 0.2s; 
+            flex-shrink: 0; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 34px;
+        }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
-        .whatsapp-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
         
-        /* تعديل الشارات (العدادات) لتبان واضحة وبدقة بدون قص */
-        .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 2px 6px; font-size: 0.68rem; position: absolute; top: -8px; right: -6px; box-shadow: 0 2px 4px rgba(0,0,0,0.3); font-weight: bold; z-index: 5; }
+        /* زر للتواصل واتساب بنفس المستطيل الخاص بالباقين وبنفس الستايل */
+        .whatsapp-btn { 
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+            color: #fff; 
+            border: 1px solid rgba(255, 255, 255, 0.3); 
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); 
+        }
+        .whatsapp-btn:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+        
+        /* إظهار العدادات بالأحمر بوضوح عالي فوق المستطيلات */
+        .cart-badge, .wishlist-badge { 
+            background: #ef4444; 
+            color: #fff; 
+            border-radius: 50%; 
+            padding: 2px 6px; 
+            font-size: 0.68rem; 
+            position: absolute; 
+            top: -6px; 
+            right: -5px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+            font-weight: bold; 
+            z-index: 10; 
+            line-height: 1;
+        }
 
         .hero { padding: 25px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); width: 100%; }
         .hero h2 { font-size: 1.35rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
         .hero p { color: #64748b; font-size: 0.88rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
         
-        /* شريط الأقسام القابل للتمرير يمين ويسار */
+        /* شريط الأقسام القابل للتمرير */
         .categories-container { max-width: 1200px; margin: 18px auto 5px; padding: 0 15px; width: 100%; }
         .categories-title { font-size: 1rem; color: #334155; margin-bottom: 10px; font-weight: bold; }
         .categories-grid { 
@@ -98,7 +139,6 @@
         .card { background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 8px; transition: 0.25s; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
         .card:hover { box-shadow: 0 8px 20px rgba(30, 58, 138, 0.08); transform: translateY(-3px); border-color: #cbd5e1; }
         
-        /* زر المفضلة (القلب) */
         .wishlist-btn { position: absolute; top: 12px; left: 12px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; z-index: 2; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .wishlist-btn:hover { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
         .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
@@ -120,7 +160,7 @@
         .add-to-cart-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
         .badge { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; width: fit-content; font-weight: 700; }
 
-        /* تذييل الصفحة (Footer) */
+        /* تذييل الصفحة */
         .site-footer { background: #0f172a; color: #94a3b8; padding: 30px 20px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; width: 100%; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 15px; }
         .footer-title { color: #ffffff; font-size: 1.1rem; font-weight: 700; }
@@ -191,7 +231,7 @@
             <div id="searchSuggestions" class="search-suggestions"></div>
         </div>
 
-        <!-- الأزرار السريعة: ترتيب دقيق (EN، المفضلة، السلة، ويزينهم زر الواتساب كآخر زر على اليسار) مع ظهور العدادات بوضوح -->
+        <!-- أزرار الهيدر مرتبة بحجم موحد ومستطيل متناسق مع ظهور العدادات وعنونة الواتساب "للتواصل واتساب" -->
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
             <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
@@ -200,7 +240,7 @@
             <button onclick="toggleCart()" class="cart-btn">
                 🛒 السلة <span id="cartCount" class="cart-badge">0</span>
             </button>
-            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">تواصل واتساب</a>
+            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">للتواصل واتساب</a>
         </div>
     </header>
 
@@ -209,7 +249,7 @@
         <p id="txt-hero-desc">عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.</p>
     </div>
 
-    <!-- شريط الأقسام القابل للتمرير يمين ويسار -->
+    <!-- شريط الأقسام -->
     <div class="categories-container">
         <div class="categories-title" id="txt-cat-title">الأقسام:</div>
         <div class="categories-grid" id="categoriesBar"></div>
@@ -219,7 +259,7 @@
 
     <div class="grid" id="productsGrid"></div>
 
-    <!-- تذييل الصفحة (Footer) - تواصل معنا -->
+    <!-- تذييل الصفحة -->
     <footer class="site-footer">
         <div class="footer-content">
             <h4 class="footer-title">تواصل معنا</h4>
@@ -846,6 +886,7 @@
                 document.getElementById('txt-cat-title').innerText = 'Categories:';
                 document.getElementById('txt-products-title').innerText = 'Featured Products & Services';
                 document.getElementById('txt-cart-title').innerText = 'Shopping Cart';
+                document.getElementById('contactBtn').innerText = 'Contact WhatsApp';
                 document.getElementById('searchInput').placeholder = 'What are you looking for?';
             } else {
                 currentLang = 'ar';
@@ -858,6 +899,7 @@
                 document.getElementById('txt-cat-title').innerText = 'الأقسام:';
                 document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
                 document.getElementById('txt-cart-title').innerText = 'سلة المشتريات';
+                document.getElementById('contactBtn').innerText = 'للتواصل واتساب';
                 document.getElementById('searchInput').placeholder = 'ما الذي تبحث عنه؟';
             }
         }
