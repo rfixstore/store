@@ -402,11 +402,6 @@
 
         const ADMIN_PASSWORD = "3732";
 
-        const defaultProducts = [
-            { id: 1, title: 'كمبيوتر ألعاب بمعالج Intel Core i5-12400F', category: 'remote-repair', price: '3,519', badge: 'إكسبرس', images: [], desc: 'فورمات وتنظيف وتسريع البي سي\nحل جميع المشاكل فقط وخلاص' },
-            { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', price: '150', badge: 'خدمات حكومية', images: [], desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
-        ];
-
         function showToast(message) {
             let toast = document.getElementById('customToast');
             toast.innerText = message;
@@ -414,7 +409,7 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // جلب البيانات مع منع عودة الأقسام الافتراضية المحذوفة
+        // جلب الأقسام مع منع عودتها تلقائياً عند الحذف
         function getCategories(callback) {
             db.ref('categories').once('value', (snapshot) => {
                 const data = snapshot.val();
@@ -434,14 +429,14 @@
             });
         }
 
+        // جلب المنتجات مع منع عودتها تلقائياً عند الحذف
         function getProducts(callback) {
             db.ref('products').once('value', (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     callback(data);
                 } else {
-                    db.ref('products').set(defaultProducts);
-                    callback(defaultProducts);
+                    callback([]);
                 }
             });
         }
@@ -523,7 +518,7 @@
             grid.innerHTML = '';
 
             if (!products || products.length === 0) {
-                grid.innerHTML = '<p style="color:#64748b; text-align:center; grid-column: 1/-1;">لا توجد منتجات مطابقة لبحثك.</p>';
+                grid.innerHTML = '<p style="color:#64748b; text-align:center; grid-column: 1/-1;">لا توجد منتجات مطابقة أو معروضة حالياً.</p>';
                 return;
             }
 
@@ -569,6 +564,12 @@
             const suggestionsBox = document.getElementById('searchSuggestions');
             
             getProducts(products => {
+                if (!products || products.length === 0) {
+                    suggestionsBox.style.display = 'none';
+                    renderProducts([]);
+                    return;
+                }
+
                 if (query === '') {
                     suggestionsBox.style.display = 'none';
                     renderProducts(products);
@@ -776,15 +777,17 @@
                 const list = document.getElementById('adminItemsList');
                 list.innerHTML = '';
 
-                products.forEach(p => {
-                    const row = document.createElement('div');
-                    row.className = 'item-row';
-                    row.innerHTML = `
-                        <span style="font-size: 0.8rem; color:#0f172a;">${p.title}</span>
-                        <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
-                    `;
-                    list.appendChild(row);
-                });
+                if (products && Array.isArray(products)) {
+                    products.forEach(p => {
+                        const row = document.createElement('div');
+                        row.className = 'item-row';
+                        row.innerHTML = `
+                            <span style="font-size: 0.8rem; color:#0f172a;">${p.title}</span>
+                            <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
+                        `;
+                        list.appendChild(row);
+                    });
+                }
             });
         }
 
@@ -836,6 +839,7 @@
 
         function saveNewProductToCloud(imagesArray) {
             getProducts(products => {
+                let currentProducts = Array.isArray(products) ? products : [];
                 const newProduct = {
                     id: Date.now(),
                     title: document.getElementById('pTitle').value,
@@ -845,8 +849,8 @@
                     images: imagesArray,
                     desc: document.getElementById('pDesc').value
                 };
-                products.push(newProduct);
-                saveProductsToCloud(products);
+                currentProducts.push(newProduct);
+                saveProductsToCloud(currentProducts);
                 document.getElementById('addProductForm').reset();
                 showToast('تمت إضافة المنتج سحابياً بنجاح ✔️');
             });
@@ -854,9 +858,11 @@
 
         function deleteProduct(id) {
             getProducts(products => {
-                let updatedProducts = products.filter(p => p.id !== id);
-                saveProductsToCloud(updatedProducts);
-                showToast('تم حذف المنتج بنجاح');
+                if (Array.isArray(products)) {
+                    let updatedProducts = products.filter(p => p.id !== id);
+                    saveProductsToCloud(updatedProducts);
+                    showToast('تم حذف المنتج بنجاح');
+                }
             });
         }
 
