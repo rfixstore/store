@@ -8,7 +8,6 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
         
-        /* تعديل الجذر والجسم لضمان امتداد كامل بدون فراغات جانبية بيضاء */
         html, body {
             width: 100%;
             overflow-x: hidden;
@@ -21,26 +20,32 @@
             padding: 0;
         }
         
-        /* هيدر بنمط تقني فخم بالأزرق الملكي يمتد من الحافة للحافة */
+        /* هيدر مرتب ومحكم يمنع خروج العناصر */
         header { 
             background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); 
-            padding: 14px 20px; 
+            padding: 15px; 
             display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            gap: 15px; 
-            flex-wrap: wrap; 
+            flex-direction: column;
+            gap: 12px;
             box-shadow: 0 4px 15px rgba(15, 23, 42, 0.15); 
             border-bottom: 2px solid #3b82f6; 
             width: 100%;
             margin: 0;
         }
+
+        .header-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
         .logo { cursor: pointer; user-select: none; }
-        .logo h1 { font-size: 1.2rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
-        .logo p { font-size: 0.75rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
+        .logo h1 { font-size: 1.1rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
+        .logo p { font-size: 0.72rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
         
         /* شريط البحث في الهيدر */
-        .search-container { position: relative; flex-grow: 1; max-width: 450px; margin: 0 15px; }
+        .search-container { position: relative; width: 100%; }
         .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: 40px; width: 100%; }
         .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.9rem; color: #0f172a; text-align: right; }
         .search-box input::placeholder { color: #94a3b8; }
@@ -51,15 +56,18 @@
         .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
-        .header-left { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.82rem; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; cursor: pointer; position: relative; backdrop-filter: blur(5px); transition: 0.2s; }
+        /* صف الأزرار السريعة داخل الهيدر بانتظام */
+        .header-left { display: flex; align-items: center; gap: 6px; overflow-x: auto; width: 100%; padding-bottom: 2px; }
+        .header-left::-webkit-scrollbar { display: none; } /* إخفاء شريط التمرير للأزرار */
+
+        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.78rem; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; cursor: pointer; position: relative; backdrop-filter: blur(5px); transition: 0.2s; flex-shrink: 0; }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
         .whatsapp-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
-        .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 1px 6px; font-size: 0.7rem; position: absolute; top: -6px; right: -6px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 1px 5px; font-size: 0.65rem; position: absolute; top: -5px; right: -5px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
         .hero { padding: 25px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); width: 100%; }
-        .hero h2 { font-size: 1.5rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
-        .hero p { color: #64748b; font-size: 0.92rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
+        .hero h2 { font-size: 1.35rem; color: #0f172a; margin-bottom: 8px; font-weight: 800; }
+        .hero p { color: #64748b; font-size: 0.88rem; max-width: 700px; margin: 0 auto; line-height: 1.5; }
         
         /* شريط الأقسام القابل للتمرير يمين ويسار */
         .categories-container { max-width: 1200px; margin: 18px auto 5px; padding: 0 15px; width: 100%; }
@@ -76,13 +84,12 @@
         .categories-grid::-webkit-scrollbar { height: 6px; }
         .categories-grid::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
         .categories-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .categories-grid::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
         .category-btn { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 8px 18px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: 0.2s; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
         .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #93c5fd; }
         .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25); }
 
-        .section-title { padding: 18px 15px 6px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.2rem; color: #0f172a; font-weight: 800; }
+        .section-title { padding: 18px 15px 6px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.15rem; color: #0f172a; font-weight: 800; }
         
         /* شبكة المنتجات */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 14px; padding: 12px 15px; max-width: 1200px; margin: 0 auto; width: 100%; }
@@ -96,7 +103,7 @@
 
         .card-img-wrap { width: 100%; height: 145px; background: #f8fafc; border-radius: 6px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; }
         .card img { width: 100%; height: 100%; object-fit: contain; }
-        .card h3 { color: #1e293b; font-size: 0.95rem; cursor: pointer; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
+        .card h3 { color: #1e293b; font-size: 0.92rem; cursor: pointer; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
         .card h3:hover { color: #2563eb; }
         
         .card-price { display: flex; align-items: baseline; gap: 5px; margin-top: 2px; }
@@ -120,7 +127,7 @@
         .social-icon-btn:hover { background: #22bf5b; transform: translateY(-2px); }
         .footer-copy { font-size: 0.8rem; color: #64748b; margin-top: 10px; }
 
-        /* نافذة تفاصيل الإعلان */
+        /* نوافذ التفاعل */
         .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .details-box { background: #ffffff; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .details-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -131,7 +138,6 @@
         .thumbnails img { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #cbd5e1; }
         .thumbnails img.active { border-color: #2563eb; border-width: 2px; }
 
-        /* نافذة السلة والمفضلة الجانبية */
         .cart-modal, .wishlist-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); z-index: 1000; justify-content: flex-start; backdrop-filter: blur(2px); }
         .cart-content, .wishlist-content { background: #ffffff; width: 360px; height: 100%; padding: 22px; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 15px; box-shadow: -6px 0 20px rgba(0,0,0,0.15); }
         .cart-header, .wishlist-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
@@ -146,13 +152,11 @@
         .checkout-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 13px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
         .checkout-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
 
-        /* نافذة إدخال الرمز السرية */
         .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 1200; justify-content: center; align-items: center; padding: 15px; }
         .pass-box { background: #ffffff; width: 100%; max-width: 320px; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .pass-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; }
         .pass-box input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 1rem; text-align: center; letter-spacing: 3px; }
 
-        /* نافذة لوحة التحكم */
         .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1100; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); }
         .admin-box { background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
@@ -169,9 +173,11 @@
 </head>
 <body>
     <header>
-        <div class="logo" onclick="logoClicksTrigger()">
-            <h1 id="txt-logo-title">المتخصصون في صيانة الأجهزة</h1>
-            <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
+        <div class="header-top-row">
+            <div class="logo" onclick="logoClicksTrigger()">
+                <h1 id="txt-logo-title">المتخصصون في صيانة الأجهزة</h1>
+                <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
+            </div>
         </div>
 
         <!-- شريط البحث الذكي -->
@@ -183,15 +189,16 @@
             <div id="searchSuggestions" class="search-suggestions"></div>
         </div>
 
+        <!-- الأزرار السريعة مرتبة داخل الهيدر تماماً -->
         <div class="header-left">
-            <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
-            <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
-                🤍 المفضلة <span id="wishlistCount" class="wishlist-badge">0</span>
-            </button>
+            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">تواصل واتساب</a>
             <button onclick="toggleCart()" class="cart-btn">
                 🛒 السلة <span id="cartCount" class="cart-badge">0</span>
             </button>
-            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">تواصل واتساب</a>
+            <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
+                🤍 المفضلة <span id="wishlistCount" class="wishlist-badge">0</span>
+            </button>
+            <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
         </div>
     </header>
 
