@@ -24,7 +24,7 @@
         
         /* قائمة الاقتراحات المنسدلة للبحث */
         .search-suggestions { display: none; position: absolute; top: 45px; left: 0; right: 0; background: #ffffff; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); z-index: 1400; max-height: 250px; overflow-y: auto; border: 1px solid #e2e8f0; }
-        .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
+        .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
         .header-left { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -420,7 +420,7 @@
             });
         }
 
-        /* دالة البحث التفاعلي واظهار الاقتراحات */
+        /* دالة البحث التفاعلي واظهار الاقتراحات (بدون سعر) */
         function handleSearchInput() {
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
             const suggestionsBox = document.getElementById('searchSuggestions');
@@ -437,13 +437,13 @@
             // تصفية المنتجات في الصفحة مباشرة
             renderProducts(matched);
 
-            // عرض الاقتراحات المنسدلة
+            // عرض الاقتراحات المنسدلة (اسم المنتج فقط بدون سعر)
             if (matched.length > 0) {
                 suggestionsBox.innerHTML = '';
                 matched.forEach(item => {
                     const div = document.createElement('div');
                     div.className = 'suggestion-item';
-                    div.innerHTML = `<span>${item.title}</span> <span style="color:#2563eb; font-weight:bold;">${item.price} ر.س</span>`;
+                    div.innerText = item.title;
                     div.onclick = function() {
                         document.getElementById('searchInput').value = item.title;
                         suggestionsBox.style.display = 'none';
@@ -458,7 +458,7 @@
             }
         }
 
-        // إخفاء صندوق الاقتراحات عند النقر خارجه‌
+        // إخفاء صندوق الاقتراحات عند النقر خارجه
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.search-container')) {
                 document.getElementById('searchSuggestions').style.display = 'none';
