@@ -56,11 +56,11 @@
         .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
-        /* شريط الأزرار داخل الهيدر تماماً وبدون أي خروج */
+        /* شريط الأزرار: وترتيبها بحيث يكون زر الواتساب أقصى اليسار */
         .header-left { 
             display: flex; 
             align-items: center; 
-            justify-content: space-between; 
+            justify-content: flex-start; 
             gap: 6px; 
             width: 100%; 
             overflow-x: auto; 
@@ -90,7 +90,7 @@
         }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
         
-        /* زر الواتساب الخضراء الفخمة كآخر زر على اليسار */
+        /* زر الواتساب الأخضر الفخم في أقصى اليسار */
         .whatsapp-btn { 
             background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
             color: #fff; 
@@ -238,16 +238,16 @@
             <div id="searchSuggestions" class="search-suggestions"></div>
         </div>
 
-        <!-- الأزرار محبوسة بالكامل داخل الهيدر الأزرق وبترتيب مرتب -->
+        <!-- الأزرار داخل الهيدر تماماً: زر الواتساب أصبح في أقصى اليسار -->
         <div class="header-left">
-            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">للتواصل واتساب</a>
-            <button onclick="toggleCart()" class="cart-btn">
-                🛒 السلة <span id="cartCount" class="cart-badge">0</span>
-            </button>
+            <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
             <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
                 🤍 المفضلة <span id="wishlistCount" class="wishlist-badge">0</span>
             </button>
-            <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
+            <button onclick="toggleCart()" class="cart-btn">
+                🛒 السلة <span id="cartCount" class="cart-badge">0</span>
+            </button>
+            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">للتواصل واتساب</a>
         </div>
     </header>
 
