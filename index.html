@@ -402,13 +402,6 @@
 
         const ADMIN_PASSWORD = "3732";
 
-        const defaultCategories = [
-            { id: 'pc-laptops', name: 'قسم بيع الأجهزة واللابتوبات والكمبيوترات' },
-            { id: 'gov-services', name: 'المنتجات والخدمات الحكومية' },
-            { id: 'remote-repair', name: 'صيانة عن بُعد' },
-            { id: 'phones', name: 'قسم بيع الجوالات' }
-        ];
-
         const defaultProducts = [
             { id: 1, title: 'كمبيوتر ألعاب بمعالج Intel Core i5-12400F', category: 'remote-repair', price: '3,519', badge: 'إكسبرس', images: [], desc: 'فورمات وتنظيف وتسريع البي سي\nحل جميع المشاكل فقط وخلاص' },
             { id: 2, title: 'إدارة وتنظيم حسابات أبشر ونفاذ', category: 'gov-services', price: '150', badge: 'خدمات حكومية', images: [], desc: 'تحديث البيانات، التسجيل، وحل المشكلات الحسابية الحكومية بدقة وأمان.' }
@@ -421,15 +414,16 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // جلب البيانات من السحابة بشكل مباشر ومزامن لكل الأجهزة فوراً
+        // جلب البيانات مع منع عودة الأقسام الافتراضية المحذوفة
         function getCategories(callback) {
             db.ref('categories').once('value', (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     callback(data);
-              } else {
-        callback({});
-    }
+                } else {
+                    callback({});
+                }
+            });
         }
 
         function saveCategoriesToCloud(cats) {
@@ -501,13 +495,15 @@
                 const container = document.getElementById('categoriesBar');
                 container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)" id="cat-all">الكل</button>';
 
-                cats.forEach(c => {
-                    const btn = document.createElement('button');
-                    btn.className = 'category-btn';
-                    btn.innerText = c.name;
-                    btn.onclick = function() { filterCategory(c.id, btn); };
-                    container.appendChild(btn);
-                });
+                if (cats && Array.isArray(cats)) {
+                    cats.forEach(c => {
+                        const btn = document.createElement('button');
+                        btn.className = 'category-btn';
+                        btn.innerText = c.name;
+                        btn.onclick = function() { filterCategory(c.id, btn); };
+                        container.appendChild(btn);
+                    });
+                }
             });
         }
 
@@ -745,12 +741,14 @@
             getCategories(cats => {
                 const select = document.getElementById('pCategory');
                 select.innerHTML = '';
-                cats.forEach(c => {
-                    const opt = document.createElement('option');
-                    opt.value = c.id;
-                    opt.innerText = c.name;
-                    select.appendChild(opt);
-                });
+                if (cats && Array.isArray(cats)) {
+                    cats.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c.id;
+                        opt.innerText = c.name;
+                        select.appendChild(opt);
+                    });
+                }
             });
         }
 
@@ -759,15 +757,17 @@
                 const list = document.getElementById('adminCatsList');
                 list.innerHTML = '';
 
-                cats.forEach(c => {
-                    const row = document.createElement('div');
-                    row.className = 'item-row';
-                    row.innerHTML = `
-                        <span style="font-size: 0.8rem; color:#0f172a;">${c.name}</span>
-                        <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
-                    `;
-                    list.appendChild(row);
-                });
+                if (cats && Array.isArray(cats)) {
+                    cats.forEach(c => {
+                        const row = document.createElement('div');
+                        row.className = 'item-row';
+                        row.innerHTML = `
+                            <span style="font-size: 0.8rem; color:#0f172a;">${c.name}</span>
+                            <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
+                        `;
+                        list.appendChild(row);
+                    });
+                }
             });
         }
 
@@ -792,8 +792,9 @@
             e.preventDefault();
             const nameInput = document.getElementById('catName').value;
             getCategories(cats => {
-                cats.push({ id: 'cat-' + Date.now(), name: nameInput });
-                saveCategoriesToCloud(cats);
+                let currentCats = Array.isArray(cats) ? cats : [];
+                currentCats.push({ id: 'cat-' + Date.now(), name: nameInput });
+                saveCategoriesToCloud(currentCats);
                 this.reset();
                 showToast('تمت إضافة القسم السحابي بنجاح ✔️');
             });
@@ -801,9 +802,11 @@
 
         function deleteCategory(id) {
             getCategories(cats => {
-                let updatedCats = cats.filter(c => c.id !== id);
-                saveCategoriesToCloud(updatedCats);
-                showToast('تم حذف القسم بنجاح');
+                if (Array.isArray(cats)) {
+                    let updatedCats = cats.filter(c => c.id !== id);
+                    saveCategoriesToCloud(updatedCats);
+                    showToast('تم حذف القسم بنجاح');
+                }
             });
         }
 
