@@ -35,7 +35,7 @@
 
         .header-top-row {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-align;
             align-items: center;
             width: 100%;
         }
@@ -56,12 +56,12 @@
         .suggestion-item { padding: 10px 14px; font-size: 0.88rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
-        /* شريط الأزرار مع إضافة هامش علوي بسيط لضمان ظهور العدادات بالكامل بدون قص */
+        /* شريط الأزرار: راكد ومضبوط تماماً على كل الشاشات بدون تمدد مزعج */
         .header-left { 
             display: flex; 
             align-items: center; 
             justify-content: flex-start; 
-            gap: 6px; 
+            gap: 8px; 
             width: 100%; 
             overflow-x: auto; 
             padding: 8px 2px 2px 2px; 
@@ -71,11 +71,11 @@
         .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { 
             background-color: rgba(255, 255, 255, 0.1); 
             color: #fff; 
-            padding: 6px 10px; 
+            padding: 6px 12px; 
             border-radius: 6px; 
             text-decoration: none; 
             font-weight: bold; 
-            font-size: 0.75rem; 
+            font-size: 0.78rem; 
             border: 1px solid rgba(255, 255, 255, 0.2); 
             white-space: nowrap; 
             cursor: pointer; 
@@ -90,13 +90,12 @@
         }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
         
-        /* زر الواتساب في أقصى اليسار */
+        /* زر الواتساب الأخضر الفخم في أقصى اليسار بحجم ثابت متناسق مع بقية الأزرار */
         .whatsapp-btn { 
             background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
             color: #fff; 
             border: none; 
             box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); 
-            flex-grow: 1;
         }
         .whatsapp-btn:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
         
@@ -239,7 +238,7 @@
             <div id="searchSuggestions" class="search-suggestions"></div>
         </div>
 
-        <!-- أزرار الهيدر مع العدادات الواضحة وزر الواتساب في أقصى اليسار -->
+        <!-- أزرار الهيدر بمقاسات متناسقة على كل الأجهزة -->
         <div class="header-left">
             <button onclick="toggleLanguage()" id="langBtn" class="lang-btn">🌐 EN</button>
             <button onclick="toggleWishlistModal()" class="wishlist-nav-btn">
