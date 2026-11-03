@@ -755,7 +755,9 @@
         function renderAdminPendingReviews() {
             const list = document.getElementById('adminPendingReviewsList');
             if(!list || !db) return;
-            db.ref('pendingReviews').once('value', (snapshot) => {
+            
+            // استخدام on عشان يحدث تلقائياً أول بأول
+            db.ref('pendingReviews').on('value', (snapshot) => {
                 const data = snapshot.val();
                 list.innerHTML = '';
                 let hasReviews = false;
@@ -791,12 +793,9 @@
             db.ref('pendingReviews/' + key).once('value', (snapshot) => {
                 if(snapshot.exists()) {
                     let revData = snapshot.val();
-                    // نقل التقييم إلى قائمة المنشورة رسميًا
                     db.ref('reviews/' + key).set(revData).then(() => {
-                        // حذفه من المعلقات
                         db.ref('pendingReviews/' + key).remove().then(() => {
                             showToast('تم قبول ونشر التقييم بنجاح ✔️');
-                            renderAdminPendingReviews();
                             renderAdminApprovedReviews();
                         });
                     });
@@ -808,14 +807,14 @@
             if(!db) return;
             db.ref('pendingReviews/' + key).remove().then(() => {
                 showToast('تم حذف التقييم المعلق');
-                renderAdminPendingReviews();
             });
         }
 
         function renderAdminApprovedReviews() {
             const list = document.getElementById('adminApprovedReviewsList');
             if(!list || !db) return;
-            db.ref('reviews').once('value', (snapshot) => {
+            
+            db.ref('reviews').on('value', (snapshot) => {
                 const data = snapshot.val();
                 list.innerHTML = '';
                 let hasReviews = false;
@@ -849,7 +848,6 @@
             if(!db) return;
             db.ref('reviews/' + key).remove().then(() => {
                 showToast('تم حذف التقييم المنشور');
-                renderAdminApprovedReviews();
             });
         }
 
