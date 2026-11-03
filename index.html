@@ -45,7 +45,6 @@
         .logo h1 { font-size: 1rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .logo p { font-size: 0.68rem; color: #93c5fd; margin-top: 1px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        /* صندوق التقييمات المصغر والمضبوط */
         .header-ratings-box {
             display: flex;
             flex-direction: column;
@@ -297,7 +296,7 @@
             <button onclick="toggleCart()" class="cart-btn">
                 🛒 السلة <span id="cartCount" class="cart-badge">0</span>
             </button>
-            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">واتساب</a>
+            <a href="https://wa.me/966556843732" id="contactBtn" class="whatsapp-btn">للتواصل واتساب</a>
         </div>
     </header>
 
@@ -1434,7 +1433,7 @@
                 let ptitle = document.getElementById('txt-products-title');
                 if(ptitle) ptitle.innerText = 'المنتجات والخدمات المعروضة';
                 let contact = document.getElementById('contactBtn');
-                if(contact) contact.innerText = 'واتساب';
+                if(contact) contact.innerText = 'للتواصل واتساب';
                 let search = document.getElementById('searchInput');
                 if(search) search.placeholder = 'ما الذي تبحث عنه؟';
             }
