@@ -405,7 +405,7 @@
             </div>
             <div class="iban-box">
                 <h4 style="color:#1e3a8a; font-size:0.9rem;">💳 الحساب البنكي الرسمي للتحويل:</h4>
-                <p style="font-size:0.8rem; color:#475569; margin-top:4px;">البنك الأهلي السعودي (SNB)</p>
+                <p style="font-size:0.8rem; color:#475569; margin-top:4px;">مصرف الراجحي</p>
                 <p id="ibanText" style="font-size:0.95rem; font-weight:bold; color:#0f172a; letter-spacing:1px; margin:4px 0;">SA6180000859608019057128</p>
                 <button onclick="copyIban()" class="copy-btn">نسخ رقم الآيبان 📋</button>
             </div>
@@ -764,7 +764,6 @@
             document.getElementById('checkoutModal').style.display = 'none';
         }
 
-        // إرسال الطلب وحفظ الفاتورة سحابياً في Firebase
         function sendToWhatsApp() {
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
@@ -790,7 +789,6 @@
                 createdAt: new Date().toISOString()
             };
 
-            // حفظ الطلب في Firebase
             db.ref('orders/' + orderId).set(orderData).then(() => {
                 let invoiceLink = `${baseUrl}?order_id=${orderId}`;
                 let cartTextDetails = "";
@@ -817,7 +815,6 @@
             });
         }
 
-        // الفحص التلقائي للروابط (منتج مباشر أو فاتورة دفع)
         function checkURLForParams() {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('product_id');
