@@ -260,9 +260,41 @@
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.82rem; }
         .admin-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.85rem; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
         .admin-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
+        
+        /* تنسيق بطاقة التقييم المعلق لتكون واضحة وكبيرة ومرتبة */
+        .pending-review-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .pending-review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 6px;
+        }
+        .pending-review-body {
+            font-size: 0.85rem;
+            color: #334155;
+            line-height: 1.4;
+        }
+        .pending-review-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 4px;
+        }
+
         .item-row { background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .del-btn { background: #ef4444; color: #fff; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; font-weight: 700; }
-        .approve-btn { background: #10b981; color: #fff; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; font-weight: 700; }
+        .del-btn { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 700; }
+        .approve-btn { background: #10b981; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 700; }
 
         .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; z-index: 3000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
     </style>
@@ -502,11 +534,11 @@
             </div>
             
             <h4 class="admin-sec-title">📥 إدارة التقييمات المعلقة (بانتظار الموافقة)</h4>
-            <!-- تم تعديل الـ div هنا ليكون مربعاً بارزاً وقابلاً للتمرير مع لون خلفية واضح -->
-            <div id="adminPendingReviewsList" style="max-height: 200px; overflow-y: auto; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px;"></div>
+            <!-- تم توسيع هذا المربع واعتماده لتوضيح التقييمات بالكامل -->
+            <div id="adminPendingReviewsList" style="max-height: 250px; overflow-y: auto; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; margin-top: 6px;"></div>
 
             <h4 class="admin-sec-title">⭐ إدارة التقييمات المنشورة الحالية</h4>
-            <div id="adminApprovedReviewsList" style="max-height: 140px; overflow-y: auto;"></div>
+            <div id="adminApprovedReviewsList" style="max-height: 160px; overflow-y: auto; margin-top: 6px;"></div>
 
             <h4 class="admin-sec-title">📁 إدارة الأقسام (إضافة / حذف)</h4>
             <form id="addCategoryForm">
@@ -668,38 +700,46 @@
         }
 
         function updateRatingCountUI() {
-            let saved = localStorage.getItem('storeApprovedReviews');
-            let reviews = saved ? JSON.parse(saved) : [];
-            let countElem = document.getElementById('rating-count');
-            if (countElem) {
-                countElem.innerText = reviews.length;
-            }
+            if(!db) return;
+            db.ref('approvedReviews').once('value', snapshot => {
+                let reviews = snapshot.val() ? Object.values(snapshot.val()) : [];
+                let countElem = document.getElementById('rating-count');
+                if (countElem) {
+                    countElem.innerText = reviews.length;
+                }
+            });
         }
         updateRatingCountUI();
 
         function loadApprovedReviews() {
             const list = document.getElementById('approvedReviewsList');
             if(!list) return;
-            let saved = localStorage.getItem('storeApprovedReviews');
-            let reviews = saved ? JSON.parse(saved) : [];
             
-            list.innerHTML = '';
-            if (reviews.length === 0) {
-                list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن. كن أول من يقيّم!</p>';
+            if(!db) {
+                list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد قاعدة بيانات متصلة</p>';
                 return;
             }
 
-            reviews.forEach(rev => {
-                let div = document.createElement('div');
-                div.className = 'review-item';
-                div.innerHTML = `
-                    <div class="review-header">
-                        <span>${rev.name}</span>
-                        <span class="review-stars">⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p style="color:#475569; margin-top:2px;">${rev.comment}</p>
-                `;
-                list.appendChild(div);
+            db.ref('approvedReviews').once('value', snapshot => {
+                let reviews = snapshot.val() ? Object.values(snapshot.val()) : [];
+                list.innerHTML = '';
+                if (reviews.length === 0) {
+                    list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن. كن أول من يقيّم!</p>';
+                    return;
+                }
+
+                reviews.forEach(rev => {
+                    let div = document.createElement('div');
+                    div.className = 'review-item';
+                    div.innerHTML = `
+                        <div class="review-header">
+                            <span>${rev.name}</span>
+                            <span class="review-stars">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p style="color:#475569; margin-top:2px;">${rev.comment}</p>
+                    `;
+                    list.appendChild(div);
+                });
             });
         }
 
@@ -712,123 +752,136 @@
                 return;
             }
 
-            let saved = localStorage.getItem('storePendingReviews');
-            let pending = saved ? JSON.parse(saved) : [];
+            if(!db) {
+                showToast('خطأ في الاتصال بقاعدة البيانات!');
+                return;
+            }
 
+            let newRevId = 'rev-' + Date.now();
             let newRev = {
-                id: 'rev-' + Date.now(),
+                id: newRevId,
                 name: name,
                 comment: comment,
                 createdAt: new Date().toISOString()
             };
 
-            pending.push(newRev);
-            localStorage.setItem('storePendingReviews', JSON.stringify(pending));
-
-            showToast('تم إرسال تقييمك بنجاح، بانتظار مراجعة الإدارة ⭐');
-            document.getElementById('revName').value = '';
-            document.getElementById('revComment').value = '';
-            closeAddReviewModal();
-            renderAdminPendingReviews();
+            db.ref('pendingReviews/' + newRevId).set(newRev).then(() => {
+                showToast('تم إرسال تقييمك بنجاح، بانتظار مراجعة الإدارة ⭐');
+                document.getElementById('revName').value = '';
+                document.getElementById('revComment').value = '';
+                closeAddReviewModal();
+            }).catch(err => {
+                showToast('حدث خطأ أثناء الإرسال');
+            });
         }
 
         function renderAdminPendingReviews() {
             const list = document.getElementById('adminPendingReviewsList');
             if(!list) return;
 
-            let saved = localStorage.getItem('storePendingReviews');
-            let pending = saved ? JSON.parse(saved) : [];
-            
-            list.innerHTML = '';
-            if (pending.length === 0) {
-                list.innerHTML = '<p style="color:#64748b; font-size:0.78rem; text-align:center; padding:10px;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
+            if(!db) {
+                list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا يوجد اتصال بقاعدة البيانات.</p>';
                 return;
             }
 
-            pending.forEach((rev, index) => {
-                let div = document.createElement('div');
-                div.className = 'item-row';
-                div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px; background:#ffffff;";
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; width:100%;">
-                        <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
-                        <div style="display:flex; gap:4px;">
-                            <button class="approve-btn" onclick="approveReview(${index})">قبول ونشر ⭐</button>
-                            <button class="del-btn" onclick="deletePendingReview(${index})">حذف ❌</button>
+            db.ref('pendingReviews').once('value', snapshot => {
+                let data = snapshot.val();
+                list.innerHTML = '';
+                
+                if (!data) {
+                    list.innerHTML = '<p style="color:#64748b; font-size:0.85rem; text-align:center; padding:15px; color:#64748b;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
+                    return;
+                }
+
+                Object.keys(data).forEach(key => {
+                    let rev = data[key];
+                    let div = document.createElement('div');
+                    div.className = 'pending-review-card';
+                    div.innerHTML = `
+                        <div class="pending-review-header">
+                            <span style="font-weight: bold; color: #0f172a; font-size: 0.9rem;">👤 ${rev.name}</span>
+                            <span style="color: #f59e0b; font-size: 0.85rem;">⭐⭐⭐⭐⭐</span>
                         </div>
-                    </div>
-                    <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
-                `;
-                list.appendChild(div);
+                        <div class="pending-review-body">
+                            "${rev.comment}"
+                        </div>
+                        <div class="pending-review-actions">
+                            <button class="approve-btn" onclick="approveReview('${key}')">قبول ونشر ⭐</button>
+                            <button class="del-btn" onclick="deletePendingReview('${key}')">حذف ❌</button>
+                        </div>
+                    `;
+                    list.appendChild(div);
+                });
             });
         }
 
-        function approveReview(index) {
-            let savedPending = localStorage.getItem('storePendingReviews');
-            let pending = savedPending ? JSON.parse(savedPending) : [];
-
-            let savedApproved = localStorage.getItem('storeApprovedReviews');
-            let approved = savedApproved ? JSON.parse(savedApproved) : [];
-
-            let itemToApprove = pending.splice(index, 1)[0];
-            if (itemToApprove) {
-                approved.push(itemToApprove);
-                localStorage.setItem('storePendingReviews', JSON.stringify(pending));
-                localStorage.setItem('storeApprovedReviews', JSON.stringify(approved));
-                showToast('تم قبول ونشر التقييم بنجاح ✔️');
-                renderAdminPendingReviews();
-                renderAdminApprovedReviews();
-                updateRatingCountUI();
-            }
+        function approveReview(key) {
+            if(!db) return;
+            db.ref('pendingReviews/' + key).once('value', snapshot => {
+                let revData = snapshot.val();
+                if(revData) {
+                    let approvedRef = db.ref('approvedReviews').push();
+                    approvedRef.set(revData).then(() => {
+                        db.ref('pendingReviews/' + key).remove().then(() => {
+                            showToast('تم قبول ونشر التقييم بنجاح ✔️');
+                            renderAdminPendingReviews();
+                            renderAdminApprovedReviews();
+                            updateRatingCountUI();
+                        });
+                    });
+                }
+            });
         }
 
-        function deletePendingReview(index) {
-            let saved = localStorage.getItem('storePendingReviews');
-            let pending = saved ? JSON.parse(saved) : [];
-            pending.splice(index, 1);
-            localStorage.setItem('storePendingReviews', JSON.stringify(pending));
-            showToast('تم حذف التقييم المعلق');
-            renderAdminPendingReviews();
+        function deletePendingReview(key) {
+            if(!db) return;
+            db.ref('pendingReviews/' + key).remove().then(() => {
+                showToast('تم حذف التقييم المعلق');
+                renderAdminPendingReviews();
+            });
         }
 
         function renderAdminApprovedReviews() {
             const list = document.getElementById('adminApprovedReviewsList');
             if(!list) return;
 
-            let saved = localStorage.getItem('storeApprovedReviews');
-            let approved = saved ? JSON.parse(saved) : [];
-            
-            list.innerHTML = '';
-            if (approved.length === 0) {
-                list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات منشورة حالياً.</p>';
-                return;
-            }
+            if(!db) return;
 
-            approved.forEach((rev, index) => {
-                let div = document.createElement('div');
-                div.className = 'item-row';
-                div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px;";
-                div.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; width:100%;">
-                        <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
-                        <div>
-                            <button class="del-btn" onclick="deleteApprovedReview(${index})">حذف ❌</button>
+            db.ref('approvedReviews').once('value', snapshot => {
+                let data = snapshot.val();
+                list.innerHTML = '';
+
+                if (!data) {
+                    list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات منشورة حالياً.</p>';
+                    return;
+                }
+
+                Object.keys(data).forEach(key => {
+                    let rev = data[key];
+                    let div = document.createElement('div');
+                    div.className = 'item-row';
+                    div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px;";
+                    div.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; width:100%;">
+                            <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
+                            <div>
+                                <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف ❌</button>
+                            </div>
                         </div>
-                    </div>
-                    <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
-                `;
-                list.appendChild(div);
+                        <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
+                    `;
+                    list.appendChild(div);
+                });
             });
         }
 
-        function deleteApprovedReview(index) {
-            let saved = localStorage.getItem('storeApprovedReviews');
-            let approved = saved ? JSON.parse(saved) : [];
-            approved.splice(index, 1);
-            localStorage.setItem('storeApprovedReviews', JSON.stringify(approved));
-            showToast('تم حذف التقييم المنشور');
-            renderAdminApprovedReviews();
-            updateRatingCountUI();
+        function deleteApprovedReview(key) {
+            if(!db) return;
+            db.ref('approvedReviews/' + key).remove().then(() => {
+                showToast('تم حذف التقييم المنشور');
+                renderAdminApprovedReviews();
+                updateRatingCountUI();
+            });
         }
 
         function getCategories(callback) {
@@ -1486,7 +1539,7 @@
             } else {
                 currentLang = 'ar';
                 document.documentElement.lang = 'ar';
-                document.documentElement.dir, 'rtl';
+                document.documentElement.dir = 'rtl';
                 let btn = document.getElementById('langBtn');
                 if(btn) btn.innerText = '🌐 EN';
                 let title = document.getElementById('txt-logo-title');
