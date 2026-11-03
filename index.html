@@ -502,7 +502,8 @@
             </div>
             
             <h4 class="admin-sec-title">📥 إدارة التقييمات المعلقة (بانتظار الموافقة)</h4>
-            <div id="adminPendingReviewsList" style="max-height: 160px; overflow-y: auto;"></div>
+            <!-- تم تعديل الـ div هنا ليكون مربعاً بارزاً وقابلاً للتمرير مع لون خلفية واضح -->
+            <div id="adminPendingReviewsList" style="max-height: 200px; overflow-y: auto; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px;"></div>
 
             <h4 class="admin-sec-title">⭐ إدارة التقييمات المنشورة الحالية</h4>
             <div id="adminApprovedReviewsList" style="max-height: 140px; overflow-y: auto;"></div>
@@ -728,8 +729,6 @@
             document.getElementById('revName').value = '';
             document.getElementById('revComment').value = '';
             closeAddReviewModal();
-
-            // تحديث لوحة التحكم فوراً إذا كانت مفتوحة
             renderAdminPendingReviews();
         }
 
@@ -742,14 +741,14 @@
             
             list.innerHTML = '';
             if (pending.length === 0) {
-                list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
+                list.innerHTML = '<p style="color:#64748b; font-size:0.78rem; text-align:center; padding:10px;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
                 return;
             }
 
             pending.forEach((rev, index) => {
                 let div = document.createElement('div');
                 div.className = 'item-row';
-                div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px;";
+                div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px; background:#ffffff;";
                 div.innerHTML = `
                     <div style="display:flex; justify-content:space-between; width:100%;">
                         <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
@@ -1487,7 +1486,7 @@
             } else {
                 currentLang = 'ar';
                 document.documentElement.lang = 'ar';
-                document.documentElement.dir = 'rtl';
+                document.documentElement.dir, 'rtl';
                 let btn = document.getElementById('langBtn');
                 if(btn) btn.innerText = '🌐 EN';
                 let title = document.getElementById('txt-logo-title');
