@@ -231,7 +231,7 @@
         .checkout-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
 
         .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
-        .checkout-box { background: #ffffff; width: 100%; max-width: 380px; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
+        .checkout-box { background: #ffffff; width: 100%; max-width: 400px; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .checkout-box h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; text-align: center; margin-bottom: 4px; }
         .checkout-box label { font-size: 0.82rem; font-weight: 700; color: #475569; display: block; margin-bottom: 2px; }
         .checkout-box input, .checkout-box select, .add-review-box input, .add-review-box textarea, .modal-card input, .modal-card textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.85rem; }
@@ -262,7 +262,6 @@
         .admin-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.85rem; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
         .admin-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
         
-        /* النوافذ المنبثقة لإدارة التقييمات */
         .admin-reviews-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 2800; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .admin-reviews-box { background: #ffffff; width: 100%; max-width: 500px; max-height: 85vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); direction: rtl; }
         
@@ -470,6 +469,7 @@
         </div>
     </div>
 
+    <!-- نافذة إتمام الطلب مع زر تحديد الموقع من الخريطة -->
     <div id="checkoutModal" class="checkout-modal">
         <div class="checkout-box">
             <h3>إكمال بيانات الطلب 🛒</h3>
@@ -482,8 +482,12 @@
                 <input type="tel" id="custPhone" placeholder="05xxxxxxxx">
             </div>
             <div>
-                <label>المدينة / العنوان:</label>
-                <input type="text" id="custCity" placeholder="مثال: الباحة / الرياض / جدة">
+                <label>📍 الموقع (العنوان الشارع والحي):</label>
+                <div style="display: flex; gap: 6px; margin-bottom: 4px;">
+                    <input type="text" id="custLocation" placeholder="اضغط زر تحديد الموقع تلقائياً أو اكتبه" readonly style="background: #f8fafc; font-size: 0.78rem;">
+                    <button type="button" onclick="getDeviceLocation()" style="background: #2563eb; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; white-space: nowrap;">📍 حدد موقعي</button>
+                </div>
+                <input type="text" id="custExtraAddr" placeholder="تفاصيل إضافية (رقم المبنى / الشقة / الشارع)" style="margin-top: 2px;">
             </div>
             <div>
                 <label>طريقة الدفع:</label>
@@ -507,7 +511,7 @@
             <div class="invoice-section">
                 <p><strong>اسم العميل:</strong> <span id="invCustName"></span></p>
                 <p><strong>رقم الجوال:</strong> <span id="invCustPhone"></span></p>
-                <p><strong>المدينة:</strong> <span id="invCustCity"></span></p>
+                <p><strong>الموقع والعنوان:</strong> <span id="invCustCity"></span></p>
                 <p><strong>طريقة الدفع:</strong> <span id="invPayMethod"></span></p>
             </div>
             <div class="invoice-section">
@@ -544,7 +548,6 @@
                 <button onclick="toggleAdminModal()" class="close-cart">&times;</button>
             </div>
             
-            <!-- زر إدارة التقييمات المعلقة -->
             <div style="margin-top: 5px;">
                 <button onclick="openAdminReviewsModal()" class="admin-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem;">
                     <span>📥 إدارة التقييمات المعلقة</span>
@@ -552,7 +555,6 @@
                 </button>
             </div>
 
-            <!-- زر إدارة التقييمات المنشورة وحذفها -->
             <div style="margin-top: 6px;">
                 <button onclick="openAdminApprovedModal()" class="admin-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem;">
                     <span>⭐ إدارة التقييمات المنشورة (حذف)</span>
@@ -688,6 +690,49 @@
             if(modal) modal.style.display = 'none';
         }
 
+        // دالة تحديد الموقع الجغرافي التلقائي (تحديد موقع العميل زي تطبيقات التوصيل الكبرى)
+        function getDeviceLocation() {
+            if (!navigator.geolocation) {
+                showToast('متصفحك لا يدعم تحديد الموقع الجغرافي');
+                return;
+            }
+            
+            showToast('جاري تحديد موقعك الحالي بدقة... 📍');
+            
+            navigator.geolocation.getCurrentPosition(async function(position) {
+                let lat = position.coords.latitude;
+                let lon = position.coords.longitude;
+                
+                // استخدام خدمة مجانية لجلب اسم الحي والشارع والمدينة من الإحداثيات
+                try {
+                    let response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`, {
+                        headers: { 'Accept-Language': 'ar' }
+                    });
+                    let data = await response.json();
+                    
+                    if (data && data.address) {
+                        let city = data.address.city || data.address.town || data.address.state || 'السعودية';
+                        let suburb = data.address.suburb || data.address.neighbourhood || '';
+                        let road = data.address.road || '';
+                        
+                        let fullLocationText = `${city} ${suburb ? '- ' + suburb : ''} ${road ? '- ' + road : ''}`;
+                        document.getElementById('custLocation').value = fullLocationText;
+                        showToast('تم تحديد موقعك بنجاح ✔️');
+                    } else {
+                        document.getElementById('custLocation').value = `خط عرض: ${lat.toFixed(4)}, خط طول: ${lon.toFixed(4)}`;
+                        showToast('تم تحديد الإحداثيات بنجاح ✔️');
+                    }
+                } catch(e) {
+                    // في حال عدم توفر الإنترنت للخرائط، نضع رابط خرائط جوجل المباشر
+                    let mapLink = `https://maps.google.com/?q=${lat},${lon}`;
+                    document.getElementById('custLocation').value = mapLink;
+                    showToast('تم جلب رابط الخريطة بنجاح ✔️');
+                }
+            }, function(error) {
+                showToast('تعذر تحديد الموقع، يرجى السماح بالصلاحية من المتصفح');
+            }, { timeout: 10000, enableHighAccuracy: true });
+        }
+
         let count = 0;
         let timer = null;
         function logoClicksTrigger() {
@@ -797,10 +842,10 @@
                     div.className = 'review-item';
                     div.innerHTML = `
                         <div class="review-header">
-                            <span>${rev.name}[cite: 13, 14, 15]</span>
+                            <span>${rev.name}</span>
                             <span class="review-stars">⭐⭐⭐⭐⭐</span>
                         </div>
-                        <p style="color:#475569; margin-top:2px;">${rev.comment}[cite: 13, 14, 15]</p>
+                        <p style="color:#475569; margin-top:2px;">${rev.comment}</p>
                     `;
                     list.appendChild(div);
                 });
@@ -864,10 +909,10 @@
                     div.className = 'pending-review-card';
                     div.innerHTML = `
                         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
-                            <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}[cite: 13, 14, 15]</strong>
+                            <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}</strong>
                             <span style="color:#f59e0b; font-size:0.85rem;">⭐⭐⭐⭐⭐</span>
                         </div>
-                        <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"[cite: 13, 14, 15]</p>
+                        <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:4px;">
                             <button class="approve-btn" onclick="approveReview('${key}')">قبول ونشر ⭐</button>
                             <button class="del-btn" onclick="deletePendingReview('${key}')">حذف ❌</button>
@@ -927,10 +972,10 @@
                     div.className = 'pending-review-card';
                     div.innerHTML = `
                         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
-                            <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}[cite: 13, 14, 15]</strong>
+                            <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}</strong>
                             <span style="color:#f59e0b; font-size:0.85rem;">⭐⭐⭐⭐⭐</span>
                         </div>
-                        <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"[cite: 13, 14, 15]</p>
+                        <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         <div style="display:flex; justify-content:flex-end; margin-top:4px;">
                             <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف التقييم نهائياً ❌</button>
                         </div>
@@ -1223,14 +1268,16 @@
         function sendToWhatsApp() {
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
-            const city = document.getElementById('custCity').value.trim();
+            const location = document.getElementById('custLocation').value.trim();
+            const extraAddr = document.getElementById('custExtraAddr').value.trim();
             const payMethod = document.getElementById('payMethod').value;
 
-            if (!name || !phone || !city) {
-                showToast('يرجى تعبئة جميع الحقول المطلوبة!');
+            if (!name || !phone || !location) {
+                showToast('يرجى تعبئة الاسم ورقم الجوال وتحديد الموقع!');
                 return;
             }
 
+            let fullAddress = location + (extraAddr ? ` (${extraAddr})` : '');
             let cart = getCart();
             let orderId = "ORD-" + Date.now().toString().slice(-6);
             let baseUrl = window.location.href.split('?')[0];
@@ -1239,7 +1286,7 @@
                 orderId: orderId,
                 name: name,
                 phone: phone,
-                city: city,
+                city: fullAddress,
                 payMethod: payMethod,
                 items: cart,
                 createdAt: new Date().toISOString()
@@ -1261,7 +1308,7 @@
                 `*رقم الطلب:* ${orderId}\n` +
                 `*الاسم الكريم:* ${name}\n` +
                 `*رقم الجوال:* ${phone}\n` +
-                `*المدينة / العنوان:* ${city}\n` +
+                `*الموقع (الشارع والحي):* ${fullAddress}\n` +
                 `*طريقة الدفع:* ${payMethod}\n\n` +
                 `*تفاصيل المنتجات:*\n${cartTextDetails}\n` +
                 `💳 *رابط الفاتورة المباشر والدفع:* ${invoiceLink}`
