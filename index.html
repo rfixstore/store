@@ -43,6 +43,14 @@
         .logo h1 { font-size: 1.1rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
         .logo p { font-size: 0.72rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
         
+        /* شارة التقييمات فوق اسم المتجر */
+        .header-ratings-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 2px;
+        }
+        
         .search-container { position: relative; width: 100%; }
         .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: 40px; width: 100%; }
         .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.9rem; color: #0f172a; text-align: right; }
@@ -189,8 +197,16 @@
         .cart-item-info h4, .wishlist-item-info h4 { color: #0f172a; font-size: 0.88rem; font-weight: 700; }
         .cart-item-info p, .wishlist-item-info p { color: #2563eb; font-size: 0.8rem; font-weight: 700; }
         .del-cart-item, .del-wishlist-item { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; font-weight: 700; }
+        
         .checkout-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 13px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
-        .checkout-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
+        .checkout-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
+
+        /* تنسيق نافذة إتمام الطلب الذكية */
+        .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
+        .checkout-box { background: #ffffff; width: 100%; max-width: 400px; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
+        .checkout-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; text-align: center; margin-bottom: 5px; }
+        .checkout-box label { font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 3px; }
+        .checkout-box input, .checkout-box select { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.9rem; }
 
         .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 1200; justify-content: center; align-items: center; padding: 15px; }
         .pass-box { background: #ffffff; width: 100%; max-width: 320px; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
@@ -206,7 +222,7 @@
         .form-group label { display: block; margin-bottom: 4px; color: #475569; font-weight: 600; font-size: 0.85rem; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.85rem; }
         .admin-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 11px 15px; border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.9rem; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
-        .admin-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
+        .admin-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
         .item-row { background: #f8fafc; padding: 9px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .del-btn { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
 
@@ -217,7 +233,16 @@
     <header>
         <div class="header-top-row">
             <div class="logo" onclick="logoClicksTrigger()">
-                <h1 id="txt-logo-title">المتخصصون في صيانة الأجهزة</h1>
+                <!-- شارة التقييمات الديناميكية فوق اسم المتجر مباشرة -->
+                <div class="header-ratings-box">
+                    <div style="color: #FFB800; font-size: 14px; letter-spacing: 1px; line-height: 1;">
+                        ⭐⭐⭐⭐⭐
+                    </div>
+                    <span style="color: #93c5fd; font-size: 11px; font-weight: bold; margin-top: 2px;">
+                        <span id="rating-count">0</span> تقييمات
+                    </span>
+                </div>
+                <h1 id="txt-logo-title" style="margin-top: 4px;">المتخصصون في صيانة الأجهزة</h1>
                 <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
             </div>
         </div>
@@ -318,8 +343,36 @@
                 <p id="txt-cart-empty" style="color:#64748b; text-align:center; margin-top:30px;">السلة فارغة حالياً</p>
             </div>
             <div id="cartFooter" style="display:none; border-top: 2px solid #f1f5f9; padding-top: 14px;">
-                <a id="checkoutWhatsappBtn" href="#" target="_blank" class="checkout-btn">إتمام الطلب عبر الواتساب</a>
+                <button onclick="openCheckoutModal()" class="checkout-btn">إتمام الطلب عبر الواتساب</button>
             </div>
+        </div>
+    </div>
+
+    <!-- نافذة إتمام الطلب الذكية السريعة -->
+    <div id="checkoutModal" class="checkout-modal">
+        <div class="checkout-box">
+            <h3>إكمال بيانات الطلب 🛒</h3>
+            <div>
+                <label>الاسم الكريم:</label>
+                <input type="text" id="custName" placeholder="أدخل اسمك الكريم">
+            </div>
+            <div>
+                <label>رقم الجوال:</label>
+                <input type="tel" id="custPhone" placeholder="05xxxxxxxx">
+            </div>
+            <div>
+                <label>المدينة / العنوان:</label>
+                <input type="text" id="custCity" placeholder="مثال: الباحة / الرياض / جدة">
+            </div>
+            <div>
+                <label>طريقة الدفع:</label>
+                <select id="payMethod">
+                    <option value="الدفع عند الاستلام (شحن قيمة الشحن مقدماً)">الدفع عند الاستلام (شحن قيمة الشحن مقدماً)</option>
+                    <option value="دفع كامل إلكترونياً (شبكة / مدى / أبل باي)">دفع كامل إلكترونياً (شبكة / مدى / أبل باي)</option>
+                </select>
+            </div>
+            <button onclick="sendToWhatsApp()" class="admin-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-top: 5px;">تأكيد وإرسال الطلب للواتساب 📲</button>
+            <button onclick="closeCheckoutModal()" style="background:none; border:none; color:#64748b; cursor:pointer; font-size:0.85rem; text-align:center; margin-top: 2px;">إلغاء</button>
         </div>
     </div>
 
@@ -409,6 +462,15 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
+        // جلب عدد التقييمات تلقائياً من Firebase
+        db.ref('ratings').on('value', (snapshot) => {
+            const count = snapshot.exists() ? snapshot.numChildren() : 0;
+            const countElem = document.getElementById('rating-count');
+            if (countElem) {
+                countElem.innerText = count;
+            }
+        });
+
         // جلب الأقسام
         function getCategories(callback) {
             db.ref('categories').once('value', (snapshot) => {
@@ -431,14 +493,11 @@
                 const data = snapshot.val();
                 const productsArray = data ? data : [];
                 
-                // تنظيف تلقائي للسلة والمفضلة من أي منتج تم حذفه من قاعدة البيانات
                 cleanupCartAndWishlist(productsArray);
-
                 callback(productsArray);
             });
         }
 
-        // دالة تنظيف السلة والمفضلة من المنتجات المحذوفة
         function cleanupCartAndWishlist(serverProducts) {
             let cart = getCart();
             let wishlist = getWishlist();
@@ -565,7 +624,7 @@
                         <span class="price-amount">${p.price || '0'}</span>
                     </div>
                     <div class="card-rating">
-                        <span class="stars">★★★★☆</span> <span>(39)</span>
+                        <span class="stars">★★★★★</span>
                     </div>
                     <div class="card-footer">
                         <button class="add-to-cart-btn" onclick='addToCart(${JSON.stringify(p)})'>أضف للسلة 🛒</button>
@@ -645,13 +704,8 @@
             }
 
             footer.style.display = 'block';
-            let cartTextDetails = "";
-            let baseUrl = window.location.href.split('?')[0];
 
             cart.forEach((item, index) => {
-                let itemDirectLink = `${baseUrl}?product_id=${item.id}`;
-                cartTextDetails += `📦 المنتج: ${item.title} (${item.price} ر.س)\n🔗 رابط الإعلان: ${itemDirectLink}\n------------------\n`;
-                
                 let div = document.createElement('div');
                 div.className = 'cart-item-card';
                 div.innerHTML = `
@@ -663,9 +717,54 @@
                 `;
                 list.appendChild(div);
             });
+        }
 
-            let fullMsg = encodeURIComponent(`السلام عليكم، أرغب في طلب المنتجات التالية:\n\n${cartTextDetails}`);
-            document.getElementById('checkoutWhatsappBtn').href = `https://wa.me/966556843732?text=${fullMsg}`;
+        // فتح وإغلاق نافذة إتمام الطلب الذكية
+        function openCheckoutModal() {
+            let cart = getCart();
+            if (cart.length === 0) {
+                showToast('السلة فارغة!');
+                return;
+            }
+            document.getElementById('checkoutModal').style.display = 'flex';
+            toggleCart(); // إغلاق قائمة السلة الجانبية
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('custName').value.trim();
+            const phone = document.getElementById('custPhone').value.trim();
+            const city = document.getElementById('custCity').value.trim();
+            const payMethod = document.getElementById('payMethod').value;
+
+            if (!name || !phone || !city) {
+                showToast('يرجى تعبئة جميع الحقول المطلوبة!');
+                return;
+            }
+
+            let cart = getCart();
+            let cartTextDetails = "";
+            let baseUrl = window.location.href.split('?')[0];
+
+            cart.forEach(item => {
+                let itemDirectLink = `${baseUrl}?product_id=${item.id}`;
+                cartTextDetails += `📦 المنتج: ${item.title} (${item.price} ر.س)\n🔗 رابط الإعلان: ${itemDirectLink}\n------------------\n`;
+            });
+
+            let fullMsg = encodeURIComponent(
+                `طلب جديد من المتجر 🛒\n\n` +
+                `*الاسم الكريم:* ${name}\n` +
+                `*رقم الجوال:* ${phone}\n` +
+                `*المدينة / العنوان:* ${city}\n` +
+                `*طريقة الدفع:* ${payMethod}\n\n` +
+                `*تفاصيل المنتجات:*\n${cartTextDetails}`
+            );
+
+            window.open(`https://wa.me/966556843732?text=${fullMsg}`, '_blank');
+            closeCheckoutModal();
         }
 
         function checkURLForProduct() {
@@ -985,7 +1084,7 @@
                 document.documentElement.dir = 'rtl';
                 document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة الأجهزة';
                 document.getElementById('txt-logo-sub').innerText = 'صيانة أجهزة • خدمات رقمية وحكومية';
-                document.getElementById('txt-hero-title').innerText, document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
+                document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
                 document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
                 document.getElementById('txt-cat-title').innerText = 'الأقسام:';
                 document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
@@ -995,7 +1094,7 @@
             }
         }
 
-        // تشغيل واجهة المتجر وجلب البيانات السحابية مع التنظيف التلقائي
+        // تشغيل واجهة المتجر وجلب البيانات السحابية
         renderCategoriesBar();
         renderProducts();
         renderCart();
