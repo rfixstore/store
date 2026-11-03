@@ -666,7 +666,6 @@
             }
         }
 
-        // تحديث عدد التقييمات في الهيدر محلياً
         function updateRatingCountUI() {
             let saved = localStorage.getItem('storeApprovedReviews');
             let reviews = saved ? JSON.parse(saved) : [];
@@ -729,6 +728,9 @@
             document.getElementById('revName').value = '';
             document.getElementById('revComment').value = '';
             closeAddReviewModal();
+
+            // تحديث لوحة التحكم فوراً إذا كانت مفتوحة
+            renderAdminPendingReviews();
         }
 
         function renderAdminPendingReviews() {
