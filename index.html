@@ -43,7 +43,6 @@
         .logo h1 { font-size: 1.1rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
         .logo p { font-size: 0.72rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
         
-        /* شارة التقييمات فوق اسم المتجر */
         .header-ratings-box {
             display: flex;
             flex-direction: column;
@@ -165,7 +164,7 @@
 
         .card-footer { display: flex; gap: 6px; margin-top: 4px; }
         .add-to-cart-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 7px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.82rem; flex-grow: 1; transition: 0.2s; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2); }
-        .add-to-cart-btn:hover { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); }
+        .add-to-cart-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
         .badge { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; width: fit-content; font-weight: 700; }
 
         .site-footer { background: #0f172a; color: #94a3b8; padding: 30px 20px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; width: 100%; }
@@ -201,12 +200,21 @@
         .checkout-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 13px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
         .checkout-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
 
-        /* تنسيق نافذة إتمام الطلب الذكية */
         .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .checkout-box { background: #ffffff; width: 100%; max-width: 400px; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .checkout-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; text-align: center; margin-bottom: 5px; }
         .checkout-box label { font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 3px; }
         .checkout-box input, .checkout-box select { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.9rem; }
+
+        /* نافذة فاتورة الدفع الرسمية الخاصة بالموقع */
+        .invoice-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 1600; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
+        .invoice-box { background: #ffffff; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); direction: rtl; }
+        .invoice-header { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 12px; }
+        .invoice-header h3 { color: #1e3a8a; font-size: 1.25rem; font-weight: 800; }
+        .invoice-header p { font-size: 0.8rem; color: #64748b; margin-top: 2px; }
+        .invoice-section { background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.88rem; }
+        .iban-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px; text-align: center; margin-top: 5px; }
+        .copy-btn { background: #2563eb; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; margin-top: 6px; }
 
         .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 1200; justify-content: center; align-items: center; padding: 15px; }
         .pass-box { background: #ffffff; width: 100%; max-width: 320px; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
@@ -233,7 +241,6 @@
     <header>
         <div class="header-top-row">
             <div class="logo" onclick="logoClicksTrigger()">
-                <!-- شارة التقييمات الديناميكية فوق اسم المتجر مباشرة -->
                 <div class="header-ratings-box">
                     <div style="color: #FFB800; font-size: 14px; letter-spacing: 1px; line-height: 1;">
                         ⭐⭐⭐⭐⭐
@@ -348,7 +355,6 @@
         </div>
     </div>
 
-    <!-- نافذة إتمام الطلب الذكية السريعة -->
     <div id="checkoutModal" class="checkout-modal">
         <div class="checkout-box">
             <h3>إكمال بيانات الطلب 🛒</h3>
@@ -368,11 +374,42 @@
                 <label>طريقة الدفع:</label>
                 <select id="payMethod">
                     <option value="الدفع عند الاستلام (شحن قيمة الشحن مقدماً)">الدفع عند الاستلام (شحن قيمة الشحن مقدماً)</option>
-                    <option value="دفع كامل إلكترونياً (شبكة / مدى / أبل باي)">دفع كامل إلكترونياً (شبكة / مدى / أبل باي)</option>
+                    <option value="دفع كامل إلكترونياً (تحويل بنكي / مدى)">دفع كامل إلكترونياً (تحويل بنكي / مدى)</option>
                 </select>
             </div>
             <button onclick="sendToWhatsApp()" class="admin-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-top: 5px;">تأكيد وإرسال الطلب للواتساب 📲</button>
             <button onclick="closeCheckoutModal()" style="background:none; border:none; color:#64748b; cursor:pointer; font-size:0.85rem; text-align:center; margin-top: 2px;">إلغاء</button>
+        </div>
+    </div>
+
+    <!-- نافذة فاتورة الطلب الرسمية للموقع -->
+    <div id="invoiceModal" class="invoice-modal">
+        <div class="invoice-box">
+            <div class="invoice-header">
+                <h3>🧾 فاتورة طلب رسمية</h3>
+                <p>المتخصصون في صيانة الأجهزة</p>
+                <span id="invOrderId" style="font-size:0.75rem; color:#2563eb; font-weight:bold;"></span>
+            </div>
+            <div class="invoice-section">
+                <p><strong>اسم العميل:</strong> <span id="invCustName"></span></p>
+                <p><strong>رقم الجوال:</strong> <span id="invCustPhone"></span></p>
+                <p><strong>المدينة:</strong> <span id="invCustCity"></span></p>
+                <p><strong>طريقة الدفع:</strong> <span id="invPayMethod"></span></p>
+            </div>
+            <div class="invoice-section">
+                <h4 style="margin-bottom:6px; color:#0f172a;">تفاصيل المنتجات:</h4>
+                <div id="invProductsList"></div>
+                <div style="border-top: 1px solid #cbd5e1; margin-top: 8px; padding-top: 6px; font-weight: bold; color: #1e3a8a;">
+                    المبلغ الإجمالي: <span id="invTotalPrice"></span> ر.س
+                </div>
+            </div>
+            <div class="iban-box">
+                <h4 style="color:#1e3a8a; font-size:0.9rem;">💳 الحساب البنكي الرسمي للتحويل:</h4>
+                <p style="font-size:0.8rem; color:#475569; margin-top:4px;">البنك الأهلي السعودي (SNB)</p>
+                <p id="ibanText" style="font-size:0.95rem; font-weight:bold; color:#0f172a; letter-spacing:1px; margin:4px 0;">SA6180000859608019057128</p>
+                <button onclick="copyIban()" class="copy-btn">نسخ رقم الآيبان 📋</button>
+            </div>
+            <button onclick="closeInvoiceModal()" class="admin-btn">إغلاق الفاتورة</button>
         </div>
     </div>
 
@@ -441,12 +478,10 @@
         </div>
     </div>
 
-    <!-- استدعاء مكتبة Firebase السحابية المجانية -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <script>
-        // إعدادات قاعدة البيانات السحابية الخاصة بمتجرك
         const firebaseConfig = {
             databaseURL: "https://rfixstore-default-rtdb.firebaseio.com/"
         };
@@ -462,7 +497,6 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // جلب عدد التقييمات تلقائياً من Firebase
         db.ref('ratings').on('value', (snapshot) => {
             const count = snapshot.exists() ? snapshot.numChildren() : 0;
             const countElem = document.getElementById('rating-count');
@@ -471,7 +505,6 @@
             }
         });
 
-        // جلب الأقسام
         function getCategories(callback) {
             db.ref('categories').once('value', (snapshot) => {
                 const data = snapshot.val();
@@ -487,12 +520,10 @@
             });
         }
 
-        // جلب المنتجات مع الفحص والتنظيف التلقائي للسلة والمفضلة
         function getProducts(callback) {
             db.ref('products').once('value', (snapshot) => {
                 const data = snapshot.val();
                 const productsArray = data ? data : [];
-                
                 cleanupCartAndWishlist(productsArray);
                 callback(productsArray);
             });
@@ -719,7 +750,6 @@
             });
         }
 
-        // فتح وإغلاق نافذة إتمام الطلب الذكية
         function openCheckoutModal() {
             let cart = getCart();
             if (cart.length === 0) {
@@ -727,13 +757,14 @@
                 return;
             }
             document.getElementById('checkoutModal').style.display = 'flex';
-            toggleCart(); // إغلاق قائمة السلة الجانبية
+            toggleCart();
         }
 
         function closeCheckoutModal() {
             document.getElementById('checkoutModal').style.display = 'none';
         }
 
+        // إرسال الطلب وحفظ الفاتورة سحابياً في Firebase
         function sendToWhatsApp() {
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
@@ -746,30 +777,52 @@
             }
 
             let cart = getCart();
-            let cartTextDetails = "";
+            let orderId = "ORD-" + Date.now().toString().slice(-6);
             let baseUrl = window.location.href.split('?')[0];
 
-            cart.forEach(item => {
-                let itemDirectLink = `${baseUrl}?product_id=${item.id}`;
-                cartTextDetails += `📦 المنتج: ${item.title} (${item.price} ر.س)\n🔗 رابط الإعلان: ${itemDirectLink}\n------------------\n`;
+            let orderData = {
+                orderId: orderId,
+                name: name,
+                phone: phone,
+                city: city,
+                payMethod: payMethod,
+                items: cart,
+                createdAt: new Date().toISOString()
+            };
+
+            // حفظ الطلب في Firebase
+            db.ref('orders/' + orderId).set(orderData).then(() => {
+                let invoiceLink = `${baseUrl}?order_id=${orderId}`;
+                let cartTextDetails = "";
+
+                cart.forEach(item => {
+                    cartTextDetails += `📦 المنتج: ${item.title} (${item.price} ر.س)\n`;
+                });
+
+                let fullMsg = encodeURIComponent(
+                    `طلب جديد من المتجر 🛒\n\n` +
+                    `*رقم الطلب:* ${orderId}\n` +
+                    `*الاسم الكريم:* ${name}\n` +
+                    `*رقم الجوال:* ${phone}\n` +
+                    `*المدينة / العنوان:* ${city}\n` +
+                    `*طريقة الدفع:* ${payMethod}\n\n` +
+                    `*تفاصيل المنتجات:*\n${cartTextDetails}\n` +
+                    `💳 *رابط الفاتورة المباشر والدفع:* ${invoiceLink}`
+                );
+
+                window.open(`https://wa.me/966556843732?text=${fullMsg}`, '_blank');
+                closeCheckoutModal();
+                localStorage.removeItem('storeCart');
+                renderCart();
             });
-
-            let fullMsg = encodeURIComponent(
-                `طلب جديد من المتجر 🛒\n\n` +
-                `*الاسم الكريم:* ${name}\n` +
-                `*رقم الجوال:* ${phone}\n` +
-                `*المدينة / العنوان:* ${city}\n` +
-                `*طريقة الدفع:* ${payMethod}\n\n` +
-                `*تفاصيل المنتجات:*\n${cartTextDetails}`
-            );
-
-            window.open(`https://wa.me/966556843732?text=${fullMsg}`, '_blank');
-            closeCheckoutModal();
         }
 
-        function checkURLForProduct() {
+        // الفحص التلقائي للروابط (منتج مباشر أو فاتورة دفع)
+        function checkURLForParams() {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('product_id');
+            const orderId = urlParams.get('order_id');
+
             if (productId) {
                 getProducts(products => {
                     if (products && Array.isArray(products)) {
@@ -779,7 +832,49 @@
                         }
                     }
                 });
+            } else if (orderId) {
+                db.ref('orders/' + orderId).once('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        openInvoiceModal(snapshot.val());
+                    } else {
+                        showToast('الطلب غير موجود أو انتهت صلاحيته');
+                    }
+                });
             }
+        }
+
+        function openInvoiceModal(order) {
+            document.getElementById('invOrderId').innerText = order.orderId;
+            document.getElementById('invCustName').innerText = order.name;
+            document.getElementById('invCustPhone').innerText = order.phone;
+            document.getElementById('invCustCity').innerText = order.city;
+            document.getElementById('invPayMethod').innerText = order.payMethod;
+
+            let list = document.getElementById('invProductsList');
+            list.innerHTML = '';
+            let total = 0;
+
+            order.items.forEach(item => {
+                total += parseFloat(item.price || 0);
+                let div = document.createElement('div');
+                div.style.cssText = "display:flex; justify-content:space-between; margin-bottom:4px;";
+                div.innerHTML = `<span>• ${item.title}</span> <strong>${item.price} ر.س</strong>`;
+                list.appendChild(div);
+            });
+
+            document.getElementById('invTotalPrice').innerText = total;
+            document.getElementById('invoiceModal').style.display = 'flex';
+        }
+
+        function closeInvoiceModal() {
+            document.getElementById('invoiceModal').style.display = 'none';
+        }
+
+        function copyIban() {
+            let iban = document.getElementById('ibanText').innerText;
+            navigator.clipboard.writeText(iban).then(() => {
+                showToast('تم نسخ رقم الآيبان بنجاح 📋');
+            });
         }
 
         function removeFromCart(index) {
@@ -1094,13 +1189,12 @@
             }
         }
 
-        // تشغيل واجهة المتجر وجلب البيانات السحابية
         renderCategoriesBar();
         renderProducts();
         renderCart();
         renderWishlist();
         updateCategorySelectOptions();
-        checkURLForProduct();
+        checkURLForParams();
     </script>
 </body>
 </html>
