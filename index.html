@@ -658,8 +658,8 @@
             if(!modal) return;
             modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
             if (modal.style.display === 'flex') {
-                renderAdminPendingReviews();
-                renderAdminApprovedReviews();
+                listenToAdminPendingReviews();
+                listenToAdminApprovedReviews();
                 renderAdminCats();
                 renderAdminProducts();
                 updateCategorySelectOptions();
@@ -752,11 +752,11 @@
             });
         }
 
-        function renderAdminPendingReviews() {
+        function listenToAdminPendingReviews() {
             const list = document.getElementById('adminPendingReviewsList');
             if(!list || !db) return;
             
-            db.ref('pendingReviews').once('value', (snapshot) => {
+            db.ref('pendingReviews').on('value', (snapshot) => {
                 const data = snapshot.val();
                 list.innerHTML = '';
                 let hasReviews = false;
@@ -795,8 +795,6 @@
                     db.ref('reviews/' + key).set(revData).then(() => {
                         db.ref('pendingReviews/' + key).remove().then(() => {
                             showToast('تم قبول ونشر التقييم بنجاح ✔️');
-                            renderAdminPendingReviews();
-                            renderAdminApprovedReviews();
                         });
                     });
                 }
@@ -807,15 +805,14 @@
             if(!db) return;
             db.ref('pendingReviews/' + key).remove().then(() => {
                 showToast('تم حذف التقييم المعلق');
-                renderAdminPendingReviews();
             });
         }
 
-        function renderAdminApprovedReviews() {
+        function listenToAdminApprovedReviews() {
             const list = document.getElementById('adminApprovedReviewsList');
             if(!list || !db) return;
             
-            db.ref('reviews').once('value', (snapshot) => {
+            db.ref('reviews').on('value', (snapshot) => {
                 const data = snapshot.val();
                 list.innerHTML = '';
                 let hasReviews = false;
@@ -849,7 +846,6 @@
             if(!db) return;
             db.ref('reviews/' + key).remove().then(() => {
                 showToast('تم حذف التقييم المنشور');
-                renderAdminApprovedReviews();
             });
         }
 
