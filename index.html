@@ -201,7 +201,6 @@
         .review-header { display: flex; justify-content: space-between; font-weight: bold; color: #0f172a; margin-bottom: 2px; }
         .review-stars { color: #f59e0b; }
 
-        /* نافذة إضافة التقييم المنفصلة */
         .add-review-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2700; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .add-review-box { background: #ffffff; width: 100%; max-width: 400px; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .add-review-box h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
@@ -263,6 +262,7 @@
         .admin-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
         .item-row { background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .del-btn { background: #ef4444; color: #fff; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; font-weight: 700; }
+        .approve-btn { background: #10b981; color: #fff; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; font-weight: 700; }
 
         .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; z-index: 3000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
     </style>
@@ -333,7 +333,7 @@
         </div>
     </footer>
 
-    <!-- نافذة عرض التقييمات مع زر إضافة تقييم بالأسفل -->
+    <!-- نافذة عرض التقييمات المنشورة مع زر إضافة تقييم بالأسفل -->
     <div id="publicReviewsModal" class="modal-overlay">
         <div class="modal-card" style="height: 85vh; display: flex; flex-direction: column;">
             <h3>
@@ -341,19 +341,17 @@
                 <button onclick="closePublicReviewsModal()" class="close-cart">&times;</button>
             </h3>
             
-            <!-- قائمة التقييمات في الأعلى -->
             <div id="approvedReviewsList" class="reviews-list" style="flex-grow: 1; overflow-y: auto;">
                 <p style="color:#64748b; text-align:center; margin-top: 40px;">جاري تحميل التقييمات...</p>
             </div>
             
-            <!-- زر إضافة تقييم في أسفل النافذة تماماً -->
             <div style="padding-top: 10px; border-top: 1px solid #e2e8f0; margin-top: auto;">
                 <button onclick="openAddReviewModal()" class="admin-btn">إضافة تقييم</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة إدخال بيانات التقييم الجديدة -->
+    <!-- نافذة إدخال بيانات التقييم الجديدة للعميل -->
     <div id="addReviewModal" class="add-review-modal">
         <div class="add-review-box">
             <h3>
@@ -503,8 +501,11 @@
                 <button onclick="toggleAdminModal()" class="close-cart">&times;</button>
             </div>
             
-            <h4 class="admin-sec-title">⭐ إدارة التقييمات الحالية</h4>
-            <div id="adminPendingReviewsList" style="max-height: 140px; overflow-y: auto;"></div>
+            <h4 class="admin-sec-title">📥 إدارة التقييمات المعلقة (بانتظار الموافقة)</h4>
+            <div id="adminPendingReviewsList" style="max-height: 160px; overflow-y: auto;"></div>
+
+            <h4 class="admin-sec-title">⭐ إدارة التقييمات المنشورة الحالية</h4>
+            <div id="adminApprovedReviewsList" style="max-height: 140px; overflow-y: auto;"></div>
 
             <h4 class="admin-sec-title">📁 إدارة الأقسام (إضافة / حذف)</h4>
             <form id="addCategoryForm">
@@ -658,6 +659,7 @@
             modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
             if (modal.style.display === 'flex') {
                 renderAdminPendingReviews();
+                renderAdminApprovedReviews();
                 renderAdminCats();
                 renderAdminProducts();
                 updateCategorySelectOptions();
@@ -733,7 +735,7 @@
                 return;
             }
 
-            let newRef = db.ref('reviews').push();
+            let newRef = db.ref('pendingReviews').push();
             newRef.set({
                 id: newRef.key,
                 name: name,
@@ -741,11 +743,10 @@
                 comment: comment,
                 createdAt: new Date().toISOString()
             }).then(() => {
-                showToast('تمت إضافة تقييمك بنجاح ⭐');
+                showToast('تم إرسال تقييمك بنجاح، بانتظار مراجعة الإدارة ⭐');
                 document.getElementById('revName').value = '';
                 document.getElementById('revComment').value = '';
                 closeAddReviewModal();
-                loadApprovedReviews();
             }).catch(() => {
                 showToast('حدث خطأ أثناء الإرسال');
             });
@@ -753,6 +754,66 @@
 
         function renderAdminPendingReviews() {
             const list = document.getElementById('adminPendingReviewsList');
+            if(!list || !db) return;
+            db.ref('pendingReviews').once('value', (snapshot) => {
+                const data = snapshot.val();
+                list.innerHTML = '';
+                let hasReviews = false;
+
+                if (data) {
+                    Object.entries(data).forEach(([key, rev]) => {
+                        hasReviews = true;
+                        let div = document.createElement('div');
+                        div.className = 'item-row';
+                        div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px;";
+                        div.innerHTML = `
+                            <div style="display:flex; justify-content:space-between; width:100%;">
+                                <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
+                                <div style="display:flex; gap:4px;">
+                                    <button class="approve-btn" onclick="approveReview('${key}')">قبول ونشر ⭐</button>
+                                    <button class="del-btn" onclick="deletePendingReview('${key}')">حذف ❌</button>
+                                </div>
+                            </div>
+                            <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
+                        `;
+                        list.appendChild(div);
+                    });
+                }
+
+                if (!hasReviews) {
+                    list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
+                }
+            });
+        }
+
+        function approveReview(key) {
+            if(!db) return;
+            db.ref('pendingReviews/' + key).once('value', (snapshot) => {
+                if(snapshot.exists()) {
+                    let revData = snapshot.val();
+                    // نقل التقييم إلى قائمة المنشورة رسميًا
+                    db.ref('reviews/' + key).set(revData).then(() => {
+                        // حذفه من المعلقات
+                        db.ref('pendingReviews/' + key).remove().then(() => {
+                            showToast('تم قبول ونشر التقييم بنجاح ✔️');
+                            renderAdminPendingReviews();
+                            renderAdminApprovedReviews();
+                        });
+                    });
+                }
+            });
+        }
+
+        function deletePendingReview(key) {
+            if(!db) return;
+            db.ref('pendingReviews/' + key).remove().then(() => {
+                showToast('تم حذف التقييم المعلق');
+                renderAdminPendingReviews();
+            });
+        }
+
+        function renderAdminApprovedReviews() {
+            const list = document.getElementById('adminApprovedReviewsList');
             if(!list || !db) return;
             db.ref('reviews').once('value', (snapshot) => {
                 const data = snapshot.val();
@@ -769,7 +830,7 @@
                             <div style="display:flex; justify-content:space-between; width:100%;">
                                 <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
                                 <div>
-                                    <button class="del-btn" onclick="deleteReview('${key}')">حذف ❌</button>
+                                    <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف ❌</button>
                                 </div>
                             </div>
                             <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
@@ -779,17 +840,16 @@
                 }
 
                 if (!hasReviews) {
-                    list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات مسجلة حالياً.</p>';
+                    list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات منشورة حالياً.</p>';
                 }
             });
         }
 
-        function deleteReview(key) {
+        function deleteApprovedReview(key) {
             if(!db) return;
             db.ref('reviews/' + key).remove().then(() => {
-                showToast('تم حذف التقييم');
-                renderAdminPendingReviews();
-                loadApprovedReviews();
+                showToast('تم حذف التقييم المنشور');
+                renderAdminApprovedReviews();
             });
         }
 
