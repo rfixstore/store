@@ -658,67 +658,49 @@
             if(!modal) return;
             modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
             if (modal.style.display === 'flex') {
-                listenToAdminPendingReviews();
-                listenToAdminApprovedReviews();
+                renderAdminPendingReviews();
+                renderAdminApprovedReviews();
                 renderAdminCats();
                 renderAdminProducts();
                 updateCategorySelectOptions();
             }
         }
 
-        if(db) {
-            try {
-                db.ref('reviews').on('value', (snapshot) => {
-                    const data = snapshot.val();
-                    let countVal = 0;
-                    if (data) {
-                        countVal = Object.keys(data).length;
-                    }
-                    const countElem = document.getElementById('rating-count');
-                    if (countElem) {
-                        countElem.innerText = countVal;
-                    }
-                });
-            } catch(e) { console.log(e); }
+        // تحديث عدد التقييمات في الهيدر محلياً
+        function updateRatingCountUI() {
+            let saved = localStorage.getItem('storeApprovedReviews');
+            let reviews = saved ? JSON.parse(saved) : [];
+            let countElem = document.getElementById('rating-count');
+            if (countElem) {
+                countElem.innerText = reviews.length;
+            }
         }
+        updateRatingCountUI();
 
         function loadApprovedReviews() {
             const list = document.getElementById('approvedReviewsList');
             if(!list) return;
-            if(!db) {
-                list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن.</p>';
+            let saved = localStorage.getItem('storeApprovedReviews');
+            let reviews = saved ? JSON.parse(saved) : [];
+            
+            list.innerHTML = '';
+            if (reviews.length === 0) {
+                list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن. كن أول من يقيّم!</p>';
                 return;
             }
-            try {
-                db.ref('reviews').once('value', (snapshot) => {
-                    const data = snapshot.val();
-                    list.innerHTML = '';
-                    let hasReviews = false;
 
-                    if (data) {
-                        Object.values(data).forEach(rev => {
-                            hasReviews = true;
-                            let starsText = '⭐'.repeat(5);
-                            let div = document.createElement('div');
-                            div.className = 'review-item';
-                            div.innerHTML = `
-                                <div class="review-header">
-                                    <span>${rev.name}</span>
-                                    <span class="review-stars">${starsText}</span>
-                                </div>
-                                <p style="color:#475569; margin-top:2px;">${rev.comment}</p>
-                            `;
-                            list.appendChild(div);
-                        });
-                    }
-
-                    if (!hasReviews) {
-                        list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن. كن أول من يقيّم!</p>';
-                    }
-                });
-            } catch(e) {
-                list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد تقييمات متاحة حالياً.</p>';
-            }
+            reviews.forEach(rev => {
+                let div = document.createElement('div');
+                div.className = 'review-item';
+                div.innerHTML = `
+                    <div class="review-header">
+                        <span>${rev.name}</span>
+                        <span class="review-stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p style="color:#475569; margin-top:2px;">${rev.comment}</p>
+                `;
+                list.appendChild(div);
+            });
         }
 
         function submitNewReview() {
@@ -730,123 +712,122 @@
                 return;
             }
 
-            if(!db) {
-                showToast('عذراً، خدمة التقييم غير متصلة حالياً');
+            let saved = localStorage.getItem('storePendingReviews');
+            let pending = saved ? JSON.parse(saved) : [];
+
+            let newRev = {
+                id: 'rev-' + Date.now(),
+                name: name,
+                comment: comment,
+                createdAt: new Date().toISOString()
+            };
+
+            pending.push(newRev);
+            localStorage.setItem('storePendingReviews', JSON.stringify(pending));
+
+            showToast('تم إرسال تقييمك بنجاح، بانتظار مراجعة الإدارة ⭐');
+            document.getElementById('revName').value = '';
+            document.getElementById('revComment').value = '';
+            closeAddReviewModal();
+        }
+
+        function renderAdminPendingReviews() {
+            const list = document.getElementById('adminPendingReviewsList');
+            if(!list) return;
+
+            let saved = localStorage.getItem('storePendingReviews');
+            let pending = saved ? JSON.parse(saved) : [];
+            
+            list.innerHTML = '';
+            if (pending.length === 0) {
+                list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
                 return;
             }
 
-            let newRef = db.ref('pendingReviews').push();
-            newRef.set({
-                id: newRef.key,
-                name: name,
-                stars: "5",
-                comment: comment,
-                createdAt: new Date().toISOString()
-            }).then(() => {
-                showToast('تم إرسال تقييمك بنجاح، بانتظار مراجعة الإدارة ⭐');
-                document.getElementById('revName').value = '';
-                document.getElementById('revComment').value = '';
-                closeAddReviewModal();
-            }).catch(() => {
-                showToast('حدث خطأ أثناء الإرسال');
+            pending.forEach((rev, index) => {
+                let div = document.createElement('div');
+                div.className = 'item-row';
+                div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px;";
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; width:100%;">
+                        <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
+                        <div style="display:flex; gap:4px;">
+                            <button class="approve-btn" onclick="approveReview(${index})">قبول ونشر ⭐</button>
+                            <button class="del-btn" onclick="deletePendingReview(${index})">حذف ❌</button>
+                        </div>
+                    </div>
+                    <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
+                `;
+                list.appendChild(div);
             });
         }
 
-        function listenToAdminPendingReviews() {
-            const list = document.getElementById('adminPendingReviewsList');
-            if(!list || !db) return;
-            
-            db.ref('pendingReviews').on('value', (snapshot) => {
-                const data = snapshot.val();
-                list.innerHTML = '';
-                let hasReviews = false;
+        function approveReview(index) {
+            let savedPending = localStorage.getItem('storePendingReviews');
+            let pending = savedPending ? JSON.parse(savedPending) : [];
 
-                if (data) {
-                    Object.entries(data).forEach(([key, rev]) => {
-                        hasReviews = true;
-                        let div = document.createElement('div');
-                        div.className = 'item-row';
-                        div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px;";
-                        div.innerHTML = `
-                            <div style="display:flex; justify-content:space-between; width:100%;">
-                                <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
-                                <div style="display:flex; gap:4px;">
-                                    <button class="approve-btn" onclick="approveReview('${key}')">قبول ونشر ⭐</button>
-                                    <button class="del-btn" onclick="deletePendingReview('${key}')">حذف ❌</button>
-                                </div>
-                            </div>
-                            <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
-                        `;
-                        list.appendChild(div);
-                    });
-                }
+            let savedApproved = localStorage.getItem('storeApprovedReviews');
+            let approved = savedApproved ? JSON.parse(savedApproved) : [];
 
-                if (!hasReviews) {
-                    list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
-                }
-            });
+            let itemToApprove = pending.splice(index, 1)[0];
+            if (itemToApprove) {
+                approved.push(itemToApprove);
+                localStorage.setItem('storePendingReviews', JSON.stringify(pending));
+                localStorage.setItem('storeApprovedReviews', JSON.stringify(approved));
+                showToast('تم قبول ونشر التقييم بنجاح ✔️');
+                renderAdminPendingReviews();
+                renderAdminApprovedReviews();
+                updateRatingCountUI();
+            }
         }
 
-        function approveReview(key) {
-            if(!db) return;
-            db.ref('pendingReviews/' + key).once('value', (snapshot) => {
-                if(snapshot.exists()) {
-                    let revData = snapshot.val();
-                    db.ref('reviews/' + key).set(revData).then(() => {
-                        db.ref('pendingReviews/' + key).remove().then(() => {
-                            showToast('تم قبول ونشر التقييم بنجاح ✔️');
-                        });
-                    });
-                }
-            });
+        function deletePendingReview(index) {
+            let saved = localStorage.getItem('storePendingReviews');
+            let pending = saved ? JSON.parse(saved) : [];
+            pending.splice(index, 1);
+            localStorage.setItem('storePendingReviews', JSON.stringify(pending));
+            showToast('تم حذف التقييم المعلق');
+            renderAdminPendingReviews();
         }
 
-        function deletePendingReview(key) {
-            if(!db) return;
-            db.ref('pendingReviews/' + key).remove().then(() => {
-                showToast('تم حذف التقييم المعلق');
-            });
-        }
-
-        function listenToAdminApprovedReviews() {
+        function renderAdminApprovedReviews() {
             const list = document.getElementById('adminApprovedReviewsList');
-            if(!list || !db) return;
+            if(!list) return;
+
+            let saved = localStorage.getItem('storeApprovedReviews');
+            let approved = saved ? JSON.parse(saved) : [];
             
-            db.ref('reviews').on('value', (snapshot) => {
-                const data = snapshot.val();
-                list.innerHTML = '';
-                let hasReviews = false;
+            list.innerHTML = '';
+            if (approved.length === 0) {
+                list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات منشورة حالياً.</p>';
+                return;
+            }
 
-                if (data) {
-                    Object.entries(data).forEach(([key, rev]) => {
-                        hasReviews = true;
-                        let div = document.createElement('div');
-                        div.className = 'item-row';
-                        div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px;";
-                        div.innerHTML = `
-                            <div style="display:flex; justify-content:space-between; width:100%;">
-                                <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
-                                <div>
-                                    <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف ❌</button>
-                                </div>
-                            </div>
-                            <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
-                        `;
-                        list.appendChild(div);
-                    });
-                }
-
-                if (!hasReviews) {
-                    list.innerHTML = '<p style="color:#64748b; font-size:0.78rem;">لا توجد تقييمات منشورة حالياً.</p>';
-                }
+            approved.forEach((rev, index) => {
+                let div = document.createElement('div');
+                div.className = 'item-row';
+                div.style.cssText = "flex-direction:column; align-items:flex-start; gap:4px;";
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; width:100%;">
+                        <strong style="font-size:0.8rem; color:#0f172a;">${rev.name} (⭐⭐⭐⭐⭐)</strong>
+                        <div>
+                            <button class="del-btn" onclick="deleteApprovedReview(${index})">حذف ❌</button>
+                        </div>
+                    </div>
+                    <p style="font-size:0.75rem; color:#475569;">"${rev.comment}"</p>
+                `;
+                list.appendChild(div);
             });
         }
 
-        function deleteApprovedReview(key) {
-            if(!db) return;
-            db.ref('reviews/' + key).remove().then(() => {
-                showToast('تم حذف التقييم المنشور');
-            });
+        function deleteApprovedReview(index) {
+            let saved = localStorage.getItem('storeApprovedReviews');
+            let approved = saved ? JSON.parse(saved) : [];
+            approved.splice(index, 1);
+            localStorage.setItem('storeApprovedReviews', JSON.stringify(approved));
+            showToast('تم حذف التقييم المنشور');
+            renderAdminApprovedReviews();
+            updateRatingCountUI();
         }
 
         function getCategories(callback) {
