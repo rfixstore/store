@@ -37,13 +37,14 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
+            position: relative;
+            z-index: 10;
         }
 
-        .logo { cursor: pointer; user-select: none; flex-grow: 1; }
+        .logo { cursor: pointer; user-select: none; }
         .logo h1 { font-size: 1.1rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
         .logo p { font-size: 0.72rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
         
-        /* صندوق النجوم في أقصى اليسار حسب طلبك */
         .header-ratings-box {
             display: flex;
             flex-direction: column;
@@ -62,7 +63,7 @@
             border-color: #60a5fa;
         }
         
-        .search-container { position: relative; width: 100%; }
+        .search-container { position: relative; width: 100%; z-index: 9; }
         .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: 40px; width: 100%; }
         .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.9rem; color: #0f172a; text-align: right; }
         .search-box input::placeholder { color: #94a3b8; }
@@ -80,6 +81,8 @@
             width: 100%; 
             overflow-x: auto; 
             padding: 8px 2px 2px 2px; 
+            position: relative;
+            z-index: 10;
         }
         .header-left::-webkit-scrollbar { display: none; }
 
@@ -102,6 +105,7 @@
             align-items: center;
             justify-content: center;
             height: 34px;
+            z-index: 11;
         }
         .cart-btn:hover, .wishlist-nav-btn:hover, .lang-btn:hover { background-color: rgba(255, 255, 255, 0.25); border-color: #60a5fa; }
         
@@ -188,7 +192,7 @@
         .footer-copy { font-size: 0.8rem; color: #64748b; margin-top: 10px; }
 
         /* نوافذ الشاشة المنبثقة */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .modal-card { background: #ffffff; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .modal-card h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
 
@@ -200,7 +204,7 @@
         .approve-btn { background: #10b981; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
         .reject-btn { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
 
-        .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
+        .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .details-box { background: #ffffff; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .details-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media(max-width: 600px) { .details-content-grid { grid-template-columns: 1fr; } }
@@ -210,7 +214,7 @@
         .thumbnails img { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #cbd5e1; }
         .thumbnails img.active { border-color: #2563eb; border-width: 2px; }
 
-        .cart-modal, .wishlist-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); z-index: 1000; justify-content: flex-start; backdrop-filter: blur(2px); }
+        .cart-modal, .wishlist-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); z-index: 2000; justify-content: flex-start; backdrop-filter: blur(2px); }
         .cart-content, .wishlist-content { background: #ffffff; width: 360px; height: 100%; padding: 22px; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 15px; box-shadow: -6px 0 20px rgba(0,0,0,0.15); }
         .cart-header, .wishlist-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
         .cart-header h3, .wishlist-header h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; }
@@ -225,13 +229,13 @@
         .checkout-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 13px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
         .checkout-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
 
-        .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
+        .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .checkout-box { background: #ffffff; width: 100%; max-width: 400px; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .checkout-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; text-align: center; margin-bottom: 5px; }
         .checkout-box label { font-size: 0.85rem; font-weight: 700; color: #475569; display: block; margin-bottom: 3px; }
         .checkout-box input, .checkout-box select, .modal-card input, .modal-card textarea, .modal-card select { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.9rem; }
 
-        .invoice-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 1600; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
+        .invoice-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 2600; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .invoice-box { background: #ffffff; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); direction: rtl; }
         .invoice-header { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 12px; }
         .invoice-header h3 { color: #1e3a8a; font-size: 1.25rem; font-weight: 800; }
@@ -240,12 +244,12 @@
         .iban-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px; text-align: center; margin-top: 5px; }
         .copy-btn { background: #2563eb; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; margin-top: 6px; }
 
-        .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 1200; justify-content: center; align-items: center; padding: 15px; }
+        .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 2200; justify-content: center; align-items: center; padding: 15px; }
         .pass-box { background: #ffffff; width: 100%; max-width: 320px; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
         .pass-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; }
         .pass-box input { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 1rem; text-align: center; letter-spacing: 3px; }
 
-        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 1100; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); }
+        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2100; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); }
         .admin-box { background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 25px; border-radius: 12px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px; }
         .admin-header h3 { color: #0f172a; font-size: 1.2rem; font-weight: 800; }
@@ -258,19 +262,17 @@
         .item-row { background: #f8fafc; padding: 9px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
         .del-btn { background: #ef4444; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
 
-        .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 0.88rem; z-index: 2000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
+        .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 0.88rem; z-index: 3000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
     </style>
 </head>
 <body>
     <header>
         <div class="header-top-row">
-            <!-- العنوان على اليمين مع تفعيل الضغط 5 مرات للوحة التحكم -->
             <div class="logo" onclick="logoClicksTrigger()">
                 <h1 id="txt-logo-title">المتخصصون في صيانة الأجهزة</h1>
                 <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
             </div>
 
-            <!-- النجوم في أقصى اليسار تماماً -->
             <div class="header-ratings-box" onclick="openPublicReviewsModal(event)">
                 <div style="color: #FFB800; font-size: 13px; letter-spacing: 1px; line-height: 1;">
                     ⭐⭐⭐⭐⭐
@@ -478,7 +480,7 @@
         <div class="pass-box">
             <h3>🔒 لوحة التحكم السرية</h3>
             <p style="font-size: 0.8rem; color: #64748b;">الرجاء إدخال رمز الدخول:</p>
-            <input type="password" id="adminPassInput" placeholder="**">
+            <input type="password" id="adminPassInput" placeholder="****">
             <button onclick="checkAdminPassword()" class="admin-btn">دخول</button>
             <button onclick="closePasswordModal()" style="background: none; border: none; color: #2563eb; cursor: pointer; font-size: 0.8rem; margin-top: 5px; font-weight:700;">إلغاء</button>
         </div>
@@ -824,9 +826,9 @@
                 let imgTag = '';
                 let imgsList = p.images || [];
                 if (imgsList.length > 0) {
-                    imgTag = <img src="${imgsList[0]}" alt="${p.title}">;
+                    imgTag = `<img src="${imgsList[0]}" alt="${p.title}">`;
                 } else {
-                    imgTag = <div style="height:100%; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.75rem;">بدون صورة</div>;
+                    imgTag = `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.75rem;">بدون صورة</div>`;
                 }
 
                 let isLiked = wishlist.some(item => item.id === p.id);
@@ -904,7 +906,7 @@
             let cart = getCart();
             cart.push(p);
             saveCart(cart);
-            showToast(تمت إضافة "${p.title}" إلى السلة 🛒);
+            showToast(`تمت إضافة "${p.title}" إلى السلة 🛒`);
         }
 
         function renderCart() {
@@ -978,25 +980,25 @@
             };
 
             db.ref('orders/' + orderId).set(orderData).then(() => {
-                let invoiceLink = ${baseUrl}?order_id=${orderId};
+                let invoiceLink = `${baseUrl}?order_id=${orderId}`;
                 let cartTextDetails = "";
 
                 cart.forEach(item => {
-                    cartTextDetails += 📦 المنتج: ${item.title} (${item.price} ر.س)\n;
+                    cartTextDetails += `📦 المنتج: ${item.title} (${item.price} ر.س)\n`;
                 });
 
                 let fullMsg = encodeURIComponent(
-                    طلب جديد من المتجر 🛒\n\n +
-                    *رقم الطلب:* ${orderId}\n +
-                    *الاسم الكريم:* ${name}\n +
-                    *رقم الجوال:* ${phone}\n +
-                    *المدينة / العنوان:* ${city}\n +
-                    *طريقة الدفع:* ${payMethod}\n\n +
-                    *تفاصيل المنتجات:*\n${cartTextDetails}\n +
-                    💳 *رابط الفاتورة المباشر والدفع:* ${invoiceLink}
+                    `طلب جديد من المتجر 🛒\n\n` +
+                    `*رقم الطلب:* ${orderId}\n` +
+                    `*الاسم الكريم:* ${name}\n` +
+                    `*رقم الجوال:* ${phone}\n` +
+                    `*المدينة / العنوان:* ${city}\n` +
+                    `*طريقة الدفع:* ${payMethod}\n\n` +
+                    `*تفاصيل المنتجات:*\n${cartTextDetails}\n` +
+                    `💳 *رابط الفاتورة المباشر والدفع:* ${invoiceLink}`
                 );
 
-                window.open(https://wa.me/966556843732?text=${fullMsg}, '_blank');
+                window.open(`https://wa.me/966556843732?text=${fullMsg}`, '_blank');
                 closeCheckoutModal();
                 localStorage.removeItem('storeCart');
                 renderCart();
@@ -1043,7 +1045,7 @@
                 total += parseFloat(item.price || 0);
                 let div = document.createElement('div');
                 div.style.cssText = "display:flex; justify-content:space-between; margin-bottom:4px;";
-                div.innerHTML = <span>• ${item.title}</span> <strong>${item.price} ر.س</strong>;
+                div.innerHTML = `<span>• ${item.title}</span> <strong>${item.price} ر.س</strong>`;
                 list.appendChild(div);
             });
 
@@ -1308,4 +1310,5 @@
                 closePasswordModal();
                 toggleAdminModal();
             } else {
-                showToast('رمز الدخول غير 
+                showToast('رمز الدخول غير صحيح!');
+                document.getEl
