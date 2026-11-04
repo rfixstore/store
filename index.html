@@ -1692,7 +1692,6 @@
             }
         }
 
-        // التكيف الذكي لطلب العميل وإخفاء حقول الاسم ورقم الجوال والموقع للخدمات الرقمية
         function openCheckoutModal() {
             let cart = getCart();
             if (cart.length === 0) {
@@ -1723,15 +1722,14 @@
                     <option value="الدفع عند الاستلام (شحن قيمة الشحن مقدماً)">الدفع عند الاستلام (شحن قيمة الشحن مقدماً)</option>
                 `;
             } else {
-                nameFieldBlock.style.display = 'none'; // حذف وإخفاء اسم العميل للخدمات تماماً
-                phoneFieldBlock.style.display = 'none'; // إخفاء رقم الجوال للخدمات الرقمية
+                nameFieldBlock.style.display = 'none';
+                phoneFieldBlock.style.display = 'none';
                 locationBlock.style.display = 'none';
                 shippingLabel.innerHTML = '<i class="fa-solid fa-wrench"></i> طريقة تنفيذ الخدمة:';
                 shippingSelect.innerHTML = `
                     <option value="تنفيذ الخدمة عن بُعد">تنفيذ الخدمة عن بُعد</option>
                     <option value="إحضار الجهاز">إحضار الجهاز</option>
                 `;
-                // الوضع الافتراضي عند فتح القائمة (عن بُعد -> تحويل فقط)
                 payMethodSelect.innerHTML = `
                     <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
                 `;
@@ -1807,9 +1805,8 @@
                 ? `🚚 *طريقة التوصيل:* ${shippingText}` 
                 : `🛠️ *طريقة تنفيذ الخدمة:* ${shippingText}`;
 
+            // تم حذف عبارة "طلب جديد من متجر المتخصصون في صيانة الأجهزة" بناءً على طلبك
             let fullMsg = encodeURIComponent(
-                `✨ *طلب جديد من متجر المتخصصون في صيانة الأجهزة* ✨\n` +
-                `━━━━━━━━━━━━━━━\n` +
                 `📌 *بيانات الطلب:*\n` +
                 `🔹 *رقم الطلب:* ${orderId}\n` +
                 `${clientDetailsMsg}` +
