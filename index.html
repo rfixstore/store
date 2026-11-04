@@ -286,6 +286,17 @@
         .approve-btn { background: #10b981; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 700; }
 
         .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; z-index: 3000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
+
+        /* نافذة التأكيد المخصصة للحذف */
+        .custom-confirm-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 3500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
+        .custom-confirm-box { background: #ffffff; width: 100%; max-width: 340px; padding: 22px; border-radius: 14px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.25); direction: rtl; text-align: center; }
+        .custom-confirm-box h4 { color: #0f172a; font-size: 1.1rem; font-weight: 800; }
+        .custom-confirm-box p { color: #64748b; font-size: 0.85rem; line-height: 1.4; }
+        .confirm-btns { display: flex; gap: 8px; margin-top: 4px; }
+        .confirm-yes { background: #ef4444; color: #fff; border: none; padding: 9px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; flex: 1; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3); }
+        .confirm-yes:hover { background: #dc2626; }
+        .confirm-no { background: #e2e8f0; color: #334155; border: none; padding: 9px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; flex: 1; }
+        .confirm-no:hover { background: #cbd5e1; }
     </style>
 </head>
 <body>
@@ -341,6 +352,19 @@
     <div class="grid" id="productsGrid"></div>
 
     <div id="customToast" class="custom-toast">رسالة تنبيه</div>
+
+    <!-- نافذة تأكيد الحذف المخصصة والمصممة للمتجر -->
+    <div id="customConfirmModal" class="custom-confirm-overlay">
+        <div class="custom-confirm-box">
+            <div style="font-size: 2rem; color: #ef4444; line-height: 1;">⚠️</div>
+            <h4>تأكيد الحذف</h4>
+            <p>هل أنت متأكد من حذف هذا الطلب نهائياً من النظام؟</p>
+            <div class="confirm-btns">
+                <button type="button" id="confirmYesBtn" class="confirm-yes">نعم، حذف</button>
+                <button type="button" onclick="closeCustomConfirm()" class="confirm-no">إلغاء</button>
+            </div>
+        </div>
+    </div>
 
     <footer class="site-footer">
         <div class="footer-content">
@@ -569,7 +593,7 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم الإدارية (الأقسام الثلاثة الجديدة للطلبات) -->
+    <!-- لوحة التحكم الإدارية -->
     <div id="adminModal" class="admin-modal">
         <div class="admin-box">
             <div class="admin-header">
@@ -717,6 +741,29 @@
             toast.innerText = message;
             toast.style.display = 'block';
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        }
+
+        // دوال نافذة التأكيد المخصصة للحذف
+        function showCustomConfirm(onConfirmCallback) {
+            let modal = document.getElementById('customConfirmModal');
+            let yesBtn = document.getElementById('confirmYesBtn');
+            if(!modal || !yesBtn) return;
+            
+            modal.style.display = 'flex';
+            
+            // إزالة الأحداث السابقة لمنع التكرار
+            let newYesBtn = yesBtn.cloneNode(true);
+            yesBtn.parentNode.replaceChild(newYesBtn, yesBtn);
+            
+            newYesBtn.onclick = function() {
+                closeCustomConfirm();
+                if(onConfirmCallback) onConfirmCallback();
+            };
+        }
+
+        function closeCustomConfirm() {
+            let modal = document.getElementById('customConfirmModal');
+            if(modal) modal.style.display = 'none';
         }
 
         function toggleCart() {
@@ -1047,14 +1094,14 @@
                 return;
             }
 
-            if(confirm('هل أنت متأكد من حذف هذا الطلب نهائياً؟')) {
+            showCustomConfirm(function() {
                 db.ref('orders/' + orderKey).remove().then(() => {
                     showToast('تم حذف الطلب بنجاح 🗑️');
                     loadAdminAllOrders();
                 }).catch(err => {
                     showToast('حدث خطأ أثناء الحذف');
                 });
-            }
+            });
         }
 
         function updateRatingCountUI() {
@@ -1258,7 +1305,7 @@
 
         function deleteApprovedReview(key) {
             if(!db) return;
-            db.ref('approvedReviews/' + key).remove().then(() => {
+            db.ref('approvedReviews').remove().then(() => {
                 showToast('تم حذف التقييم المنشور بنجاح 🗑️');
                 renderAdminApprovedReviews();
                 updateRatingCountUI();
