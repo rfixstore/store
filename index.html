@@ -474,7 +474,7 @@
         <div class="checkout-box">
             <h3>إكمال بيانات الطلب 🛒</h3>
             <div>
-                <label>الاسم الكريم:</label>
+                <label>اسم العميل:</label>
                 <input type="text" id="custName" placeholder="أدخل اسمك الكريم">
             </div>
             <div>
@@ -690,7 +690,6 @@
             if(modal) modal.style.display = 'none';
         }
 
-        // دالة تحديد الموقع الجغرافي التلقائي (تحديد موقع العميل زي تطبيقات التوصيل الكبرى)
         function getDeviceLocation() {
             if (!navigator.geolocation) {
                 showToast('متصفحك لا يدعم تحديد الموقع الجغرافي');
@@ -703,7 +702,6 @@
                 let lat = position.coords.latitude;
                 let lon = position.coords.longitude;
                 
-                // استخدام خدمة مجانية لجلب اسم الحي والشارع والمدينة من الإحداثيات
                 try {
                     let response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`, {
                         headers: { 'Accept-Language': 'ar' }
@@ -723,7 +721,6 @@
                         showToast('تم تحديد الإحداثيات بنجاح ✔️');
                     }
                 } catch(e) {
-                    // في حال عدم توفر الإنترنت للخرائط، نضع رابط خرائط جوجل المباشر
                     let mapLink = `https://maps.google.com/?q=${lat},${lon}`;
                     document.getElementById('custLocation').value = mapLink;
                     showToast('تم جلب رابط الخريطة بنجاح ✔️');
@@ -1273,7 +1270,7 @@
             const payMethod = document.getElementById('payMethod').value;
 
             if (!name || !phone || !location) {
-                showToast('يرجى تعبئة الاسم ورقم الجوال وتحديد الموقع!');
+                showToast('يرجى تعبئة اسم العميل ورقم الجوال وتحديد الموقع!');
                 return;
             }
 
@@ -1300,18 +1297,23 @@
             let cartTextDetails = "";
 
             cart.forEach(item => {
-                cartTextDetails += `📦 المنتج: ${item.title} (${item.price} ر.س)\n`;
+                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n`;
             });
 
             let fullMsg = encodeURIComponent(
-                `طلب جديد من المتجر 🛒\n\n` +
-                `*رقم الطلب:* ${orderId}\n` +
-                `*الاسم الكريم:* ${name}\n` +
-                `*رقم الجوال:* ${phone}\n` +
-                `*الموقع (الشارع والحي):* ${fullAddress}\n` +
-                `*طريقة الدفع:* ${payMethod}\n\n` +
-                `*تفاصيل المنتجات:*\n${cartTextDetails}\n` +
-                `💳 *رابط الفاتورة المباشر والدفع:* ${invoiceLink}`
+                `✨ *طلب جديد من متجر المتخصصون في صيانة الأجهزة* ✨\n` +
+                `━━━━━━━━━━━━━━━\n` +
+                `📌 *بيانات العميل:*\n` +
+                `🔹 *رقم الطلب:* ${orderId}\n` +
+                `👤 *اسم العميل:* ${name}\n` +
+                `📱 *رقم الجوال:* ${phone}\n` +
+                `📍 *الموقع (الشارع والحي):* ${fullAddress}\n` +
+                `💳 *طريقة الدفع:* ${payMethod}\n\n` +
+                `📦 *قائمة المنتجات والخدمات:*\n` +
+                `${cartTextDetails}\n` +
+                `🔗 *رابط الفاتورة ومتابعة الطلب:*\n${invoiceLink}\n` +
+                `━━━━━━━━━━━━━━━\n` +
+                `⚡ *شكراً لاختياركم المتخصصون في صيانة الأجهزة* ⚡`
             );
 
             window.open(`https://wa.me/966556843732?text=${fullMsg}`, '_blank');
