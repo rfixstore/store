@@ -540,7 +540,7 @@
             <!-- قسم خيارات الشحن والخدمات الذكية -->
             <div>
                 <label id="shippingMethodLabel"><i class="fa-solid fa-wrench"></i> طريقة تنفيذ الخدمة:</label>
-                <select id="shippingMethod"></select>
+                <select id="shippingMethod" onchange="onShippingMethodChanged()"></select>
             </div>
 
             <div>
@@ -1670,6 +1670,28 @@
             });
         }
 
+        function onShippingMethodChanged() {
+            let cart = getCart();
+            let hasPhysicalItem = cart.some(item => item.type === 'physical');
+            if(hasPhysicalItem) return;
+
+            let shippingSelect = document.getElementById('shippingMethod');
+            let payMethodSelect = document.getElementById('payMethod');
+            if(!shippingSelect || !payMethodSelect) return;
+
+            let selectedVal = shippingSelect.value;
+            if (selectedVal === 'تنفيذ الخدمة عن بُعد') {
+                payMethodSelect.innerHTML = `
+                    <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
+                `;
+            } else if (selectedVal === 'إحضار الجهاز') {
+                payMethodSelect.innerHTML = `
+                    <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
+                    <option value="نقدي (كاش)">نقدي (كاش)</option>
+                `;
+            }
+        }
+
         // التكيف الذكي لطلب العميل وإخفاء حقول الاسم ورقم الجوال والموقع للخدمات الرقمية
         function openCheckoutModal() {
             let cart = getCart();
@@ -1701,7 +1723,7 @@
                     <option value="الدفع عند الاستلام (شحن قيمة الشحن مقدماً)">الدفع عند الاستلام (شحن قيمة الشحن مقدماً)</option>
                 `;
             } else {
-                nameFieldBlock.style.display = 'block';
+                nameFieldBlock.style.display = 'none'; // حذف وإخفاء اسم العميل للخدمات تماماً
                 phoneFieldBlock.style.display = 'none'; // إخفاء رقم الجوال للخدمات الرقمية
                 locationBlock.style.display = 'none';
                 shippingLabel.innerHTML = '<i class="fa-solid fa-wrench"></i> طريقة تنفيذ الخدمة:';
@@ -1709,9 +1731,9 @@
                     <option value="تنفيذ الخدمة عن بُعد">تنفيذ الخدمة عن بُعد</option>
                     <option value="إحضار الجهاز">إحضار الجهاز</option>
                 `;
+                // الوضع الافتراضي عند فتح القائمة (عن بُعد -> تحويل فقط)
                 payMethodSelect.innerHTML = `
                     <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
-                    <option value="نقدي (كاش)">نقدي (كاش)</option>
                 `;
             }
 
@@ -1726,7 +1748,8 @@
         }
 
         function sendToWhatsApp() {
-            const name = document.getElementById('custName').value.trim();
+            const nameInput = document.getElementById('custName');
+            const name = (nameInput && nameInput.style.display !== 'none') ? nameInput.value.trim() : '';
             const phone = document.getElementById('custPhone').value.trim();
             const shippingSelect = document.getElementById('shippingMethod');
             const shippingText = shippingSelect.value;
@@ -1742,11 +1765,6 @@
                 return;
             }
 
-            if (!hasPhysicalItem && !name) {
-                showToast('يرجى إدخال اسمك!');
-                return;
-            }
-
             if (hasPhysicalItem && !location) {
                 showToast('يرجى تحديد موقع التوصيل والعنوان!');
                 return;
@@ -1758,7 +1776,7 @@
 
             let orderData = {
                 orderId: orderId,
-                name: name || 'بدون اسم',
+                name: hasPhysicalItem ? (name || 'بدون اسم') : 'غير مطلوب (خدمة)',
                 phone: hasPhysicalItem ? phone : 'غير مطلوب (خدمة)',
                 city: fullAddress,
                 shipping: shippingText,
@@ -1783,7 +1801,7 @@
 
             let clientDetailsMsg = hasPhysicalItem 
                 ? `👤 *اسم العميل:* ${name}\n📱 *رقم الجوال:* ${phone}\n📍 *الموقع (الشارع والحي):* ${fullAddress}\n` 
-                : `👤 *اسم العميل:* ${name}\n`;
+                : ``;
 
             let executionLine = hasPhysicalItem 
                 ? `🚚 *طريقة التوصيل:* ${shippingText}` 
@@ -1792,7 +1810,7 @@
             let fullMsg = encodeURIComponent(
                 `✨ *طلب جديد من متجر المتخصصون في صيانة الأجهزة* ✨\n` +
                 `━━━━━━━━━━━━━━━\n` +
-                `📌 *بيانات العميل:*\n` +
+                `📌 *بيانات الطلب:*\n` +
                 `🔹 *رقم الطلب:* ${orderId}\n` +
                 `${clientDetailsMsg}` +
                 `${executionLine}\n` +
@@ -1844,7 +1862,14 @@
 
         function openInvoiceModal(order) {
             document.getElementById('invOrderId').innerText = order.orderId;
-            document.getElementById('invCustName').innerText = order.name;
+            
+            let nameRow = document.getElementById('invCustNameRow');
+            if (order.name && order.name.includes('غير مطلوب')) {
+                if(nameRow) nameRow.style.display = 'none';
+            } else {
+                if(nameRow) nameRow.style.display = 'block';
+                document.getElementById('invCustName').innerText = order.name;
+            }
             
             let phoneRow = document.getElementById('invCustPhoneRow');
             if (order.phone && order.phone.includes('غير مطلوب')) {
