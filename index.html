@@ -743,7 +743,6 @@
             setTimeout(() => { toast.style.display = 'none'; }, 2500);
         }
 
-        // دوال نافذة التأكيد المخصصة للحذف
         function showCustomConfirm(onConfirmCallback) {
             let modal = document.getElementById('customConfirmModal');
             let yesBtn = document.getElementById('confirmYesBtn');
@@ -751,7 +750,6 @@
             
             modal.style.display = 'flex';
             
-            // إزالة الأحداث السابقة لمنع التكرار
             let newYesBtn = yesBtn.cloneNode(true);
             yesBtn.parentNode.replaceChild(newYesBtn, yesBtn);
             
@@ -1305,7 +1303,7 @@
 
         function deleteApprovedReview(key) {
             if(!db) return;
-            db.ref('approvedReviews').remove().then(() => {
+            db.ref('approvedReviews/' + key).remove().then(() => {
                 showToast('تم حذف التقييم المنشور بنجاح 🗑️');
                 renderAdminApprovedReviews();
                 updateRatingCountUI();
@@ -1680,6 +1678,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('product_id');
             const orderId = urlParams.get('order_id');
+            const openParam = urlParams.get('open');
 
             if (productId) {
                 getProducts(products => {
@@ -1700,6 +1699,11 @@
                         if(invModal) invModal.style.display = 'none';
                     }
                 });
+            } else if (openParam === 'review') {
+                // فتح نافذة التقييمات مباشرة ومفتوحة على إضافة تقييم أو عرض التقييمات كما في الصورة
+                let modal = document.getElementById('publicReviewsModal');
+                if(modal) modal.style.display = 'flex';
+                loadApprovedReviews();
             }
         }
 
@@ -2059,7 +2063,7 @@
                 let ctitle = document.getElementById('txt-cat-title');
                 if(ctitle) ctitle.innerText = 'الأقسام:';
                 let ptitle = document.getElementById('txt-products-title');
-                if(ptitle) ptitle.innerText = 'المنتجات والخدمات المعروضة';
+                if(ptitle) ptitle.innerText = ' المنتجات والخدمات المعروضة';
                 let contact = document.getElementById('contactBtn');
                 if(contact) contact.innerText = 'للتواصل واتساب';
                 let search = document.getElementById('searchInput');
