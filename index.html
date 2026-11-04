@@ -201,10 +201,7 @@
         .review-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .review-author-side { display: flex; align-items: center; gap: 8px; }
         .review-author { font-weight: 800; color: #0f172a; font-size: 0.92rem; }
-        
-        /* لون النجوم في التقييمات صار أخضر غامق تماماً مثل طلبك */
         .review-stars { color: #006400; font-size: 0.95rem; letter-spacing: 0.5px; }
-        
         .review-time { font-size: 0.72rem; color: #64748b; font-weight: 600; }
         .review-comment { color: #334155; line-height: 1.4; font-size: 0.85rem; }
         .review-img-thumb { width: 65px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer; margin-top: 4px; }
@@ -517,7 +514,7 @@
         </div>
     </div>
 
-    <!-- نافذة إتمام الطلب -->
+    <!-- نافذة إتمام الطلب الذكية المعدلة للخدمات والمنتجات -->
     <div id="checkoutModal" class="checkout-modal">
         <div class="checkout-box">
             <h3>إكمال بيانات الطلب <i class="fa-solid fa-cart-shopping"></i></h3>
@@ -529,7 +526,9 @@
                 <label>رقم الجوال:</label>
                 <input type="tel" id="custPhone" placeholder="05xxxxxxxx">
             </div>
-            <div>
+
+            <!-- قسم حقول الموقع (يظهر فقط إذا كان في السلة منتج شحن) -->
+            <div id="locationFieldBlock">
                 <label><i class="fa-solid fa-location-dot"></i> الموقع (العنوان الشارع والحي):</label>
                 <div style="display: flex; gap: 6px; margin-bottom: 4px;">
                     <input type="text" id="custLocation" placeholder="اضغط زر تحديد الموقع تلقائياً أو اكتبه" readonly style="background: #f8fafc; font-size: 0.78rem;">
@@ -537,19 +536,18 @@
                 </div>
                 <input type="text" id="custExtraAddr" placeholder="تفاصيل إضافية (رقم المبنى / الشقة / الشارع)" style="margin-top: 2px;">
             </div>
+
+            <!-- قسم خيارات الشحن والخدمات الذكية -->
             <div>
-                <label><i class="fa-solid fa-car"></i> خيارات التوصيل والشحن:</label>
-                <select id="shippingMethod">
-                    <option value="توصيل داخل جدة (يتم الاتفاق على السعر بالواتساب)">توصيل داخل جدة (يُحدد بالواتساب)</option>
-                    <option value="شحن لجميع مدن المملكة (يتم الاتفاق على السعر بالواتساب)">شحن لجميع المدن (يُحدد بالواتساب)</option>
-                    <option value="استلام شخصي من المقر (مجاناً)">استلام شخصي من المقر (مجاناً)</option>
-                </select>
+                <label id="shippingMethodLabel"><i class="fa-solid fa-car"></i> طريقة التوصيل الشحن / تنفيذ الخدمة:</label>
+                <select id="shippingMethod"></select>
             </div>
+
             <div>
                 <label>طريقة الدفع:</label>
                 <select id="payMethod">
-                    <option value="الدفع عند الاستلام (شحن قيمة الشحن مقدماً)">الدفع عند الاستلام (شحن قيمة الشحن مقدماً)</option>
                     <option value="دفع كامل إلكترونياً (تحويل بنكي / مدى)">دفع كامل إلكترونياً (تحويل بنكي / مدى)</option>
+                    <option value="الدفع عند الاستلام (شحن قيمة الشحن مقدماً)" id="codOption">الدفع عند الاستلام (شحن قيمة الشحن مقدماً)</option>
                 </select>
             </div>
             <button onclick="sendToWhatsApp()" class="admin-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-top: 4px;">تأكيد وإرسال الطلب للواتساب <i class="fa-brands fa-whatsapp"></i></button>
@@ -568,8 +566,8 @@
             <div class="invoice-section">
                 <p><strong>اسم العميل:</strong> <span id="invCustName"></span></p>
                 <p><strong>رقم الجوال:</strong> <span id="invCustPhone"></span></p>
-                <p><strong>الموقع والعنوان:</strong> <span id="invCustCity"></span></p>
-                <p><strong>خيارات التوصيل:</strong> <span id="invShipping"></span></p>
+                <p id="invCustCityRow"><strong>الموقع والعنوان:</strong> <span id="invCustCity"></span></p>
+                <p><strong>خيارات الخدمة / التوصيل:</strong> <span id="invShipping"></span></p>
                 <p><strong>طريقة الدفع:</strong> <span id="invPayMethod"></span></p>
             </div>
             <div class="invoice-section">
@@ -695,7 +693,14 @@
             <form id="addProductForm">
                 <div class="form-group">
                     <label>عنوان المنتج / الخدمة:</label>
-                    <input type="text" id="pTitle" required placeholder="مثال: كمبيوتر ألعاب i5">
+                    <input type="text" id="pTitle" required placeholder="مثال: فك أيكلاود / كمبيوتر ألعاب">
+                </div>
+                <div class="form-group">
+                    <label>نوع المنتج/الخدمة (مهم للطلب):</label>
+                    <select id="pType" required style="font-weight: bold; color: #2563eb;">
+                        <option value="digital">🛠️ خدمة رقمية / صيانة عن بُعد (بدون شحن أو موقع)</option>
+                        <option value="physical">📦 منتج عادي / جهاز مادي (يتطلب توصيل أو شحن)</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>اختر القسم:</label>
@@ -703,15 +708,15 @@
                 </div>
                 <div class="form-group">
                     <label>السعر الحالي (ر.س):</label>
-                    <input type="text" id="pPrice" required placeholder="مثال: 5449">
+                    <input type="text" id="pPrice" required placeholder="مثال: 150">
                 </div>
                 <div class="form-group">
                     <label>السعر قبل الخصم (اختياري):</label>
-                    <input type="text" id="pOldPrice" placeholder="مثال: 5999">
+                    <input type="text" id="pOldPrice" placeholder="مثال: 200">
                 </div>
                 <div class="form-group">
                     <label>الشارة (Badge):</label>
-                    <input type="text" id="pBadge" placeholder="مثال: إكسبرس / جديد">
+                    <input type="text" id="pBadge" placeholder="مثال: خدمة فوريّة / إكسبرس">
                 </div>
                 <div class="form-group">
                     <label>اختر الصور من الاستوديو (متعددة):</label>
@@ -721,7 +726,7 @@
                     <label>الوصف:</label>
                     <textarea id="pDesc" rows="2" required placeholder="المواصفات والتفاصيل..."></textarea>
                 </div>
-                <button type="submit" class="admin-btn">إضافة المنتج للمتجر</button>
+                <button type="submit" class="admin-btn">إضافة المنتج/الخدمة للمتجر</button>
             </form>
             <div>
                 <label style="color:#64748b; font-size:0.78rem; display:block; margin-bottom:3px;">المنتجات الحالية:</label>
@@ -1668,12 +1673,42 @@
             });
         }
 
+        // التكيف الذكي لطلب العميل بناءً على نوع المنتجات في السلة
         function openCheckoutModal() {
             let cart = getCart();
             if (cart.length === 0) {
                 showToast('السلة فارغة!');
                 return;
             }
+
+            // فحص هل السلة فيها أي منتج فيزيائي يحتاج شحن
+            let hasPhysicalItem = cart.some(item => item.type === 'physical');
+            let locationBlock = document.getElementById('locationFieldBlock');
+            let shippingSelect = document.getElementById('shippingMethod');
+            let shippingLabel = document.getElementById('shippingMethodLabel');
+            let codOption = document.getElementById('codOption');
+
+            if (hasPhysicalItem) {
+                // إذا كان فيه منتج فيزيائي: إظهار الموقع والشحن العادي
+                locationBlock.style.display = 'block';
+                shippingLabel.innerHTML = '<i class="fa-solid fa-car"></i> خيارات التوصيل والشحن:';
+                shippingSelect.innerHTML = `
+                    <option value="توصيل داخل جدة (يتم الاتفاق على السعر بالواتساب)">توصيل داخل جدة (يُحدد بالواتساب)</option>
+                    <option value="شحن لجميع مدن المملكة (يتم الاتفاق على السعر بالواتساب)">شحن لجميع المدن (يُحدد بالواتساب)</option>
+                    <option value="حضور واستلام شخصي (مجاناً)">حضور واستلام شخصي (مجاناً)</option>
+                `;
+                if(codOption) codOption.style.display = 'block';
+            } else {
+                // إذا كانت جميعها خدمات رقمية / صيانة عن بُعد: إخفاء الموقع والشحن العادي
+                locationBlock.style.display = 'none';
+                shippingLabel.innerHTML = '<i class="fa-solid fa-wrench"></i> طريقة تنفيذ الخدمة الصيانة:';
+                shippingSelect.innerHTML = `
+                    <option value="تنفيذ الخدمة عن بُعد (أونلاين / برامج الصيانة)">تنفيذ الخدمة عن بُعد (أونلاين / أونلاين)</option>
+                    <option value="حضور الفني لموقعك / إحضار الجهاز">حضور الفني لموقعك / إحضار الجهاز</option>
+                `;
+                if(codOption) codOption.style.display = 'none';
+            }
+
             let modal = document.getElementById('checkoutModal');
             if(modal) modal.style.display = 'flex';
             toggleCart();
@@ -1687,19 +1722,26 @@
         function sendToWhatsApp() {
             const name = document.getElementById('custName').value.trim();
             const phone = document.getElementById('custPhone').value.trim();
-            const location = document.getElementById('custLocation').value.trim();
-            const extraAddr = document.getElementById('custExtraAddr').value.trim();
             const shippingSelect = document.getElementById('shippingMethod');
             const shippingText = shippingSelect.value;
             const payMethod = document.getElementById('payMethod').value;
+            let cart = getCart();
 
-            if (!name || !phone || !location) {
-                showToast('يرجى تعبئة اسم العميل ورقم الجوال وتحديد الموقع!');
+            let hasPhysicalItem = cart.some(item => item.type === 'physical');
+            const location = document.getElementById('custLocation').value.trim();
+            const extraAddr = document.getElementById('custExtraAddr').value.trim();
+
+            if (!name || !phone) {
+                showToast('يرجى تعبئة الاسم ورقم الجوال!');
                 return;
             }
 
-            let fullAddress = location + (extraAddr ? ` (${extraAddr})` : '');
-            let cart = getCart();
+            if (hasPhysicalItem && !location) {
+                showToast('يرجى تحديد موقع التوصيل والعنوان!');
+                return;
+            }
+
+            let fullAddress = hasPhysicalItem ? (location + (extraAddr ? ` (${extraAddr})` : '')) : 'غير مطلوب (خدمة رقمية / عن بُعد)';
             let orderId = "ORD-" + Date.now().toString().slice(-6);
             let baseUrl = window.location.href.split('?')[0];
 
@@ -1725,8 +1767,10 @@
 
             cart.forEach(item => {
                 let productLink = `${baseUrl}?product_id=${item.id}`;
-                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n🔗 رابط المنتج: ${productLink}\n\n`;
+                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n🔗 رابط الخدمة/المنتج: ${productLink}\n\n`;
             });
+
+            let locationSection = hasPhysicalItem ? `📍 *الموقع (الشارع والحي):* ${fullAddress}\n` : `💻 *نوع الطلب:* خدمة رقمية / صيانة عن بُعد\n`;
 
             let fullMsg = encodeURIComponent(
                 `✨ *طلب جديد من متجر المتخصصون في صيانة الأجهزة* ✨\n` +
@@ -1735,8 +1779,8 @@
                 `🔹 *رقم الطلب:* ${orderId}\n` +
                 `👤 *اسم العميل:* ${name}\n` +
                 `📱 *رقم الجوال:* ${phone}\n` +
-                `📍 *الموقع (الشارع والحي):* ${fullAddress}\n` +
-                `🚗 *طريقة التوصيل:* ${shippingText}\n` +
+                `${locationSection}` +
+                `🛠️ *طريقة تنفيذ الخدمة/التوصيل:* ${shippingText}\n` +
                 `💳 *طريقة الدفع:* ${payMethod}\n\n` +
                 `📦 *قائمة المنتجات والخدمات:*\n` +
                 `${cartTextDetails}` +
@@ -1787,11 +1831,18 @@
             document.getElementById('invOrderId').innerText = order.orderId;
             document.getElementById('invCustName').innerText = order.name;
             document.getElementById('invCustPhone').innerText = order.phone;
-            document.getElementById('invCustCity').innerText = order.city;
+            
+            let cityRow = document.getElementById('invCustCityRow');
+            if (order.city && order.city.includes('غير مطلوب')) {
+                if(cityRow) cityRow.style.display = 'none';
+            } else {
+                if(cityRow) cityRow.style.display = 'block';
+                document.getElementById('invCustCity').innerText = order.city;
+            }
             
             let shippingElem = document.getElementById('invShipping');
             if (shippingElem) {
-                shippingElem.innerText = order.shipping || 'توصيل محلي';
+                shippingElem.innerText = order.shipping || 'خدمة صيانة / توصيل';
             }
 
             document.getElementById('invPayMethod').innerText = order.payMethod;
@@ -1989,10 +2040,11 @@
 
                 if (products && Array.isArray(products)) {
                     products.forEach(p => {
+                        let typeTag = p.type === 'physical' ? '📦 منتج شحن' : '🛠️ خدمة رقمية';
                         const row = document.createElement('div');
                         row.className = 'item-row';
                         row.innerHTML = `
-                            <span style="font-size: 0.78rem; color:#0f172a;">${p.title}</span>
+                            <span style="font-size: 0.78rem; color:#0f172a;">${p.title} <small style="color:#2563eb;">(${typeTag})</small></span>
                             <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
                         `;
                         list.appendChild(row);
@@ -2059,6 +2111,7 @@
                 const newProduct = {
                     id: Date.now(),
                     title: document.getElementById('pTitle').value,
+                    type: document.getElementById('pType').value || 'digital',
                     category: document.getElementById('pCategory').value,
                     price: document.getElementById('pPrice').value,
                     oldPrice: document.getElementById('pOldPrice').value || '',
@@ -2070,7 +2123,7 @@
                 saveProductsToCloud(currentProducts);
                 let form = document.getElementById('addProductForm');
                 if(form) form.reset();
-                showToast('تمت إضافة المنتج سحابياً بنجاح ✔️');
+                showToast('تمت إضافة المنتج/الخدمة سحابياً بنجاح ✔️');
             });
         }
 
