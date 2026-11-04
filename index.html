@@ -306,7 +306,6 @@
                 <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
             </div>
 
-            <!-- صندوق التقييمات في الهيدر متضمن النجوم ورقم 5.5 وعدد التقييمات -->
             <div class="header-ratings-box" onclick="openPublicReviewsModal(event)">
                 <div style="color: #eab308; font-size: 14px; letter-spacing: 1px; line-height: 1; display: flex; align-items: center; gap: 2px;">
                     <i class="fa-solid fa-star"></i>
@@ -1672,7 +1671,7 @@
 
         function onShippingMethodChanged() {
             let cart = getCart();
-            let hasPhysicalItem = cart.some(item => item.type === 'physical');
+            let hasPhysicalItem = cart.some(item => item.type === 'physical' || item.type === 'product');
             if(hasPhysicalItem) return;
 
             let shippingSelect = document.getElementById('shippingMethod');
@@ -1699,7 +1698,8 @@
                 return;
             }
 
-            let hasPhysicalItem = cart.some(item => item.type === 'physical');
+            // فحص دقيق وشامل لأنواع المنتجات في السلة (يدعم physical أو أي منتج مادي تم إضافته سابقاً)
+            let hasPhysicalItem = cart.some(item => item.type === 'physical' || item.type === 'product' || (item.category && item.category.includes('product')));
             let locationBlock = document.getElementById('locationFieldBlock');
             let nameFieldBlock = document.getElementById('nameFieldBlock');
             let phoneFieldBlock = document.getElementById('phoneFieldBlock');
@@ -1754,7 +1754,7 @@
             const payMethod = document.getElementById('payMethod').value;
             let cart = getCart();
 
-            let hasPhysicalItem = cart.some(item => item.type === 'physical');
+            let hasPhysicalItem = cart.some(item => item.type === 'physical' || item.type === 'product' || (item.category && item.category.includes('product')));
             const location = document.getElementById('custLocation').value.trim();
             const extraAddr = document.getElementById('custExtraAddr').value.trim();
 
@@ -1805,7 +1805,6 @@
                 ? `🚚 *طريقة التوصيل:* ${shippingText}` 
                 : `🛠️ *طريقة تنفيذ الخدمة:* ${shippingText}`;
 
-            // تم حذف عبارة "طلب جديد من متجر المتخصصون في صيانة الأجهزة" بناءً على طلبك
             let fullMsg = encodeURIComponent(
                 `📌 *بيانات الطلب:*\n` +
                 `🔹 *رقم الطلب:* ${orderId}\n` +
