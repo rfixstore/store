@@ -153,7 +153,6 @@
 
         .section-title { padding: 15px 15px 5px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.1rem; color: #0f172a; font-weight: 800; }
         
-        /* تعديل شبكة المنتجات لتصبح عمودين مثل تصميم نون */
         .grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
@@ -188,7 +187,6 @@
         .card-img-wrap { width: 100%; height: 115px; background: #f8fafc; border-radius: 6px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; position: relative; }
         .card img { width: 100%; height: 100%; object-fit: contain; }
         
-        /* زر الإضافة السريع الصغير على شكل (+) مثل نون */
         .quick-add-btn {
             position: absolute;
             bottom: 6px;
@@ -304,7 +302,7 @@
         .pass-box input { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.95rem; text-align: center; letter-spacing: 3px; }
 
         .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2100; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); }
-        .admin-box { background: #ffffff; width: 100%; max-width: 580px; max-height: 90vh; overflow-y: auto; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .admin-box { background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
         .admin-header h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; }
         .admin-sec-title { color: #2563eb; font-size: 0.95rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px; margin-top: 8px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
@@ -409,7 +407,7 @@
         <div class="custom-confirm-box">
             <div style="font-size: 2rem; color: #ef4444; line-height: 1;"><i class="fa-solid fa-triangle-exclamation"></i></div>
             <h4>تأكيد الحذف</h4>
-            <p>هل أنت متأكد من حذف هذا الطلب نهائياً من النظام؟</p>
+            <p>هل أنت متأكد من حذف هذا العنصر نهائياً من النظام؟</p>
             <div class="confirm-btns">
                 <button type="button" id="confirmYesBtn" class="confirm-yes">نعم، حذف</button>
                 <button type="button" onclick="closeCustomConfirm()" class="confirm-no">إلغاء</button>
@@ -561,7 +559,6 @@
         </div>
     </div>
 
-    <!-- نافذة إتمام الطلب الذكية المعدلة للخدمات والمنتجات -->
     <div id="checkoutModal" class="checkout-modal">
         <div class="checkout-box">
             <h3>إكمال بيانات الطلب <i class="fa-solid fa-cart-shopping"></i></h3>
@@ -574,7 +571,6 @@
                 <input type="tel" id="custPhone" placeholder="05xxxxxxxx">
             </div>
 
-            <!-- قسم حقول الموقع (يظهر فقط إذا كان في السلة منتج شحن) -->
             <div id="locationFieldBlock">
                 <label><i class="fa-solid fa-location-dot"></i> الموقع (العنوان الشارع والحي):</label>
                 <div style="display: flex; gap: 6px; margin-bottom: 4px;">
@@ -584,7 +580,6 @@
                 <input type="text" id="custExtraAddr" placeholder="تفاصيل إضافية (رقم المبنى / الشقة / الشارع)" style="margin-top: 2px;">
             </div>
 
-            <!-- قسم خيارات الشحن والخدمات الذكية -->
             <div>
                 <label id="shippingMethodLabel"><i class="fa-solid fa-wrench"></i> طريقة تنفيذ الخدمة:</label>
                 <select id="shippingMethod" onchange="onShippingMethodChanged()"></select>
@@ -599,7 +594,6 @@
         </div>
     </div>
 
-    <!-- نافذة الفاتورة الرسمية للطلب -->
     <div id="invoiceModal" class="invoice-modal">
         <div class="invoice-box">
             <div class="invoice-header">
@@ -648,29 +642,55 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم الإدارية -->
+    <!-- لوحة التحكم الإدارية مع نظام التقارير والمخزون المالي -->
     <div id="adminModal" class="admin-modal">
         <div class="admin-box">
             <div class="admin-header">
-                <h3>لوحة التحكم والإدارة</h3>
+                <h3>لوحة التحكم والإدارة والمخزون المالي</h3>
                 <button onclick="toggleAdminModal()" class="close-cart">&times;</button>
             </div>
             
-            <div style="margin-top: 5px;">
-                <button onclick="openAdminReviewsModal()" class="admin-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem;">
-                    <span><i class="fa-solid fa-inbox"></i> إدارة التقييمات المعلقة</span>
-                    <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;" id="pendingBadgeCount">0</span>
+            <!-- قسم التقارير المالية والأرباح -->
+            <h4 class="admin-sec-title">📈 التقارير المالية والأرباح (اليوم / الشهر / السنة)</h4>
+            <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #cbd5e1; display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <select id="reportFilterType" onchange="updateFinancialReport()" style="padding:6px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.8rem; flex:1;">
+                        <option value="today">اليوم</option>
+                        <option value="week">هذا الأسبوع</option>
+                        <option value="month">هذا الشهر</option>
+                        <option value="year">هذه السنة</option>
+                        <option value="all">الكل</option>
+                    </select>
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; font-size:0.82rem;">
+                    <div style="background:#eff6ff; padding:8px; border-radius:6px; border:1px solid #bfdbfe;">
+                        <span style="color:#1e3a8a; display:block; font-weight:bold;">إجمالي المبيعات:</span>
+                        <strong id="repTotalSales" style="font-size:1rem; color:#0f172a;">0 ر.س</strong>
+                    </div>
+                    <div style="background:#ecfdf5; padding:8px; border-radius:6px; border:1px solid #a7f3d0;">
+                        <span style="color:#065f46; display:block; font-weight:bold;">صافي الأرباح:</span>
+                        <strong id="repNetProfit" style="font-size:1rem; color:#047857;">0 ر.س</strong>
+                    </div>
+                </div>
+                <div style="background:#fffbeb; padding:8px; border-radius:6px; border:1px solid #fde68a; font-size:0.78rem; display:flex; justify-content:space-around; text-align:center;">
+                    <div>💵 كاش: <strong id="repCashSales">0 ر.س</strong></div>
+                    <div>💳 شبكة: <strong id="repCardSales">0 ر.س</strong></div>
+                    <div>🏦 تحويل: <strong id="repTransferSales">0 ر.س</strong></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 5px; display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                <button onclick="openAdminReviewsModal()" class="admin-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                    <span><i class="fa-solid fa-inbox"></i> التقييمات المعلقة</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;" id="pendingBadgeCount">0</span>
+                </button>
+                <button onclick="openAdminApprovedModal()" class="admin-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                    <span><i class="fa-solid fa-star" style="color: #006400;"></i> التقييمات المنشورة</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;" id="approvedBadgeCount">0</span>
                 </button>
             </div>
 
-            <div style="margin-top: 6px;">
-                <button onclick="openAdminApprovedModal()" class="admin-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem;">
-                    <span><i class="fa-solid fa-star" style="color: #006400;"></i> إدارة التقييمات المنشورة (حذف)</span>
-                    <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;" id="approvedBadgeCount">0</span>
-                </button>
-            </div>
-
-            <!-- القسم الأول: الطلبات الجارية / النشطة -->
+            <!-- الطلبات الجارية وتعديل الرسوم -->
             <h4 class="admin-sec-title">📦 1. الطلبات الجارية وتعديل الرسوم</h4>
             <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
                 <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">اختر الطلب الجاري:</label>
@@ -685,12 +705,12 @@
                 </div>
 
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:6px;">
-                    <button type="button" onclick="markOrderAsSold()" class="admin-btn" style="background:#2563eb; font-size:0.78rem; padding:8px;">✅ تم البيع (تثبيت الفاتورة)</button>
+                    <button type="button" onclick="markOrderAsSold()" class="admin-btn" style="background:#2563eb; font-size:0.78rem; padding:8px;">✅ تم البيع (تسجيل المبيعات)</button>
                     <button type="button" onclick="deleteActiveOrder()" class="del-btn" style="font-size:0.78rem; padding:8px;">حذف نهائي ❌</button>
                 </div>
             </div>
 
-            <!-- القسم الثاني: قسم تم البيع (الفواتير المثبتة) -->
+            <!-- قسم تم البيع -->
             <h4 class="admin-sec-title">✅ 2. قسم "تم البيع" (الفواتير المثبتة)</h4>
             <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
                 <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">الطلبات المباعة:</label>
@@ -701,7 +721,7 @@
                 </div>
             </div>
 
-            <!-- القسم الثالث: قسم تأجيل البيع (مع التاريخ) -->
+            <!-- قسم تأجيل البيع -->
             <h4 class="admin-sec-title">⏳ 3. قسم "تأجيل البيع" (تحديد تاريخ)</h4>
             <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
                 <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">اختر الطلب للتأجيل:</label>
@@ -733,14 +753,15 @@
                 <div id="adminCatsList" style="max-height: 80px; overflow-y: auto;"></div>
             </div>
 
-            <h4 class="admin-sec-title">📦 إدارة المنتجات والخدمات</h4>
+            <!-- إدارة المنتجات مع إضافة التكلفة والمخزون -->
+            <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة للأرباح</h4>
             <form id="addProductForm">
                 <div class="form-group">
                     <label>عنوان المنتج / الخدمة:</label>
                     <input type="text" id="pTitle" required placeholder="مثال: فك أيكلاود / كمبيوتر ألعاب">
                 </div>
                 <div class="form-group">
-                    <label>نوع المنتج/الخدمة (مهم للطلب):</label>
+                    <label>نوع المنتج/الخدمة:</label>
                     <select id="pType" required style="font-weight: bold; color: #2563eb;">
                         <option value="digital">🛠️ خدمة رقمية / صيانة عن بُعد (بدون شحن أو موقع)</option>
                         <option value="physical">📦 منتج عادي / جهاز مادي (يتطلب توصيل أو شحن)</option>
@@ -750,13 +771,25 @@
                     <label>اختر القسم:</label>
                     <select id="pCategory" required></select>
                 </div>
-                <div class="form-group">
-                    <label>السعر الحالي (ر.س):</label>
-                    <input type="text" id="pPrice" required placeholder="مثال: 150">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div class="form-group">
+                        <label>سعر التكلفة (ر.س):</label>
+                        <input type="text" id="pCost" required placeholder="مثال: 80">
+                    </div>
+                    <div class="form-group">
+                        <label>سعر البيع (ر.س):</label>
+                        <input type="text" id="pPrice" required placeholder="مثال: 150">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>السعر قبل الخصم (اختياري):</label>
-                    <input type="text" id="pOldPrice" placeholder="مثال: 200">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div class="form-group">
+                        <label>السعر قبل الخصم (اختياري):</label>
+                        <input type="text" id="pOldPrice" placeholder="مثال: 200">
+                    </div>
+                    <div class="form-group">
+                        <label>الكمية بالمخزون:</label>
+                        <input type="number" id="pStock" value="10" required placeholder="مثال: 10">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>الشارة (Badge):</label>
@@ -773,8 +806,8 @@
                 <button type="submit" class="admin-btn">إضافة المنتج/الخدمة للمتجر</button>
             </form>
             <div>
-                <label style="color:#64748b; font-size:0.78rem; display:block; margin-bottom:3px;">المنتجات الحالية:</label>
-                <div id="adminItemsList" style="max-height: 100px; overflow-y: auto;"></div>
+                <label style="color:#64748b; font-size:0.78rem; display:block; margin-bottom:3px;">المنتجات والمخزون الحالي:</label>
+                <div id="adminItemsList" style="max-height: 120px; overflow-y: auto;"></div>
             </div>
         </div>
     </div>
@@ -971,6 +1004,7 @@
                 renderAdminProducts();
                 updateCategorySelectOptions();
                 loadAdminAllOrders();
+                updateFinancialReport();
             }
         }
 
@@ -1002,7 +1036,7 @@
                     let status = ord.status || 'active';
                     let opt = document.createElement('option');
                     opt.value = k;
-                    opt.innerText = `${ord.orderId} - ${ord.name || 'عميل'} (${ord.phone || 'خدمة'})`;
+                    opt.innerText = `${ord.orderId} - ${ord.name || 'عميل'} (${ord.payMethod || 'كاش'})`;
 
                     if(status === 'sold') {
                         if(soldSelect) soldSelect.appendChild(opt);
@@ -1015,6 +1049,76 @@
 
                 onOrderSelectedInAdmin();
                 onDelayedOrderSelected();
+            });
+        }
+
+        // حساب التقارير المالية والأرباح بدقة
+        function updateFinancialReport() {
+            if(!db) return;
+            db.ref('orders').once('value', snapshot => {
+                let data = snapshot.val();
+                if(!data) return;
+
+                let filterType = document.getElementById('reportFilterType').value;
+                let now = new Date();
+                
+                let totalSales = 0;
+                let netProfit = 0;
+                let cashSales = 0;
+                let cardSales = 0;
+                let transferSales = 0;
+
+                Object.values(data).forEach(ord => {
+                    if (ord.status !== 'sold') return; // نحسب فقط الطلبات المباعة
+
+                    let ordDate = new Date(ord.createdAt || Date.now());
+                    
+                    // فلترة التواريخ
+                    if (filterType === 'today') {
+                        if (ordDate.toDateString() !== now.toDateString()) return;
+                    } else if (filterType === 'week') {
+                        let diffDays = (now - ordDate) / (1000 * 60 * 60 * 24);
+                        if (diffDays > 7) return;
+                    } else if (filterType === 'month') {
+                        if (ordDate.getMonth() !== now.getMonth() || ordDate.getFullYear() !== now.getFullYear()) return;
+                    } else if (filterType === 'year') {
+                        if (ordDate.getFullYear() !== now.getFullYear()) return;
+                    }
+
+                    let orderItemsTotal = 0;
+                    let orderItemsCost = 0;
+
+                    if (ord.items && Array.isArray(ord.items)) {
+                        ord.items.forEach(item => {
+                            let price = parseFloat(item.price || 0);
+                            let cost = parseFloat(item.cost || 0);
+                            orderItemsTotal += price;
+                            orderItemsCost += cost;
+                        });
+                    }
+
+                    let shippingFee = parseFloat(ord.shippingFee || 0);
+                    let ordTotal = orderItemsTotal + shippingFee;
+                    let ordProfit = (orderItemsTotal - orderItemsCost); // الربح من المنتجات
+
+                    totalSales += ordTotal;
+                    netProfit += ordProfit;
+
+                    let pay = (ord.payMethod || '').toLowerCase();
+                    if (pay.includes('نقدي') || pay.includes('كاش')) {
+                        cashSales += ordTotal;
+                    } else if (pay.includes('مدى') || pay.includes('بطاقة') || pay.includes('إلكترونياً')) {
+                        cardSales += ordTotal;
+                    } else {
+                        transferSales += ordTotal;
+                    }
+                });
+
+                document.getElementById('repTotalSales').innerText = totalSales.toFixed(2) + ' ر.س';
+                document.getElementById('repNetProfit').innerText = netProfit.toFixed(2) + ' ر.س';
+                document.getElementById('repCashSales').innerText = cashSales.toFixed(2) + ' ر.س';
+                document.getElementById('repCardSales').innerText = cardSales.toFixed(2) + ' ر.س';
+                document.getElementById('repTransferSales').innerText = transferSales.toFixed(2) + ' ر.س';
             });
         }
 
@@ -1073,8 +1177,9 @@
             }
 
             db.ref('orders/' + orderKey + '/status').set('sold').then(() => {
-                showToast('تم نقل الطلب إلى قسم (تم البيع) وتثبيت الفاتورة ✔️');
+                showToast('تم نقل الطلب إلى قسم (تم البيع) وتسجيل المبيعات في الأرباح ✔️');
                 loadAdminAllOrders();
+                updateFinancialReport();
             });
         }
 
@@ -1090,6 +1195,7 @@
             db.ref('orders/' + orderKey + '/status').set('active').then(() => {
                 showToast('تم إرجاع الطلب إلى الطلبات الجارية 🔄');
                 loadAdminAllOrders();
+                updateFinancialReport();
             });
         }
 
@@ -1158,6 +1264,7 @@
                 db.ref('orders/' + orderKey).remove().then(() => {
                     showToast('تم حذف الطلب بنجاح 🗑️');
                     loadAdminAllOrders();
+                    updateFinancialReport();
                 }).catch(err => {
                     showToast('حدث خطأ أثناء الحذف');
                 });
@@ -1765,6 +1872,7 @@
                 payMethodSelect.innerHTML = `
                     <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
                     <option value="الدفع عند الاستلام (شحن قيمة الشحن مقدماً)">الدفع عند الاستلام (شحن قيمة الشحن مقدماً)</option>
+                    <option value="نقدي (كاش)">نقدي (كاش)</option>
                 `;
             } else {
                 nameFieldBlock.style.display = 'none';
@@ -1777,6 +1885,7 @@
                 `;
                 payMethodSelect.innerHTML = `
                     <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
+                    <option value="نقدي (كاش)">نقدي (كاش)</option>
                 `;
             }
 
@@ -2128,11 +2237,11 @@
 
                 if (products && Array.isArray(products)) {
                     products.forEach(p => {
-                        let typeTag = p.type === 'physical' ? '📦 منتج شحن' : '🛠️ خدمة رقمية';
+                        let stockVal = p.stock !== undefined ? p.stock : 10;
                         const row = document.createElement('div');
                         row.className = 'item-row';
                         row.innerHTML = `
-                            <span style="font-size: 0.78rem; color:#0f172a;">${p.title} <small style="color:#2563eb;">(${typeTag})</small></span>
+                            <span style="font-size: 0.78rem; color:#0f172a;">${p.title} <small style="color:#2563eb;">(الكمية: ${stockVal})</small></span>
                             <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
                         `;
                         list.appendChild(row);
@@ -2201,8 +2310,10 @@
                     title: document.getElementById('pTitle').value,
                     type: document.getElementById('pType').value || 'digital',
                     category: document.getElementById('pCategory').value,
+                    cost: document.getElementById('pCost').value || '0',
                     price: document.getElementById('pPrice').value,
                     oldPrice: document.getElementById('pOldPrice').value || '',
+                    stock: document.getElementById('pStock').value || '10',
                     badge: document.getElementById('pBadge').value || 'إكسبرس',
                     images: imagesArray,
                     desc: document.getElementById('pDesc').value
@@ -2211,7 +2322,7 @@
                 saveProductsToCloud(currentProducts);
                 let form = document.getElementById('addProductForm');
                 if(form) form.reset();
-                showToast('تمت إضافة المنتج/الخدمة سحابياً بنجاح ✔️');
+                showToast('تمت إضافة المنتج والمخزون سحابياً بنجاح ✔️');
             });
         }
 
@@ -2284,7 +2395,7 @@
                 let contact = document.getElementById('contactBtn');
                 if(contact) contact.innerHTML = '<i class="fa-brands fa-whatsapp" style="margin-left: 4px; font-size: 0.9rem;"></i> للتواصل واتساب';
                 let search = document.getElementById('searchInput');
-                if(search) search.placeholder = 'What are you looking for?';
+                if(search) search.placeholder = 'ما الذي تبحث عنه؟';
             }
         }
 
