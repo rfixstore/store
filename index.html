@@ -302,7 +302,6 @@
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
         .admin-header h3 { color: #0f172a; font-size: 1.2rem; font-weight: 900; }
         
-        /* تنيسقات تبويبات لوحة التحكم (Tabs) واضحة وغامقة تماماً */
         .admin-tabs {
             display: flex;
             gap: 6px;
@@ -369,6 +368,7 @@
 
         .item-row { background: #f8fafc; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 800; }
         .del-btn { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 900; }
+        .edit-btn { background: #f59e0b; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 900; margin-left: 4px; }
         .approve-btn { background: #10b981; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 900; }
 
         .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 9px 20px; border-radius: 30px; font-size: 0.9rem; z-index: 3000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 900; text-align: center; }
@@ -467,7 +467,6 @@
         </div>
     </footer>
 
-    <!-- نافذة عرض التقييمات المنشورة للعملاء -->
     <div id="publicReviewsModal" class="modal-overlay">
         <div class="modal-card" style="height: 85vh; display: flex; flex-direction: column;">
             <h3>
@@ -485,7 +484,6 @@
         </div>
     </div>
 
-    <!-- نافذة إدخال بيانات التقييم الجديدة للعميل -->
     <div id="addReviewModal" class="add-review-modal">
         <div class="add-review-box">
             <h3>
@@ -514,7 +512,6 @@
         </div>
     </div>
 
-    <!-- نافذة إدارة التقييمات المعلقة المستقلة -->
     <div id="adminReviewsModal" class="admin-reviews-modal">
         <div class="admin-reviews-box">
             <div class="admin-header">
@@ -527,7 +524,6 @@
         </div>
     </div>
 
-    <!-- نافذة إدارة التقييمات المنشورة المستقلة (للحذف) -->
     <div id="adminApprovedModal" class="admin-reviews-modal">
         <div class="admin-reviews-box">
             <div class="admin-header">
@@ -682,7 +678,6 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم الإدارية بنظام التبويبات المرتبة والواضحة تماماً -->
     <div id="adminModal" class="admin-modal">
         <div class="admin-box">
             <div class="admin-header">
@@ -690,14 +685,12 @@
                 <button onclick="toggleAdminModal()" class="close-cart">&times;</button>
             </div>
 
-            <!-- أزرار التبويبات العلوية -->
             <div class="admin-tabs">
                 <button class="admin-tab-btn active" onclick="switchAdminTab('tab-reports', this)"><i class="fa-solid fa-chart-line"></i> الأرباح والتقارير</button>
                 <button class="admin-tab-btn" onclick="switchAdminTab('tab-orders', this)"><i class="fa-solid fa-box"></i> الطلبات والفواتير</button>
                 <button class="admin-tab-btn" onclick="switchAdminTab('tab-products', this)"><i class="fa-solid fa-tags"></i> المنتجات والأقسام</button>
             </div>
             
-            <!-- 1. تبويب التقارير المالية والأرباح -->
             <div id="tab-reports" class="admin-tab-content active">
                 <h4 class="admin-sec-title">📈 التقارير المالية والأرباح (اليوم / الشهر / السنة)</h4>
                 <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #cbd5e1; display:flex; flex-direction:column; gap:8px;">
@@ -739,7 +732,6 @@
                 </div>
             </div>
 
-            <!-- 2. تبويب الطلبات والفواتير (الجارية، المباعة، المؤجلة) -->
             <div id="tab-orders" class="admin-tab-content">
                 <h4 class="admin-sec-title">📦 الطلبات الجارية وتعديل الرسوم</h4>
                 <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
@@ -789,19 +781,18 @@
                 </div>
             </div>
 
-            <!-- 3. تبويب المنتجات، الأقسام، والمخزون -->
             <div id="tab-products" class="admin-tab-content">
-                <h4 class="admin-sec-title">📁 إدارة الأقسام (إضافة / حذف)</h4>
+                <h4 class="admin-sec-title">📁 إدارة الأقسام (إضافة / تعديل / حذف)</h4>
                 <form id="addCategoryForm">
                     <div class="form-group">
-                        <label>اسم القسم الجديد:</label>
+                        <label id="catFormLabel">اسم القسم الجديد:</label>
                         <input type="text" id="catName" required placeholder="مثال: قسم صيانة البلايستيشن">
                     </div>
-                    <button type="submit" class="admin-btn">إضافة القسم للمتجر</button>
+                    <button type="submit" id="catSubmitBtn" class="admin-btn">إضافة القسم للمتجر</button>
                 </form>
                 <div>
                     <label style="color:#0f172a; font-size:0.85rem; font-weight:900; display:block; margin-bottom:4px;">الأقسام الحالية:</label>
-                    <div id="adminCatsList" style="max-height: 80px; overflow-y: auto;"></div>
+                    <div id="adminCatsList" style="max-height: 100px; overflow-y: auto;"></div>
                 </div>
 
                 <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة للأرباح</h4>
@@ -853,11 +844,11 @@
                         <label>الوصف:</label>
                         <textarea id="pDesc" rows="2" required placeholder="المواصفات والتفاصيل..."></textarea>
                     </div>
-                    <button type="submit" class="admin-btn">إضافة المنتج/الخدمة للمتجر</button>
+                    <button type="submit" id="submitProductBtn" class="admin-btn">إضافة المنتج/الخدمة للمتجر</button>
                 </form>
                 <div>
                     <label style="color:#0f172a; font-size:0.85rem; font-weight:900; display:block; margin-bottom:4px;">المنتجات والمخزون الحالي:</label>
-                    <div id="adminItemsList" style="max-height: 120px; overflow-y: auto;"></div>
+                    <div id="adminItemsList" style="max-height: 140px; overflow-y: auto;"></div>
                 </div>
             </div>
 
@@ -2275,12 +2266,24 @@
                         row.className = 'item-row';
                         row.innerHTML = `
                             <span style="font-size: 0.85rem; color:#0f172a; font-weight:900;">${c.name}</span>
-                            <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
+                            <div>
+                                <button class="edit-btn" onclick="startEditCategory('${c.id}', '${c.name}')">تعديل</button>
+                                <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
+                            </div>
                         `;
                         list.appendChild(row);
                     });
                 }
             });
+        }
+
+        let editingCategoryId = null;
+        function startEditCategory(id, currentName) {
+            editingCategoryId = id;
+            document.getElementById('catName').value = currentName;
+            document.getElementById('catFormLabel').innerText = "تعديل اسم القسم:";
+            document.getElementById('catSubmitBtn').innerText = "حفظ تعديل القسم";
+            document.getElementById('catSubmitBtn').style.backgroundColor = "#f59e0b";
         }
 
         function renderAdminProducts() {
@@ -2296,12 +2299,36 @@
                         row.className = 'item-row';
                         row.innerHTML = `
                             <span style="font-size: 0.85rem; color:#0f172a; font-weight:900;">${p.title} <small style="color:#2563eb; font-weight:900;">(الكمية: ${stockVal})</small></span>
-                            <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
+                            <div>
+                                <button class="edit-btn" onclick='startEditProduct(${JSON.stringify(p)})'>تعديل</button>
+                                <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
+                            </div>
                         `;
                         list.appendChild(row);
                     });
                 }
             });
+        }
+
+        let editingProductId = null;
+        function startEditProduct(p) {
+            editingProductId = p.id;
+            document.getElementById('pTitle').value = p.title || '';
+            document.getElementById('pType').value = p.type || 'physical';
+            document.getElementById('pCategory').value = p.category || '';
+            document.getElementById('pCost').value = p.cost || '0';
+            document.getElementById('pPrice').value = p.price || '';
+            document.getElementById('pOldPrice').value = p.oldPrice || '';
+            document.getElementById('pStock').value = p.stock || '10';
+            document.getElementById('pBadge').value = p.badge || '';
+            document.getElementById('pDesc').value = p.desc || '';
+
+            let submitBtn = document.getElementById('submitProductBtn');
+            submitBtn.innerText = "حفظ تعديلات المنتج/الخدمة";
+            submitBtn.style.backgroundColor = "#f59e0b";
+            
+            let tabBtn = document.querySelector('.admin-tab-btn:nth-child(3)');
+            if(tabBtn) switchAdminTab('tab-products', tabBtn);
         }
 
         let catForm = document.getElementById('addCategoryForm');
@@ -2311,10 +2338,22 @@
                 const nameInput = document.getElementById('catName').value;
                 getCategories(cats => {
                     let currentCats = Array.isArray(cats) ? cats : [];
-                    currentCats.push({ id: 'cat-' + Date.now(), name: nameInput });
+                    
+                    if (editingCategoryId) {
+                        let catObj = currentCats.find(c => c.id === editingCategoryId);
+                        if (catObj) catObj.name = nameInput;
+                        editingCategoryId = null;
+                        document.getElementById('catFormLabel').innerText = "اسم القسم الجديد:";
+                        document.getElementById('catSubmitBtn').innerText = "إضافة القسم للمتجر";
+                        document.getElementById('catSubmitBtn').style.backgroundColor = "";
+                        showToast('تم تعديل القسم بنجاح ✔️');
+                    } else {
+                        currentCats.push({ id: 'cat-' + Date.now(), name: nameInput });
+                        showToast('تمت إضافة القسم السحابي بنجاح ✔️');
+                    }
+
                     saveCategoriesToCloud(currentCats);
                     this.reset();
-                    showToast('تمت إضافة القسم السحابي بنجاح ✔️');
                 });
             });
         }
@@ -2345,38 +2384,71 @@
                             imagesArray.push(event.target.result);
                             processed++;
                             if (processed === files.length) {
-                                saveNewProductToCloud(imagesArray);
+                                saveProductData(imagesArray);
                             }
                         };
                         reader.readAsDataURL(files[i]);
                     }
                 } else {
-                    saveNewProductToCloud([]);
+                    getProducts(products => {
+                        let existingImgs = [];
+                        if (editingProductId) {
+                            let oldP = products.find(p => p.id === editingProductId);
+                            if (oldP && oldP.images) existingImgs = oldP.images;
+                        }
+                        saveProductData(existingImgs);
+                    });
                 }
             });
         }
 
-        function saveNewProductToCloud(imagesArray) {
+        function saveProductData(imagesArray) {
             getProducts(products => {
                 let currentProducts = Array.isArray(products) ? products : [];
-                const newProduct = {
-                    id: Date.now(),
-                    title: document.getElementById('pTitle').value,
-                    type: document.getElementById('pType').value || 'physical',
-                    category: document.getElementById('pCategory').value,
-                    cost: document.getElementById('pCost').value || '0',
-                    price: document.getElementById('pPrice').value,
-                    oldPrice: document.getElementById('pOldPrice').value || '',
-                    stock: document.getElementById('pStock').value || '10',
-                    badge: document.getElementById('pBadge').value || 'إكسبرس',
-                    images: imagesArray,
-                    desc: document.getElementById('pDesc').value
-                };
-                currentProducts.push(newProduct);
+                
+                if (editingProductId) {
+                    let index = currentProducts.findIndex(p => p.id === editingProductId);
+                    if (index > -1) {
+                        currentProducts[index] = {
+                            id: editingProductId,
+                            title: document.getElementById('pTitle').value,
+                            type: document.getElementById('pType').value || 'physical',
+                            category: document.getElementById('pCategory').value,
+                            cost: document.getElementById('pCost').value || '0',
+                            price: document.getElementById('pPrice').value,
+                            oldPrice: document.getElementById('pOldPrice').value || '',
+                            stock: document.getElementById('pStock').value || '10',
+                            badge: document.getElementById('pBadge').value || 'إكسبرس',
+                            images: imagesArray,
+                            desc: document.getElementById('pDesc').value
+                        };
+                    }
+                    editingProductId = null;
+                    let submitBtn = document.getElementById('submitProductBtn');
+                    submitBtn.innerText = "إضافة المنتج/الخدمة للمتجر";
+                    submitBtn.style.backgroundColor = "";
+                    showToast('تم تحديث وحفظ المنتج بنجاح ✔️');
+                } else {
+                    const newProduct = {
+                        id: Date.now(),
+                        title: document.getElementById('pTitle').value,
+                        type: document.getElementById('pType').value || 'physical',
+                        category: document.getElementById('pCategory').value,
+                        cost: document.getElementById('pCost').value || '0',
+                        price: document.getElementById('pPrice').value,
+                        oldPrice: document.getElementById('pOldPrice').value || '',
+                        stock: document.getElementById('pStock').value || '10',
+                        badge: document.getElementById('pBadge').value || 'إكسبرس',
+                        images: imagesArray,
+                        desc: document.getElementById('pDesc').value
+                    };
+                    currentProducts.push(newProduct);
+                    showToast('تمت إضافة المنتج والمخزون سحابياً بنجاح ✔️');
+                }
+
                 saveProductsToCloud(currentProducts);
                 let form = document.getElementById('addProductForm');
                 if(form) form.reset();
-                showToast('تمت إضافة المنتج والمخزون سحابياً بنجاح ✔️');
             });
         }
 
