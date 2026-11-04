@@ -569,7 +569,7 @@
         </div>
     </div>
 
-    <!-- لوحة التحكم الإدارية المحدثة مع قسم تعديل رسوم التوصيل للطلبات -->
+    <!-- لوحة التحكم الإدارية (الأقسام الثلاثة الجديدة للطلبات) -->
     <div id="adminModal" class="admin-modal">
         <div class="admin-box">
             <div class="admin-header">
@@ -591,17 +591,53 @@
                 </button>
             </div>
 
-            <h4 class="admin-sec-title">🚚 تعديل رسوم التوصيل للطلبات الفعالة</h4>
+            <!-- القسم الأول: الطلبات الجارية / النشطة -->
+            <h4 class="admin-sec-title">📦 1. الطلبات الجارية وتعديل الرسوم</h4>
             <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
-                <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">اختر الطلب للتعديل عليه:</label>
+                <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">اختر الطلب الجاري:</label>
                 <select id="adminOrderSelect" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.82rem; margin-bottom:8px;" onchange="onOrderSelectedInAdmin()"></select>
                 
-                <div style="display:flex; gap:8px; align-items:center;">
+                <div style="display:flex; gap:8px; align-items:center; margin-bottom: 8px;">
                     <div style="flex-grow:1;">
                         <label style="color:#475569; font-size:0.75rem; display:block; margin-bottom:2px;">رسوم التوصيل (ر.س):</label>
                         <input type="number" id="adminShippingFeeInput" placeholder="مثال: 15" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.85rem;">
                     </div>
-                    <button type="button" onclick="updateOrderShippingFee()" class="admin-btn" style="background:#10b981; margin-top:14px; width:auto; padding:8px 16px;">حفظ وتحديث الفاتورة ✔️</button>
+                    <button type="button" onclick="updateOrderShippingFee()" class="admin-btn" style="background:#10b981; margin-top:14px; width:auto; padding:8px 12px; white-space:nowrap;">حفظ الرسوم ✔️</button>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:6px;">
+                    <button type="button" onclick="markOrderAsSold()" class="admin-btn" style="background:#2563eb; font-size:0.78rem; padding:8px;">✅ تم البيع (تثبيت الفاتورة)</button>
+                    <button type="button" onclick="deleteActiveOrder()" class="del-btn" style="font-size:0.78rem; padding:8px;">حذف نهائي ❌</button>
+                </div>
+            </div>
+
+            <!-- القسم الثاني: قسم تم البيع (الفواتير المثبتة) -->
+            <h4 class="admin-sec-title">✅ 2. قسم "تم البيع" (الفواتير المثبتة)</h4>
+            <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+                <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">الطلبات المباعة:</label>
+                <select id="soldOrderSelect" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.82rem; margin-bottom:6px;"></select>
+                <div style="display:flex; gap:6px;">
+                    <button type="button" onclick="returnOrderToActive()" class="admin-btn" style="background:#f59e0b; font-size:0.78rem; padding:6px;">إرجاع للجارية 🔄</button>
+                    <button type="button" onclick="deleteSoldOrder()" class="del-btn" style="font-size:0.78rem; padding:6px;">حذف الطلب ❌</button>
+                </div>
+            </div>
+
+            <!-- القسم الثالث: قسم تأجيل البيع (مع التاريخ) -->
+            <h4 class="admin-sec-title">⏳ 3. قسم "تأجيل البيع" (تحديد تاريخ)</h4>
+            <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+                <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">اختر الطلب للتأجيل:</label>
+                <select id="delayedOrderSelect" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.82rem; margin-bottom:6px;" onchange="onDelayedOrderSelected()"></select>
+                
+                <div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;">
+                    <div style="flex-grow:1;">
+                        <label style="color:#475569; font-size:0.72rem; display:block; margin-bottom:2px;">تاريخ التنفيذ المستهدف:</label>
+                        <input type="date" id="delayDateInput" style="width:100%; padding:6px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.8rem;">
+                    </div>
+                    <button type="button" onclick="saveDelayedOrderDate()" class="admin-btn" style="background:#8b5cf6; margin-top:14px; width:auto; padding:6px 12px; font-size:0.78rem; white-space:nowrap;">حفظ التاريخ 📅</button>
+                </div>
+                <div style="display:flex; gap:6px;">
+                    <button type="button" onclick="returnDelayedToActive()" class="admin-btn" style="background:#2563eb; font-size:0.78rem; padding:6px;">إرجاع للجارية 🔄</button>
+                    <button type="button" onclick="deleteDelayedOrder()" class="del-btn" style="font-size:0.78rem; padding:6px;">حذف ❌</button>
                 </div>
             </div>
 
@@ -827,33 +863,51 @@
                 renderAdminCats();
                 renderAdminProducts();
                 updateCategorySelectOptions();
-                loadAdminOrdersSelect();
+                loadAdminAllOrders();
             }
         }
 
         let adminLoadedOrders = {};
-        function loadAdminOrdersSelect() {
-            const select = document.getElementById('adminOrderSelect');
-            if(!select || !db) return;
-            select.innerHTML = '<option value="">جاري التحميل...</option>';
-
+        function loadAdminAllOrders() {
+            if(!db) return;
             db.ref('orders').once('value', snapshot => {
                 let data = snapshot.val();
-                select.innerHTML = '';
-                if(!data) {
-                    select.innerHTML = '<option value="">لا توجد طلبات سابقة</option>';
+                adminLoadedOrders = data ? data : {};
+                
+                let activeSelect = document.getElementById('adminOrderSelect');
+                let soldSelect = document.getElementById('soldOrderSelect');
+                let delayedSelect = document.getElementById('delayedOrderSelect');
+
+                if(activeSelect) activeSelect.innerHTML = '';
+                if(soldSelect) soldSelect.innerHTML = '';
+                if(delayedSelect) delayedSelect.innerHTML = '';
+
+                let keys = Object.keys(adminLoadedOrders).reverse();
+                if(keys.length === 0) {
+                    if(activeSelect) activeSelect.innerHTML = '<option value="">لا توجد طلبات</option>';
+                    if(soldSelect) soldSelect.innerHTML = '<option value="">لا توجد طلبات مباعة</option>';
+                    if(delayedSelect) delayedSelect.innerHTML = '<option value="">لا توجد طلبات مؤجلة</option>';
                     return;
                 }
-                adminLoadedOrders = data;
-                let keys = Object.keys(data).reverse();
+
                 keys.forEach(k => {
-                    let ord = data[k];
+                    let ord = adminLoadedOrders[k];
+                    let status = ord.status || 'active';
                     let opt = document.createElement('option');
                     opt.value = k;
                     opt.innerText = `${ord.orderId} - ${ord.name} (${ord.phone})`;
-                    select.appendChild(opt);
+
+                    if(status === 'sold') {
+                        if(soldSelect) soldSelect.appendChild(opt);
+                    } else if(status === 'delayed') {
+                        if(delayedSelect) delayedSelect.appendChild(opt);
+                    } else {
+                        if(activeSelect) activeSelect.appendChild(opt);
+                    }
                 });
+
                 onOrderSelectedInAdmin();
+                onDelayedOrderSelected();
             });
         }
 
@@ -866,6 +920,18 @@
                 feeInput.value = adminLoadedOrders[orderKey].shippingFee || 0;
             } else {
                 feeInput.value = '';
+            }
+        }
+
+        function onDelayedOrderSelected() {
+            let select = document.getElementById('delayedOrderSelect');
+            let dateInput = document.getElementById('delayDateInput');
+            if(!select || !dateInput) return;
+            let orderKey = select.value;
+            if(orderKey && adminLoadedOrders[orderKey]) {
+                dateInput.value = adminLoadedOrders[orderKey].delayDate || '';
+            } else {
+                dateInput.value = '';
             }
         }
 
@@ -888,6 +954,107 @@
             }).catch(err => {
                 showToast('حدث خطأ أثناء التحديث');
             });
+        }
+
+        function markOrderAsSold() {
+            let select = document.getElementById('adminOrderSelect');
+            if(!select || !db) return;
+            let orderKey = select.value;
+            if(!orderKey) {
+                showToast('يرجى اختيار طلب أولاً!');
+                return;
+            }
+
+            db.ref('orders/' + orderKey + '/status').set('sold').then(() => {
+                showToast('تم نقل الطلب إلى قسم (تم البيع) وتثبيت الفاتورة ✔️');
+                loadAdminAllOrders();
+            });
+        }
+
+        function returnOrderToActive() {
+            let select = document.getElementById('soldOrderSelect');
+            if(!select || !db) return;
+            let orderKey = select.value;
+            if(!orderKey) {
+                showToast('يرجى اختيار طلب أولاً!');
+                return;
+            }
+
+            db.ref('orders/' + orderKey + '/status').set('active').then(() => {
+                showToast('تم إرجاع الطلب إلى الطلبات الجارية 🔄');
+                loadAdminAllOrders();
+            });
+        }
+
+        function saveDelayedOrderDate() {
+            let select = document.getElementById('delayedOrderSelect');
+            let dateInput = document.getElementById('delayDateInput');
+            if(!select || !dateInput || !db) return;
+
+            let orderKey = select.value;
+            let dateVal = dateInput.value;
+
+            if(!orderKey) {
+                showToast('يرجى اختيار طلب مؤجل أولاً!');
+                return;
+            }
+            if(!dateVal) {
+                showToast('يرجى تحديد تاريخ التأجيل!');
+                return;
+            }
+
+            db.ref('orders/' + orderKey).update({ status: 'delayed', delayDate: dateVal }).then(() => {
+                showToast('تم حفظ تاريخ التأجيل بنجاح 📅');
+                adminLoadedOrders[orderKey].delayDate = dateVal;
+            });
+        }
+
+        function returnDelayedToActive() {
+            let select = document.getElementById('delayedOrderSelect');
+            if(!select || !db) return;
+            let orderKey = select.value;
+            if(!orderKey) {
+                showToast('يرجى اختيار طلب أولاً!');
+                return;
+            }
+
+            db.ref('orders/' + orderKey).update({ status: 'active', delayDate: null }).then(() => {
+                showToast('تم إرجاع الطلب إلى الطلبات الجارية 🔄');
+                loadAdminAllOrders();
+            });
+        }
+
+        function deleteActiveOrder() {
+            let select = document.getElementById('adminOrderSelect');
+            deleteOrderGeneric(select);
+        }
+
+        function deleteSoldOrder() {
+            let select = document.getElementById('soldOrderSelect');
+            deleteOrderGeneric(select);
+        }
+
+        function deleteDelayedOrder() {
+            let select = document.getElementById('delayedOrderSelect');
+            deleteOrderGeneric(select);
+        }
+
+        function deleteOrderGeneric(selectElem) {
+            if(!selectElem || !db) return;
+            let orderKey = selectElem.value;
+            if(!orderKey) {
+                showToast('يرجى اختيار طلب لحذفه!');
+                return;
+            }
+
+            if(confirm('هل أنت متأكد من حذف هذا الطلب نهائياً؟')) {
+                db.ref('orders/' + orderKey).remove().then(() => {
+                    showToast('تم حذف الطلب بنجاح 🗑️');
+                    loadAdminAllOrders();
+                }).catch(err => {
+                    showToast('حدث خطأ أثناء الحذف');
+                });
+            }
         }
 
         function updateRatingCountUI() {
@@ -1091,7 +1258,7 @@
 
         function deleteApprovedReview(key) {
             if(!db) return;
-            db.ref('approvedReviews').remove().then(() => {
+            db.ref('approvedReviews/' + key).remove().then(() => {
                 showToast('تم حذف التقييم المنشور بنجاح 🗑️');
                 renderAdminApprovedReviews();
                 updateRatingCountUI();
@@ -1421,6 +1588,7 @@
                 city: fullAddress,
                 shipping: shippingText,
                 shippingFee: 0,
+                status: 'active',
                 payMethod: payMethod,
                 items: cart,
                 createdAt: new Date().toISOString()
@@ -1481,6 +1649,8 @@
                         openInvoiceModal(snapshot.val());
                     } else {
                         showToast('الطلب غير موجود أو انتهت صلاحيته');
+                        let invModal = document.getElementById('invoiceModal');
+                        if(invModal) invModal.style.display = 'none';
                     }
                 });
             }
