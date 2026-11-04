@@ -171,7 +171,6 @@
         .card h3 { color: #1e293b; font-size: 0.88rem; cursor: pointer; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
         .card h3:hover { color: #2563eb; }
         
-        /* تنسيق السعر الجديد والقديم والخصم زي الصورة بالضبط */
         .card-price-box { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
         .card-price-main { display: flex; align-items: baseline; gap: 4px; }
         .price-currency { font-size: 0.7rem; color: #475569; font-weight: bold; }
@@ -481,7 +480,7 @@
         </div>
     </div>
 
-    <!-- نافذة إتمام الطلب مع زر تحديد الموقع من الخريطة -->
+    <!-- نافذة إتمام الطلب مع تحديد التوصيل حسب الحي أو المدينة -->
     <div id="checkoutModal" class="checkout-modal">
         <div class="checkout-box">
             <h3>إكمال بيانات الطلب 🛒</h3>
@@ -500,6 +499,14 @@
                     <button type="button" onclick="getDeviceLocation()" style="background: #2563eb; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; white-space: nowrap;">📍 حدد موقعي</button>
                 </div>
                 <input type="text" id="custExtraAddr" placeholder="تفاصيل إضافية (رقم المبنى / الشقة / الشارع)" style="margin-top: 2px;">
+            </div>
+            <div>
+                <label>🚗 نوع / قيمة التوصيل والشحن:</label>
+                <select id="shippingMethod">
+                    <option value="توصيل داخل جدة (يتم الاتفاق على السعر بالواتساب)" data-price="0">توصيل داخل جدة (يُحدد بالواتساب)</option>
+                    <option value="شحن لجميع مدن المملكة (يتم الاتفاق على السعر بالواتساب)" data-price="0">شحن لجميع المدن (يُحدد بالواتساب)</option>
+                    <option value="استلام شخصي من المقر (مجاناً)" data-price="0">استلام من المقر (مجاناً)</option>
+                </select>
             </div>
             <div>
                 <label>طريقة الدفع:</label>
@@ -524,13 +531,18 @@
                 <p><strong>اسم العميل:</strong> <span id="invCustName"></span></p>
                 <p><strong>رقم الجوال:</strong> <span id="invCustPhone"></span></p>
                 <p><strong>الموقع والعنوان:</strong> <span id="invCustCity"></span></p>
+                <p><strong>خيارات التوصيل:</strong> <span id="invShipping"></span></p>
                 <p><strong>طريقة الدفع:</strong> <span id="invPayMethod"></span></p>
             </div>
             <div class="invoice-section">
                 <h4 style="margin-bottom:5px; color:#0f172a;">تفاصيل المنتجات:</h4>
                 <div id="invProductsList"></div>
+                <div id="invShippingFeeRow" style="display:none; justify-content:space-between; margin-top:4px; font-size:0.82rem; color:#475569;">
+                    <span>🚗 رسوم التوصيل:</span>
+                    <strong id="invShippingPrice">0 ر.س</strong>
+                </div>
                 <div style="border-top: 1px solid #cbd5e1; margin-top: 6px; padding-top: 5px; font-weight: bold; color: #1e3a8a;">
-                    المبلغ الإجمالي: <span id="invTotalPrice"></span> ر.س
+                    المبلغ الإجمالي للمنتجات: <span id="invTotalPrice"></span> ر.س
                 </div>
             </div>
             <div class="iban-box">
@@ -602,7 +614,7 @@
                     <input type="text" id="pPrice" required placeholder="مثال: 5449">
                 </div>
                 <div class="form-group">
-                    <label>السعر قبل الخصم (اختياري - اتركه فارغاً إذا لم يوجد):</label>
+                    <label>السعر قبل الخصم (اختياري):</label>
                     <input type="text" id="pOldPrice" placeholder="مثال: 5999">
                 </div>
                 <div class="form-group">
@@ -1152,7 +1164,6 @@
 
                 let isLiked = wishlist.some(item => item.id === p.id);
 
-                // حساب نسبة الخصم تلقائياً إذا وُجد سعر قديم
                 let priceSectionHTML = '';
                 let currentP = parseFloat(p.price || 0);
                 let oldP = parseFloat(p.oldPrice || 0);
@@ -1310,6 +1321,8 @@
             const phone = document.getElementById('custPhone').value.trim();
             const location = document.getElementById('custLocation').value.trim();
             const extraAddr = document.getElementById('custExtraAddr').value.trim();
+            const shippingSelect = document.getElementById('shippingMethod');
+            const shippingText = shippingSelect.value;
             const payMethod = document.getElementById('payMethod').value;
 
             if (!name || !phone || !location) {
@@ -1327,6 +1340,7 @@
                 name: name,
                 phone: phone,
                 city: fullAddress,
+                shipping: shippingText,
                 payMethod: payMethod,
                 items: cart,
                 createdAt: new Date().toISOString()
@@ -1352,6 +1366,7 @@
                 `👤 *اسم العميل:* ${name}\n` +
                 `📱 *رقم الجوال:* ${phone}\n` +
                 `📍 *الموقع (الشارع والحي):* ${fullAddress}\n` +
+                `🚗 *طريقة التوصيل:* ${shippingText}\n` +
                 `💳 *طريقة الدفع:* ${payMethod}\n\n` +
                 `📦 *قائمة المنتجات والخدمات:*\n` +
                 `${cartTextDetails}` +
@@ -1396,6 +1411,12 @@
             document.getElementById('invCustName').innerText = order.name;
             document.getElementById('invCustPhone').innerText = order.phone;
             document.getElementById('invCustCity').innerText = order.city;
+            
+            let shippingElem = document.getElementById('invShipping');
+            if (shippingElem) {
+                shippingElem.innerText = order.shipping || 'توصيل محلي';
+            }
+
             document.getElementById('invPayMethod').innerText = order.payMethod;
 
             let list = document.getElementById('invProductsList');
