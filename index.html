@@ -539,7 +539,7 @@
 
             <!-- قسم خيارات الشحن والخدمات الذكية -->
             <div>
-                <label id="shippingMethodLabel"><i class="fa-solid fa-car"></i> طريقة التوصيل الشحن / تنفيذ الخدمة:</label>
+                <label id="shippingMethodLabel"><i class="fa-solid fa-wrench"></i> طريقة تنفيذ الخدمة:</label>
                 <select id="shippingMethod"></select>
             </div>
 
@@ -567,7 +567,7 @@
                 <p><strong>اسم العميل:</strong> <span id="invCustName"></span></p>
                 <p><strong>رقم الجوال:</strong> <span id="invCustPhone"></span></p>
                 <p id="invCustCityRow"><strong>الموقع والعنوان:</strong> <span id="invCustCity"></span></p>
-                <p><strong>خيارات الخدمة / التوصيل:</strong> <span id="invShipping"></span></p>
+                <p><strong>طريقة التنفيذ:</strong> <span id="invShipping"></span></p>
                 <p><strong>طريقة الدفع:</strong> <span id="invPayMethod"></span></p>
             </div>
             <div class="invoice-section">
@@ -1681,7 +1681,6 @@
                 return;
             }
 
-            // فحص هل السلة فيها أي منتج فيزيائي يحتاج شحن
             let hasPhysicalItem = cart.some(item => item.type === 'physical');
             let locationBlock = document.getElementById('locationFieldBlock');
             let shippingSelect = document.getElementById('shippingMethod');
@@ -1689,7 +1688,6 @@
             let codOption = document.getElementById('codOption');
 
             if (hasPhysicalItem) {
-                // إذا كان فيه منتج فيزيائي: إظهار الموقع والشحن العادي
                 locationBlock.style.display = 'block';
                 shippingLabel.innerHTML = '<i class="fa-solid fa-car"></i> خيارات التوصيل والشحن:';
                 shippingSelect.innerHTML = `
@@ -1699,12 +1697,11 @@
                 `;
                 if(codOption) codOption.style.display = 'block';
             } else {
-                // إذا كانت جميعها خدمات رقمية / صيانة عن بُعد: إخفاء الموقع والشحن العادي
                 locationBlock.style.display = 'none';
-                shippingLabel.innerHTML = '<i class="fa-solid fa-wrench"></i> طريقة تنفيذ الخدمة الصيانة:';
+                shippingLabel.innerHTML = '<i class="fa-solid fa-wrench"></i> طريقة تنفيذ الخدمة:';
                 shippingSelect.innerHTML = `
-                    <option value="تنفيذ الخدمة عن بُعد (أونلاين / برامج الصيانة)">تنفيذ الخدمة عن بُعد (أونلاين / أونلاين)</option>
-                    <option value="حضور الفني لموقعك / إحضار الجهاز">حضور الفني لموقعك / إحضار الجهاز</option>
+                    <option value="تنفيذ الخدمة عن بُعد">تنفيذ الخدمة عن بُعد</option>
+                    <option value="إحضار الجهاز">إحضار الجهاز</option>
                 `;
                 if(codOption) codOption.style.display = 'none';
             }
@@ -1770,7 +1767,12 @@
                 cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n🔗 رابط الخدمة/المنتج: ${productLink}\n\n`;
             });
 
-            let locationSection = hasPhysicalItem ? `📍 *الموقع (الشارع والحي):* ${fullAddress}\n` : `💻 *نوع الطلب:* خدمة رقمية / صيانة عن بُعد\n`;
+            // سطر طريقة التنفيذ المخصص حسب نوع الطلب لتجنب ظهور كلمة توصيل للخدمات الرقمية
+            let executionLine = hasPhysicalItem 
+                ? `🚚 *طريقة التوصيل:* ${shippingText}` 
+                : `🛠️ *طريقة تنفيذ الخدمة:* ${shippingText}`;
+
+            let locationSection = hasPhysicalItem ? `📍 *الموقع (الشارع والحي):* ${fullAddress}\n` : ``;
 
             let fullMsg = encodeURIComponent(
                 `✨ *طلب جديد من متجر المتخصصون في صيانة الأجهزة* ✨\n` +
@@ -1780,7 +1782,7 @@
                 `👤 *اسم العميل:* ${name}\n` +
                 `📱 *رقم الجوال:* ${phone}\n` +
                 `${locationSection}` +
-                `🛠️ *طريقة تنفيذ الخدمة/التوصيل:* ${shippingText}\n` +
+                `${executionLine}\n` +
                 `💳 *طريقة الدفع:* ${payMethod}\n\n` +
                 `📦 *قائمة المنتجات والخدمات:*\n` +
                 `${cartTextDetails}` +
@@ -1842,7 +1844,7 @@
             
             let shippingElem = document.getElementById('invShipping');
             if (shippingElem) {
-                shippingElem.innerText = order.shipping || 'خدمة صيانة / توصيل';
+                shippingElem.innerText = order.shipping || 'خدمة صيانة';
             }
 
             document.getElementById('invPayMethod').innerText = order.payMethod;
