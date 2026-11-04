@@ -753,7 +753,7 @@
                 <div id="adminCatsList" style="max-height: 80px; overflow-y: auto;"></div>
             </div>
 
-            <!-- إدارة المنتجات مع إضافة التكلفة والمخزون -->
+            <!-- إدارة المنتجات مع جعل منتج عادي هو الافتراضي -->
             <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة للأرباح</h4>
             <form id="addProductForm">
                 <div class="form-group">
@@ -763,8 +763,8 @@
                 <div class="form-group">
                     <label>نوع المنتج/الخدمة:</label>
                     <select id="pType" required style="font-weight: bold; color: #2563eb;">
-                        <option value="digital">🛠️ خدمة رقمية / صيانة عن بُعد (بدون شحن أو موقع)</option>
                         <option value="physical">📦 منتج عادي / جهاز مادي (يتطلب توصيل أو شحن)</option>
+                        <option value="digital">🛠️ خدمة رقمية / صيانة عن بُعد (بدون شحن أو موقع)</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -1052,7 +1052,6 @@
             });
         }
 
-        // حساب التقارير المالية والأرباح بدقة
         function updateFinancialReport() {
             if(!db) return;
             db.ref('orders').once('value', snapshot => {
@@ -1069,11 +1068,10 @@
                 let transferSales = 0;
 
                 Object.values(data).forEach(ord => {
-                    if (ord.status !== 'sold') return; // نحسب فقط الطلبات المباعة
+                    if (ord.status !== 'sold') return;
 
                     let ordDate = new Date(ord.createdAt || Date.now());
                     
-                    // فلترة التواريخ
                     if (filterType === 'today') {
                         if (ordDate.toDateString() !== now.toDateString()) return;
                     } else if (filterType === 'week') {
@@ -1099,7 +1097,7 @@
 
                     let shippingFee = parseFloat(ord.shippingFee || 0);
                     let ordTotal = orderItemsTotal + shippingFee;
-                    let ordProfit = (orderItemsTotal - orderItemsCost); // الربح من المنتجات
+                    let ordProfit = (orderItemsTotal - orderItemsCost);
 
                     totalSales += ordTotal;
                     netProfit += ordProfit;
@@ -2308,7 +2306,7 @@
                 const newProduct = {
                     id: Date.now(),
                     title: document.getElementById('pTitle').value,
-                    type: document.getElementById('pType').value || 'digital',
+                    type: document.getElementById('pType').value || 'physical',
                     category: document.getElementById('pCategory').value,
                     cost: document.getElementById('pCost').value || '0',
                     price: document.getElementById('pPrice').value,
