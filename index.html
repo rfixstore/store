@@ -1297,7 +1297,8 @@
             let cartTextDetails = "";
 
             cart.forEach(item => {
-                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n`;
+                let productLink = `${baseUrl}?product_id=${item.id}`;
+                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n🔗 رابط المنتج: ${productLink}\n\n`;
             });
 
             let fullMsg = encodeURIComponent(
@@ -1310,7 +1311,7 @@
                 `📍 *الموقع (الشارع والحي):* ${fullAddress}\n` +
                 `💳 *طريقة الدفع:* ${payMethod}\n\n` +
                 `📦 *قائمة المنتجات والخدمات:*\n` +
-                `${cartTextDetails}\n` +
+                `${cartTextDetails}` +
                 `🔗 *رابط الفاتورة ومتابعة الطلب:*\n${invoiceLink}\n` +
                 `━━━━━━━━━━━━━━━\n` +
                 `⚡ *شكراً لاختياركم المتخصصون في صيانة الأجهزة* ⚡`
