@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المتخصصون في صيانة الأجهزة</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- مكتبة الأيقونات لمنع ظهور المربعات الفارغة على اللابتوب -->
+    <!-- مكتبة الأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
@@ -49,11 +49,10 @@
         
         .header-ratings-box {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            gap: 6px;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 5px 10px;
             border-radius: 6px;
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -182,8 +181,8 @@
         .old-price-val { text-decoration: line-through; }
         .discount-badge-tag { color: #16a34a; font-weight: bold; font-size: 0.7rem; background: #dcfce7; padding: 1px 4px; border-radius: 4px; }
 
-        .card-rating { font-size: 0.7rem; color: #64748b; display: flex; align-items: center; gap: 4px; }
-        .stars { color: #f59e0b; }
+        .card-rating { font-size: 0.85rem; color: #64748b; display: flex; align-items: center; gap: 6px; }
+        .stars { color: #eab308; font-size: 0.95rem; }
 
         .card-footer { display: flex; gap: 6px; margin-top: 4px; }
         .add-to-cart-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 6px 10px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.78rem; flex-grow: 1; transition: 0.2s; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2); }
@@ -208,7 +207,7 @@
         .review-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .review-author-side { display: flex; align-items: center; gap: 8px; }
         .review-author { font-weight: 800; color: #0f172a; font-size: 0.92rem; }
-        .review-stars { color: #f59e0b; font-size: 0.85rem; letter-spacing: 0.5px; }
+        .review-stars { color: #eab308; font-size: 0.95rem; letter-spacing: 0.5px; }
         .review-time { font-size: 0.72rem; color: #64748b; font-weight: 600; }
         .review-comment { color: #334155; line-height: 1.4; font-size: 0.85rem; }
         .review-img-thumb { width: 65px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer; margin-top: 4px; }
@@ -313,12 +312,18 @@
                 <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
             </div>
 
+            <!-- تم تعديل صندوق التقييمات في الهيدر ليعرض النجوم الصفراء الواضحة وبجانبها 5.5 -->
             <div class="header-ratings-box" onclick="openPublicReviewsModal(event)">
-                <div style="color: #FFB800; font-size: 11px; letter-spacing: 0.5px; line-height: 1;">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                <span style="color: #93c5fd; font-size: 0.75rem; font-weight: bold;">5.5</span>
+                <div style="color: #eab308; font-size: 14px; letter-spacing: 1px; line-height: 1; display: flex; align-items: center; gap: 2px;">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
                 </div>
-                <span style="color: #93c5fd; font-size: 9px; font-weight: bold; margin-top: 1px;">
-                    <span id="rating-count">0</span> تقييمات
+                <span style="color: #93c5fd; font-size: 10px; font-weight: bold;">
+                    (<span id="rating-count">0</span>)
                 </span>
             </div>
         </div>
@@ -387,7 +392,7 @@
     <div id="publicReviewsModal" class="modal-overlay">
         <div class="modal-card" style="height: 85vh; display: flex; flex-direction: column;">
             <h3>
-                <span><i class="fa-solid fa-star" style="color: #f59e0b;"></i> التقييمات والآراء</span>
+                <span><i class="fa-solid fa-star" style="color: #eab308;"></i> التقييمات والآراء</span>
                 <button onclick="closePublicReviewsModal()" class="close-cart">&times;</button>
             </h3>
             
@@ -405,7 +410,7 @@
     <div id="addReviewModal" class="add-review-modal">
         <div class="add-review-box">
             <h3>
-                <span><i class="fa-solid fa-star" style="color: #f59e0b;"></i> إضافة تقييم جديد</span>
+                <span><i class="fa-solid fa-star" style="color: #eab308;"></i> إضافة تقييم جديد</span>
                 <button onclick="closeAddReviewModal()" class="close-cart">&times;</button>
             </h3>
             <div>
@@ -414,7 +419,9 @@
             </div>
             <div style="background:#f8fafc; padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between;">
                 <span style="font-size:0.78rem; font-weight:bold; color:#1e293b;">التقييم المعتمد:</span>
-                <span style="color:#f59e0b; font-size:0.9rem; letter-spacing:1px;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (ممتاز جداً)</span>
+                <span style="color:#eab308; font-size:0.9rem; letter-spacing:1px; display:flex; align-items:center; gap:2px;">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (ممتاز جداً)
+                </span>
             </div>
             <div>
                 <label style="font-size:0.78rem; font-weight:bold;">تقييمك و تجربتك:</label>
@@ -445,7 +452,7 @@
     <div id="adminApprovedModal" class="admin-reviews-modal">
         <div class="admin-reviews-box">
             <div class="admin-header">
-                <h3><i class="fa-solid fa-star" style="color: #f59e0b;"></i> إدارة التقييمات المنشورة (للحذف)</h3>
+                <h3><i class="fa-solid fa-star" style="color: #eab308;"></i> إدارة التقييمات المنشورة (للحذف)</h3>
                 <button onclick="closeAdminApprovedModal()" class="close-cart">&times;</button>
             </div>
             <div id="adminApprovedReviewsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto;">
@@ -1296,7 +1303,7 @@
                     div.innerHTML = `
                         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
                             <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}</strong>
-                            <span style="color:#f59e0b; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                            <span style="color:#eab308; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
                         <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         ${imgHtml}
@@ -1361,7 +1368,7 @@
                     div.innerHTML = `
                         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
                             <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}</strong>
-                            <span style="color:#f59e0b; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                            <span style="color:#eab308; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
                         <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         ${imgHtml}
