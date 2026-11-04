@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المتخصصون في صيانة الأجهزة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
@@ -13,7 +13,7 @@
             width: 100%;
             overflow-x: hidden;
             background-color: #f0f4f8;
-            color: #1e293b;
+            color: #0f172a;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -61,12 +61,12 @@
         
         .search-container { position: relative; width: 100%; z-index: 9; }
         .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 10px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 5px rgba(0,0,0,0.1); height: 38px; width: 100%; }
-        .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.88rem; color: #0f172a; text-align: right; }
-        .search-box input::placeholder { color: #94a3b8; }
+        .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.88rem; color: #0f172a; text-align: right; font-weight: 700; }
+        .search-box input::placeholder { color: #64748b; font-weight: 500; }
         .search-icon { color: #64748b; font-size: 1rem; cursor: pointer; }
         
         .search-suggestions { display: none; position: absolute; top: 42px; left: 0; right: 0; background: #ffffff; border-radius: 6px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); z-index: 1400; max-height: 250px; overflow-y: auto; border: 1px solid #e2e8f0; }
-        .suggestion-item { padding: 10px 14px; font-size: 0.85rem; color: #1e293b; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
+        .suggestion-item { padding: 10px 14px; font-size: 0.85rem; color: #0f172a; font-weight: 700; cursor: pointer; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; }
         .suggestion-item:hover { background-color: #f8fafc; color: #2563eb; }
 
         .header-left { 
@@ -126,10 +126,10 @@
 
         .hero { padding: 22px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.02); width: 100%; }
         .hero h2 { font-size: 1.25rem; color: #0f172a; margin-bottom: 6px; font-weight: 800; }
-        .hero p { color: #64748b; font-size: 0.85rem; max-width: 700px; margin: 0 auto; line-height: 1.4; }
+        .hero p { color: #334155; font-size: 0.85rem; font-weight: 700; max-width: 700px; margin: 0 auto; line-height: 1.4; }
         
         .categories-container { max-width: 1200px; margin: 15px auto 5px; padding: 0 15px; width: 100%; }
-        .categories-title { font-size: 0.95rem; color: #334155; margin-bottom: 8px; font-weight: bold; }
+        .categories-title { font-size: 0.95rem; color: #0f172a; margin-bottom: 8px; font-weight: 900; }
         .categories-grid { 
             display: flex; 
             gap: 8px; 
@@ -143,11 +143,11 @@
         .categories-grid::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
         .categories-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-        .category-btn { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: 0.2s; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); min-width: max-content; }
-        .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #93c5fd; }
+        .category-btn { background-color: #ffffff; color: #1e293b; border: 1px solid #94a3b8; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: 0.2s; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); min-width: max-content; }
+        .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #3b82f6; }
         .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
 
-        .section-title { padding: 15px 15px 5px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.1rem; color: #0f172a; font-weight: 800; }
+        .section-title { padding: 15px 15px 5px; max-width: 1200px; margin: 0 auto; width: 100%; font-size: 1.1rem; color: #0f172a; font-weight: 900; }
         
         .grid { 
             display: grid; 
@@ -164,7 +164,7 @@
 
         .card { 
             background-color: #ffffff; 
-            border: 1px solid #e2e8f0; 
+            border: 1px solid #cbd5e1; 
             border-radius: 10px; 
             padding: 8px; 
             display: flex; 
@@ -174,13 +174,13 @@
             position: relative; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.03); 
         }
-        .card:hover { box-shadow: 0 6px 16px rgba(30, 58, 138, 0.08); transform: translateY(-2px); border-color: #cbd5e1; }
+        .card:hover { box-shadow: 0 6px 16px rgba(30, 58, 138, 0.08); transform: translateY(-2px); border-color: #94a3b8; }
         
-        .wishlist-btn { position: absolute; top: 8px; left: 8px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.8rem; z-index: 2; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .wishlist-btn { position: absolute; top: 8px; left: 8px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.8rem; z-index: 2; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .wishlist-btn:hover { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
         .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
 
-        .card-img-wrap { width: 100%; height: 115px; background: #f8fafc; border-radius: 6px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; border: 1px solid #f1f5f9; position: relative; }
+        .card-img-wrap { width: 100%; height: 115px; background: #f8fafc; border-radius: 6px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; position: relative; }
         .card img { width: 100%; height: 100%; object-fit: contain; }
         
         .quick-add-btn {
@@ -189,7 +189,7 @@
             right: 6px;
             background: #ffffff;
             color: #2563eb;
-            border: 1px solid #bfdbfe;
+            border: 1px solid #93c5fd;
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -208,118 +208,118 @@
             border-color: #2563eb;
         }
 
-        .card h3 { color: #1e293b; font-size: 0.82rem; cursor: pointer; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; min-height: 2.1rem; }
+        .card h3 { color: #0f172a; font-size: 0.85rem; cursor: pointer; font-weight: 800; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; min-height: 2.1rem; }
         .card h3:hover { color: #2563eb; }
         
         .card-price-box { display: flex; flex-direction: column; gap: 1px; margin-top: 1px; }
         .card-price-main { display: flex; align-items: baseline; gap: 3px; }
-        .price-currency { font-size: 0.65rem; color: #475569; font-weight: bold; }
-        .price-amount { font-size: 1rem; color: #0f172a; font-weight: 800; }
+        .price-currency { font-size: 0.7rem; color: #334155; font-weight: 900; }
+        .price-amount { font-size: 1.05rem; color: #0f172a; font-weight: 900; }
         
-        .card-old-price-row { display: flex; align-items: center; gap: 4px; font-size: 0.7rem; color: #94a3b8; }
+        .card-old-price-row { display: flex; align-items: center; gap: 4px; font-size: 0.72rem; color: #64748b; font-weight: 700; }
         .old-price-val { text-decoration: line-through; }
-        .discount-badge-tag { color: #16a34a; font-weight: bold; font-size: 0.65rem; background: #dcfce7; padding: 1px 3px; border-radius: 3px; }
+        .discount-badge-tag { color: #15803d; font-weight: 900; font-size: 0.68rem; background: #dcfce7; padding: 1px 4px; border-radius: 3px; }
 
-        .card-rating { font-size: 0.75rem; color: #64748b; display: flex; align-items: center; gap: 4px; }
-        .stars { color: #eab308; font-size: 0.85rem; }
+        .card-rating { font-size: 0.75rem; color: #334155; display: flex; align-items: center; gap: 4px; }
+        .stars { color: #ca8a04; font-size: 0.88rem; }
 
-        .badge { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; padding: 1px 5px; border-radius: 4px; font-size: 0.6rem; width: fit-content; font-weight: 700; }
+        .badge { background-color: #eff6ff; color: #1e40af; border: 1px solid #93c5fd; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; width: fit-content; font-weight: 800; }
 
         .site-footer { background: #0f172a; color: #94a3b8; padding: 25px 15px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; width: 100%; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-        .footer-title { color: #ffffff; font-size: 1.05rem; font-weight: 700; }
+        .footer-title { color: #ffffff; font-size: 1.05rem; font-weight: 800; }
 
         .footer-social { display: flex; gap: 12px; align-items: center; justify-content: center; }
-        .social-icon-btn { background: #25d366; color: #ffffff; padding: 8px 18px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); transition: 0.2s; }
+        .social-icon-btn { background: #25d366; color: #ffffff; padding: 8px 18px; border-radius: 30px; text-decoration: none; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); transition: 0.2s; }
         .social-icon-btn:hover { background: #22bf5b; transform: translateY(-2px); }
-        .footer-copy { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+        .footer-copy { font-size: 0.78rem; color: #94a3b8; font-weight: 700; margin-top: 4px; }
 
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .modal-card { background: #ffffff; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
-        .modal-card h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-card h3 { color: #0f172a; font-size: 1.15rem; font-weight: 900; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
 
         .reviews-list { display: flex; flex-direction: column; gap: 10px; max-height: 280px; overflow-y: auto; margin-bottom: 8px; }
-        .review-item { background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.85rem; display: flex; flex-direction: column; gap: 6px; }
+        .review-item { background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.88rem; display: flex; flex-direction: column; gap: 6px; }
         .review-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .review-author-side { display: flex; align-items: center; gap: 8px; }
-        .review-author { font-weight: 800; color: #0f172a; font-size: 0.92rem; }
+        .review-author { font-weight: 900; color: #0f172a; font-size: 0.95rem; }
         .review-stars { color: #006400; font-size: 0.95rem; letter-spacing: 0.5px; }
-        .review-time { font-size: 0.72rem; color: #64748b; font-weight: 600; }
-        .review-comment { color: #334155; line-height: 1.4; font-size: 0.85rem; }
-        .review-img-thumb { width: 65px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer; margin-top: 4px; }
+        .review-time { font-size: 0.75rem; color: #475569; font-weight: 700; }
+        .review-comment { color: #1e293b; font-weight: 700; line-height: 1.4; font-size: 0.88rem; }
+        .review-img-thumb { width: 65px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid #94a3b8; cursor: pointer; margin-top: 4px; }
 
         .add-review-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2700; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .add-review-box { background: #ffffff; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
-        .add-review-box h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+        .add-review-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
 
         .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .details-box { background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .details-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         @media(max-width: 600px) { .details-content-grid { grid-template-columns: 1fr; } }
         
-        .details-img-container img { width: 100%; max-height: 250px; object-fit: contain; border-radius: 8px; background: #f8fafc; border: 1px solid #e2e8f0; }
+        .details-img-container img { width: 100%; max-height: 250px; object-fit: contain; border-radius: 8px; background: #f8fafc; border: 1px solid #cbd5e1; }
         .thumbnails { display: flex; gap: 6px; margin-top: 6px; overflow-x: auto; }
-        .thumbnails img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #cbd5e1; }
+        .thumbnails img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #94a3b8; }
         .thumbnails img.active { border-color: #2563eb; border-width: 2px; }
 
         .cart-modal, .wishlist-modal { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.5); z-index: 2000; justify-content: flex-start; backdrop-filter: blur(2px); }
-        .cart-content, .wishlist-content { background: #ffffff; width: 340px; height: 100%; padding: 20px; border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 12px; box-shadow: -6px 0 20px rgba(0,0,0,0.15); }
-        .cart-header, .wishlist-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-        .cart-header h3, .wishlist-header h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; }
-        .close-cart, .close-wishlist { background: none; border: none; color: #64748b; font-size: 1.5rem; cursor: pointer; transition: 0.2s; }
+        .cart-content, .wishlist-content { background: #ffffff; width: 340px; height: 100%; padding: 20px; border-left: 1px solid #cbd5e1; display: flex; flex-direction: column; gap: 12px; box-shadow: -6px 0 20px rgba(0,0,0,0.15); }
+        .cart-header, .wishlist-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .cart-header h3, .wishlist-header h3 { color: #0f172a; font-size: 1.15rem; font-weight: 900; }
+        .close-cart, .close-wishlist { background: none; border: none; color: #475569; font-size: 1.5rem; cursor: pointer; transition: 0.2s; font-weight: 900; }
         .close-cart:hover, .close-wishlist:hover { color: #ef4444; }
         .cart-items-list, .wishlist-items-list { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-        .cart-item-card, .wishlist-item-card { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .cart-item-info h4, .wishlist-item-info h4 { color: #0f172a; font-size: 0.85rem; font-weight: 700; }
-        .cart-item-info p, .wishlist-item-info p { color: #2563eb; font-size: 0.78rem; font-weight: 700; }
-        .del-cart-item, .del-wishlist-item { background: #ef4444; color: #fff; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; font-weight: 700; }
+        .cart-item-card, .wishlist-item-card { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; display: flex; justify-content: space-between; align-items: center; }
+        .cart-item-info h4, .wishlist-item-info h4 { color: #0f172a; font-size: 0.9rem; font-weight: 800; }
+        .cart-item-info p, .wishlist-item-info p { color: #2563eb; font-size: 0.82rem; font-weight: 900; }
+        .del-cart-item, .del-wishlist-item { background: #ef4444; color: #fff; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-weight: 800; }
         
-        .checkout-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); }
+        .checkout-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: 900; cursor: pointer; width: 100%; text-align: center; text-decoration: none; display: block; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); }
         .checkout-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
 
         .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .checkout-box { background: #ffffff; width: 100%; max-width: 400px; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
-        .checkout-box h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; text-align: center; margin-bottom: 4px; }
-        .checkout-box label { font-size: 0.82rem; font-weight: 700; color: #475569; display: block; margin-bottom: 2px; }
-        .checkout-box input, .checkout-box select, .add-review-box input, .add-review-box textarea, .modal-card input, .modal-card textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.85rem; }
+        .checkout-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 900; text-align: center; margin-bottom: 4px; }
+        .checkout-box label { font-size: 0.88rem; font-weight: 800; color: #0f172a; display: block; margin-bottom: 2px; }
+        .checkout-box input, .checkout-box select, .add-review-box input, .add-review-box textarea, .modal-card input, .modal-card textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #94a3b8; background: #ffffff; color: #0f172a; font-size: 0.88rem; font-weight: 700; }
 
         .invoice-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 2600; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .invoice-box { background: #ffffff; width: 100%; max-width: 420px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); direction: rtl; }
-        .invoice-header { text-align: center; border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px; }
-        .invoice-header h3 { color: #1e3a8a; font-size: 1.2rem; font-weight: 800; }
-        .invoice-header p { font-size: 0.78rem; color: #64748b; margin-top: 2px; }
-        .invoice-section { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.85rem; }
-        .iban-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px; text-align: center; margin-top: 4px; }
-        .copy-btn { background: #2563eb; color: #fff; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: bold; margin-top: 5px; }
+        .invoice-header { text-align: center; border-bottom: 2px dashed #cbd5e1; padding-bottom: 10px; }
+        .invoice-header h3 { color: #1e3a8a; font-size: 1.25rem; font-weight: 900; }
+        .invoice-header p { font-size: 0.82rem; color: #334155; font-weight: 700; margin-top: 2px; }
+        .invoice-section { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.88rem; font-weight: 700; color: #0f172a; }
+        .iban-box { background: #eff6ff; border: 1px solid #93c5fd; border-radius: 8px; padding: 10px; text-align: center; margin-top: 4px; }
+        .copy-btn { background: #2563eb; color: #fff; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 900; margin-top: 5px; }
 
         .pass-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); z-index: 2200; justify-content: center; align-items: center; padding: 15px; }
         .pass-box { background: #ffffff; width: 100%; max-width: 300px; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
-        .pass-box h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; }
-        .pass-box input { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.95rem; text-align: center; letter-spacing: 3px; }
+        .pass-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 900; }
+        .pass-box input { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #94a3b8; background: #ffffff; color: #0f172a; font-size: 1rem; font-weight: 900; text-align: center; letter-spacing: 3px; }
 
         .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2100; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); }
         .admin-box { background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
-        .admin-header h3 { color: #0f172a; font-size: 1.15rem; font-weight: 800; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .admin-header h3 { color: #0f172a; font-size: 1.2rem; font-weight: 900; }
         
-        /* تنيسقات تبويبات لوحة التحكم (Tabs) لترتيب الخيارات */
+        /* تنيسقات تبويبات لوحة التحكم (Tabs) واضحة وغامقة تماماً */
         .admin-tabs {
             display: flex;
             gap: 6px;
-            background: #f1f5f9;
-            padding: 4px;
+            background: #e2e8f0;
+            padding: 5px;
             border-radius: 8px;
             overflow-x: auto;
             margin-bottom: 10px;
         }
         .admin-tab-btn {
-            background: transparent;
+            background: #cbd5e1;
             border: none;
-            padding: 8px 12px;
+            padding: 9px 14px;
             border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: #0f172a;
             cursor: pointer;
             white-space: nowrap;
             transition: 0.2s;
@@ -327,29 +327,30 @@
             text-align: center;
         }
         .admin-tab-btn:hover {
-            color: #1e3a8a;
+            background: #94a3b8;
+            color: #ffffff;
         }
         .admin-tab-btn.active {
-            background: #ffffff;
-            color: #2563eb;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+            background: #1e3a8a;
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(30, 58, 138, 0.3);
         }
 
         .admin-tab-content {
             display: none;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
         .admin-tab-content.active {
             display: flex;
         }
 
-        .admin-sec-title { color: #2563eb; font-size: 0.95rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 4px; margin-top: 4px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .admin-sec-title { color: #1e3a8a; font-size: 1rem; border-bottom: 2px dashed #94a3b8; padding-bottom: 5px; margin-top: 6px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; }
         
         .form-group { margin-bottom: 8px; }
-        .form-group label { display: block; margin-bottom: 3px; color: #475569; font-weight: 600; font-size: 0.82rem; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font-size: 0.82rem; }
-        .admin-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; width: 100%; font-size: 0.85rem; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
+        .form-group label { display: block; margin-bottom: 4px; color: #0f172a; font-weight: 900; font-size: 0.88rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #94a3b8; background: #ffffff; color: #0f172a; font-size: 0.88rem; font-weight: 800; }
+        .admin-btn { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 900; cursor: pointer; width: 100%; font-size: 0.9rem; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
         .admin-btn:hover { background: linear-gradient(135deg, #1d4ed8 100%, #1e40af 100%); }
         
         .admin-reviews-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 2800; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
@@ -357,7 +358,7 @@
         
         .pending-review-card {
             background: #f8fafc;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #94a3b8;
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 8px;
@@ -366,21 +367,21 @@
             gap: 6px;
         }
 
-        .item-row { background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .del-btn { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 700; }
-        .approve-btn { background: #10b981; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.78rem; font-weight: 700; }
+        .item-row { background: #f8fafc; padding: 9px; border-radius: 6px; border: 1px solid #cbd5e1; display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: 800; }
+        .del-btn { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 900; }
+        .approve-btn { background: #10b981; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 900; }
 
-        .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; z-index: 3000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
+        .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 9px 20px; border-radius: 30px; font-size: 0.9rem; z-index: 3000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 900; text-align: center; }
 
         .custom-confirm-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 3500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .custom-confirm-box { background: #ffffff; width: 100%; max-width: 340px; padding: 22px; border-radius: 14px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.25); direction: rtl; text-align: center; }
-        .custom-confirm-box h4 { color: #0f172a; font-size: 1.1rem; font-weight: 800; }
-        .custom-confirm-box p { color: #64748b; font-size: 0.85rem; line-height: 1.4; }
+        .custom-confirm-box h4 { color: #0f172a; font-size: 1.15rem; font-weight: 900; }
+        .custom-confirm-box p { color: #1e293b; font-size: 0.88rem; font-weight: 800; line-height: 1.4; }
         .confirm-btns { display: flex; gap: 8px; margin-top: 4px; }
-        .confirm-yes { background: #ef4444; color: #fff; border: none; padding: 9px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; flex: 1; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3); }
+        .confirm-yes { background: #ef4444; color: #fff; border: none; padding: 9px; border-radius: 6px; font-weight: 900; font-size: 0.88rem; cursor: pointer; flex: 1; box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3); }
         .confirm-yes:hover { background: #dc2626; }
-        .confirm-no { background: #e2e8f0; color: #334155; border: none; padding: 9px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; flex: 1; }
-        .confirm-no:hover { background: #cbd5e1; }
+        .confirm-no { background: #cbd5e1; color: #0f172a; border: none; padding: 9px; border-radius: 6px; font-weight: 900; font-size: 0.88rem; cursor: pointer; flex: 1; }
+        .confirm-no:hover { background: #94a3b8; }
     </style>
 </head>
 <body>
@@ -475,10 +476,10 @@
             </h3>
             
             <div id="approvedReviewsList" class="reviews-list" style="flex-grow: 1; overflow-y: auto;">
-                <p style="color:#64748b; text-align:center; margin-top: 40px;">جاري تحميل التقييمات...</p>
+                <p style="color:#0f172a; font-weight:800; text-align:center; margin-top: 40px;">جاري تحميل التقييمات...</p>
             </div>
             
-            <div style="padding-top: 10px; border-top: 1px solid #e2e8f0; margin-top: auto;">
+            <div style="padding-top: 10px; border-top: 1px solid #cbd5e1; margin-top: auto;">
                 <button onclick="openAddReviewModal()" class="admin-btn">إضافة تقييم جديد <i class="fa-solid fa-star"></i></button>
             </div>
         </div>
@@ -492,22 +493,22 @@
                 <button onclick="closeAddReviewModal()" class="close-cart">&times;</button>
             </h3>
             <div>
-                <label style="font-size:0.78rem; font-weight:bold;">اسمك أو اسم مستخدم (عربي أو إنجليزي):</label>
+                <label style="font-size:0.85rem; font-weight:900; color:#0f172a;">اسمك أو اسم مستخدم (عربي أو إنجليزي):</label>
                 <input type="text" id="revName" placeholder="مثال: محمد / Rayyan">
             </div>
-            <div style="background:#f8fafc; padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between;">
-                <span style="font-size:0.78rem; font-weight:bold; color:#1e293b;">التقييم المعتمد:</span>
-                <span style="color:#006400; font-size:0.9rem; letter-spacing:1px; display:flex; align-items:center; gap:2px;">
+            <div style="background:#f8fafc; padding:8px 10px; border-radius:6px; border:1px solid #cbd5e1; display:flex; align-items:center; justify-content:space-between;">
+                <span style="font-size:0.85rem; font-weight:900; color:#0f172a;">التقييم المعتمد:</span>
+                <span style="color:#006400; font-size:0.95rem; font-weight:900; letter-spacing:1px; display:flex; align-items:center; gap:2px;">
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (ممتاز جداً)
                 </span>
             </div>
             <div>
-                <label style="font-size:0.78rem; font-weight:bold;">تقييمك و تجربتك:</label>
+                <label style="font-size:0.85rem; font-weight:900; color:#0f172a;">تقييمك و تجربتك:</label>
                 <textarea id="revComment" rows="2" placeholder="اكتب رأيك وتجربتك هنا..."></textarea>
             </div>
             <div>
-                <label style="font-size:0.78rem; font-weight:bold; color:#2563eb;"><i class="fa-solid fa-camera"></i> إرفاق صورة المنتج أو الجهاز (اختياري):</label>
-                <input type="file" id="revImageFile" accept="image/*" style="font-size:0.78rem; margin-top:3px;">
+                <label style="font-size:0.85rem; font-weight:900; color:#2563eb;"><i class="fa-solid fa-camera"></i> إرفاق صورة المنتج أو الجهاز (اختياري):</label>
+                <input type="file" id="revImageFile" accept="image/*" style="font-size:0.82rem; margin-top:3px;">
             </div>
             <button onclick="submitNewReview()" class="admin-btn" style="margin-top: 4px;">إرسال التقييم <i class="fa-solid fa-star"></i></button>
         </div>
@@ -521,7 +522,7 @@
                 <button onclick="closeAdminReviewsModal()" class="close-cart">&times;</button>
             </div>
             <div id="adminPendingReviewsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto;">
-                <p style="color:#64748b; text-align:center;">جاري التحميل...</p>
+                <p style="color:#0f172a; font-weight:800; text-align:center;">جاري التحميل...</p>
             </div>
         </div>
     </div>
@@ -534,7 +535,7 @@
                 <button onclick="closeAdminApprovedModal()" class="close-cart">&times;</button>
             </div>
             <div id="adminApprovedReviewsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto;">
-                <p style="color:#64748b; text-align:center;">جاري التحميل...</p>
+                <p style="color:#0f172a; font-weight:800; text-align:center;">جاري التحميل...</p>
             </div>
         </div>
     </div>
@@ -564,7 +565,7 @@
                             <span id="detDiscountTag" class="discount-badge-tag"></span>
                         </div>
                     </div>
-                    <p id="detDesc" style="color: #475569; font-size: 0.85rem; line-height: 1.4; white-space: pre-wrap;"></p>
+                    <p id="detDesc" style="color: #1e293b; font-weight: 800; font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap;"></p>
                     <button id="detAddToCartBtn" class="admin-btn" style="margin-top: auto;">أضف إلى السلة <i class="fa-solid fa-cart-shopping"></i></button>
                 </div>
             </div>
@@ -578,7 +579,7 @@
                 <button onclick="toggleWishlistModal()" class="close-wishlist">&times;</button>
             </div>
             <div class="wishlist-items-list" id="wishlistItemsList">
-                <p style="color:#64748b; text-align:center; margin-top:20px;">قائمة المفضلة فارغة</p>
+                <p style="color:#0f172a; font-weight:800; text-align:center; margin-top:20px;">قائمة المفضلة فارغة</p>
             </div>
         </div>
     </div>
@@ -590,9 +591,9 @@
                 <button onclick="toggleCart()" class="close-cart">&times;</button>
             </div>
             <div class="cart-items-list" id="cartItemsList">
-                <p id="txt-cart-empty" style="color:#64748b; text-align:center; margin-top:20px;">السلة فارغة حالياً</p>
+                <p id="txt-cart-empty" style="color:#0f172a; font-weight:800; text-align:center; margin-top:20px;">السلة فارغة حالياً</p>
             </div>
-            <div id="cartFooter" style="display:none; border-top: 2px solid #f1f5f9; padding-top: 12px;">
+            <div id="cartFooter" style="display:none; border-top: 2px solid #cbd5e1; padding-top: 12px;">
                 <button onclick="openCheckoutModal()" class="checkout-btn">إتمام الطلب عبر الواتساب</button>
             </div>
         </div>
@@ -613,8 +614,8 @@
             <div id="locationFieldBlock">
                 <label><i class="fa-solid fa-location-dot"></i> الموقع (العنوان الشارع والحي):</label>
                 <div style="display: flex; gap: 6px; margin-bottom: 4px;">
-                    <input type="text" id="custLocation" placeholder="اضغط زر تحديد الموقع تلقائياً أو اكتبه" readonly style="background: #f8fafc; font-size: 0.78rem;">
-                    <button type="button" onclick="getDeviceLocation()" style="background: #2563eb; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; cursor: pointer; white-space: nowrap;"><i class="fa-solid fa-location-crosshairs"></i> حدد موقعي</button>
+                    <input type="text" id="custLocation" placeholder="اضغط زر تحديد الموقع تلقائياً أو اكتبه" readonly style="background: #f8fafc; font-size: 0.82rem;">
+                    <button type="button" onclick="getDeviceLocation()" style="background: #2563eb; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 900; cursor: pointer; white-space: nowrap;"><i class="fa-solid fa-location-crosshairs"></i> حدد موقعي</button>
                 </div>
                 <input type="text" id="custExtraAddr" placeholder="تفاصيل إضافية (رقم المبنى / الشقة / الشارع)" style="margin-top: 2px;">
             </div>
@@ -629,7 +630,7 @@
                 <select id="payMethod"></select>
             </div>
             <button onclick="sendToWhatsApp()" class="admin-btn" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); margin-top: 4px;">تأكيد وإرسال الطلب للواتساب <i class="fa-brands fa-whatsapp"></i></button>
-            <button onclick="closeCheckoutModal()" style="background:none; border:none; color:#64748b; cursor:pointer; font-size:0.8rem; text-align:center; margin-top: 2px;">إلغاء</button>
+            <button onclick="closeCheckoutModal()" style="background:none; border:none; color:#475569; font-weight:900; cursor:pointer; font-size:0.85rem; text-align:center; margin-top: 2px;">إلغاء</button>
         </div>
     </div>
 
@@ -638,7 +639,7 @@
             <div class="invoice-header">
                 <h3><i class="fa-solid fa-file-invoice"></i> فاتورة طلب رسمية</h3>
                 <p>المتخصصون في صيانة الأجهزة</p>
-                <span id="invOrderId" style="font-size:0.75rem; color:#2563eb; font-weight:bold;"></span>
+                <span id="invOrderId" style="font-size:0.8rem; color:#2563eb; font-weight:900;"></span>
             </div>
             <div class="invoice-section">
                 <p id="invCustNameRow"><strong>اسم العميل:</strong> <span id="invCustName"></span></p>
@@ -648,23 +649,23 @@
                 <p><strong>طريقة الدفع:</strong> <span id="invPayMethod"></span></p>
             </div>
             <div class="invoice-section">
-                <h4 style="margin-bottom:5px; color:#0f172a;">تفاصيل المنتجات والخدمات:</h4>
+                <h4 style="margin-bottom:6px; color:#0f172a; font-weight:900;">تفاصيل المنتجات والخدمات:</h4>
                 <div id="invProductsList"></div>
                 
-                <div id="invShippingFeeRow" style="display:none; justify-content:space-between; margin-top:6px; padding-top:4px; border-top:1px dashed #cbd5e1; font-size:0.85rem; color:#0f172a;">
+                <div id="invShippingFeeRow" style="display:none; justify-content:space-between; margin-top:6px; padding-top:4px; border-top:1px dashed #94a3b8; font-size:0.88rem; color:#0f172a; font-weight:800;">
                     <span>رسوم التوصيل / الشحن:</span>
                     <strong id="invShippingPrice">0 ر.س</strong>
                 </div>
 
-                <div style="border-top: 2px solid #1e3a8a; margin-top: 8px; padding-top: 6px; font-weight: bold; color: #1e3a8a; font-size:0.95rem; display:flex; justify-content:space-between;">
+                <div style="border-top: 2px solid #1e3a8a; margin-top: 8px; padding-top: 6px; font-weight: 900; color: #1e3a8a; font-size:1rem; display:flex; justify-content:space-between;">
                     <span>المبلغ الإجمالي:</span>
                     <span><span id="invTotalPrice">0</span> ر.س</span>
                 </div>
             </div>
             <div class="iban-box">
-                <h4 style="color:#1e3a8a; font-size:0.85rem;"><i class="fa-solid fa-credit-card"></i> الحساب البنكي الرسمي للتحويل:</h4>
-                <p style="font-size:0.78rem; color:#475569; margin-top:3px;">مصرف الراجحي</p>
-                <p id="ibanText" style="font-size:0.9rem; font-weight:bold; color:#0f172a; letter-spacing:1px; margin:3px 0;">SA6180000859608019057128</p>
+                <h4 style="color:#1e3a8a; font-size:0.88rem; font-weight:900;"><i class="fa-solid fa-credit-card"></i> الحساب البنكي الرسمي للتحويل:</h4>
+                <p style="font-size:0.82rem; color:#334155; font-weight:800; margin-top:3px;">مصرف الراجحي</p>
+                <p id="ibanText" style="font-size:0.95rem; font-weight:900; color:#0f172a; letter-spacing:1px; margin:3px 0;">SA6180000859608019057128</p>
                 <button onclick="copyIban()" class="copy-btn">نسخ رقم الآيبان <i class="fa-regular fa-copy"></i></button>
             </div>
             <button onclick="closeInvoiceModal()" class="admin-btn">إغلاق الفاتورة</button>
@@ -674,14 +675,14 @@
     <div id="passModal" class="pass-modal">
         <div class="pass-box">
             <h3><i class="fa-solid fa-lock"></i> لوحة التحكم السرية</h3>
-            <p style="font-size: 0.78rem; color: #64748b;">الرجاء إدخال رمز الدخول:</p>
+            <p style="font-size: 0.82rem; color: #1e293b; font-weight: 800;">الرجاء إدخال رمز الدخول:</p>
             <input type="password" id="adminPassInput" placeholder="****">
             <button onclick="checkAdminPassword()" class="admin-btn">دخول</button>
-            <button onclick="closePasswordModal()" style="background: none; border: none; color: #2563eb; cursor: pointer; font-size: 0.78rem; margin-top: 4px; font-weight:700;">إلغاء</button>
+            <button onclick="closePasswordModal()" style="background: none; border: none; color: #2563eb; cursor: pointer; font-size: 0.82rem; font-weight: 900; margin-top: 4px;">إلغاء</button>
         </div>
     </div>
 
-    <!-- لوحة التحكم الإدارية بنظام التبويبات المرتبة (Tabs) -->
+    <!-- لوحة التحكم الإدارية بنظام التبويبات المرتبة والواضحة تماماً -->
     <div id="adminModal" class="admin-modal">
         <div class="admin-box">
             <div class="admin-header">
@@ -701,7 +702,7 @@
                 <h4 class="admin-sec-title">📈 التقارير المالية والأرباح (اليوم / الشهر / السنة)</h4>
                 <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #cbd5e1; display:flex; flex-direction:column; gap:8px;">
                     <div style="display:flex; gap:6px; align-items:center;">
-                        <select id="reportFilterType" onchange="updateFinancialReport()" style="padding:6px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.8rem; flex:1;">
+                        <select id="reportFilterType" onchange="updateFinancialReport()" style="padding:7px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; flex:1;">
                             <option value="today">اليوم</option>
                             <option value="week">هذا الأسبوع</option>
                             <option value="month">هذا الشهر</option>
@@ -709,17 +710,17 @@
                             <option value="all">الكل</option>
                         </select>
                     </div>
-                    <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; font-size:0.82rem;">
-                        <div style="background:#eff6ff; padding:8px; border-radius:6px; border:1px solid #bfdbfe;">
-                            <span style="color:#1e3a8a; display:block; font-weight:bold;">إجمالي المبيعات:</span>
-                            <strong id="repTotalSales" style="font-size:1rem; color:#0f172a;">0 ر.س</strong>
+                    <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; font-size:0.85rem;">
+                        <div style="background:#eff6ff; padding:9px; border-radius:6px; border:1px solid #93c5fd;">
+                            <span style="color:#1e3a8a; display:block; font-weight:900;">إجمالي المبيعات:</span>
+                            <strong id="repTotalSales" style="font-size:1.05rem; color:#0f172a;">0 ر.س</strong>
                         </div>
-                        <div style="background:#ecfdf5; padding:8px; border-radius:6px; border:1px solid #a7f3d0;">
-                            <span style="color:#065f46; display:block; font-weight:bold;">صافي الأرباح:</span>
-                            <strong id="repNetProfit" style="font-size:1rem; color:#047857;">0 ر.س</strong>
+                        <div style="background:#ecfdf5; padding:9px; border-radius:6px; border:1px solid #6ee7b7;">
+                            <span style="color:#065f46; display:block; font-weight:900;">صافي الأرباح:</span>
+                            <strong id="repNetProfit" style="font-size:1.05rem; color:#047857;">0 ر.س</strong>
                         </div>
                     </div>
-                    <div style="background:#fffbeb; padding:8px; border-radius:6px; border:1px solid #fde68a; font-size:0.78rem; display:flex; justify-content:space-around; text-align:center;">
+                    <div style="background:#fffbeb; padding:9px; border-radius:6px; border:1px solid #fcd34d; font-size:0.82rem; font-weight:800; display:flex; justify-content:space-around; text-align:center; color:#0f172a;">
                         <div>💵 كاش: <strong id="repCashSales">0 ر.س</strong></div>
                         <div>💳 شبكة: <strong id="repCardSales">0 ر.س</strong></div>
                         <div>🏦 تحويل: <strong id="repTransferSales">0 ر.س</strong></div>
@@ -727,13 +728,13 @@
                 </div>
 
                 <div style="margin-top: 5px; display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                    <button onclick="openAdminReviewsModal()" class="admin-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                    <button onclick="openAdminReviewsModal()" class="admin-btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem;">
                         <span><i class="fa-solid fa-inbox"></i> التقييمات المعلقة</span>
-                        <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;" id="pendingBadgeCount">0</span>
+                        <span style="background: rgba(255,255,255,0.25); padding: 2px 6px; border-radius: 4px; font-size: 0.78rem;" id="pendingBadgeCount">0</span>
                     </button>
-                    <button onclick="openAdminApprovedModal()" class="admin-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                    <button onclick="openAdminApprovedModal()" class="admin-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem;">
                         <span><i class="fa-solid fa-star" style="color: #006400;"></i> التقييمات المنشورة</span>
-                        <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;" id="approvedBadgeCount">0</span>
+                        <span style="background: rgba(255,255,255,0.25); padding: 2px 6px; border-radius: 4px; font-size: 0.78rem;" id="approvedBadgeCount">0</span>
                     </button>
                 </div>
             </div>
@@ -742,48 +743,48 @@
             <div id="tab-orders" class="admin-tab-content">
                 <h4 class="admin-sec-title">📦 الطلبات الجارية وتعديل الرسوم</h4>
                 <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
-                    <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">اختر الطلب الجاري:</label>
-                    <select id="adminOrderSelect" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.82rem; margin-bottom:8px;" onchange="onOrderSelectedInAdmin()"></select>
+                    <label style="color:#0f172a; font-size:0.85rem; display:block; margin-bottom:4px; font-weight:900;">اختر الطلب الجاري:</label>
+                    <select id="adminOrderSelect" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; margin-bottom:8px;" onchange="onOrderSelectedInAdmin()"></select>
                     
                     <div style="display:flex; gap:8px; align-items:center; margin-bottom: 8px;">
                         <div style="flex-grow:1;">
-                            <label style="color:#475569; font-size:0.75rem; display:block; margin-bottom:2px;">رسوم التوصيل (ر.س):</label>
-                            <input type="number" id="adminShippingFeeInput" placeholder="مثال: 15" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.85rem;">
+                            <label style="color:#0f172a; font-size:0.82rem; display:block; margin-bottom:2px; font-weight:900;">رسوم التوصيل (ر.س):</label>
+                            <input type="number" id="adminShippingFeeInput" placeholder="مثال: 15" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.88rem; font-weight:800;">
                         </div>
-                        <button type="button" onclick="updateOrderShippingFee()" class="admin-btn" style="background:#10b981; margin-top:14px; width:auto; padding:8px 12px; white-space:nowrap;">حفظ الرسوم ✔️</button>
+                        <button type="button" onclick="updateOrderShippingFee()" class="admin-btn" style="background:#10b981; margin-top:16px; width:auto; padding:9px 12px; white-space:nowrap;">حفظ الرسوم ✔️</button>
                     </div>
 
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:6px;">
-                        <button type="button" onclick="markOrderAsSold()" class="admin-btn" style="background:#2563eb; font-size:0.78rem; padding:8px;">✅ تم البيع (تسجيل المبيعات)</button>
-                        <button type="button" onclick="deleteActiveOrder()" class="del-btn" style="font-size:0.78rem; padding:8px;">حذف نهائي ❌</button>
+                        <button type="button" onclick="markOrderAsSold()" class="admin-btn" style="background:#2563eb; font-size:0.82rem; padding:9px;">✅ تم البيع (تسجيل المبيعات)</button>
+                        <button type="button" onclick="deleteActiveOrder()" class="del-btn" style="font-size:0.82rem; padding:9px;">حذف نهائي ❌</button>
                     </div>
                 </div>
 
                 <h4 class="admin-sec-title">✅ قسم "تم البيع" (الفواتير المثبتة)</h4>
                 <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
-                    <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">الطلبات المباعة:</label>
-                    <select id="soldOrderSelect" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.82rem; margin-bottom:6px;"></select>
+                    <label style="color:#0f172a; font-size:0.85rem; display:block; margin-bottom:4px; font-weight:900;">الطلبات المباعة:</label>
+                    <select id="soldOrderSelect" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; margin-bottom:6px;"></select>
                     <div style="display:flex; gap:6px;">
-                        <button type="button" onclick="returnOrderToActive()" class="admin-btn" style="background:#f59e0b; font-size:0.78rem; padding:6px;">إرجاع للجارية 🔄</button>
-                        <button type="button" onclick="deleteSoldOrder()" class="del-btn" style="font-size:0.78rem; padding:6px;">حذف الطلب ❌</button>
+                        <button type="button" onclick="returnOrderToActive()" class="admin-btn" style="background:#d97706; font-size:0.82rem; padding:8px;">إرجاع للجارية 🔄</button>
+                        <button type="button" onclick="deleteSoldOrder()" class="del-btn" style="font-size:0.82rem; padding:8px;">حذف الطلب ❌</button>
                     </div>
                 </div>
 
                 <h4 class="admin-sec-title">⏳ قسم "تأجيل البيع" (تحديد تاريخ)</h4>
                 <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
-                    <label style="color:#475569; font-size:0.78rem; display:block; margin-bottom:4px; font-weight:bold;">اختر الطلب للتأجيل:</label>
-                    <select id="delayedOrderSelect" style="width:100%; padding:8px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.82rem; margin-bottom:6px;" onchange="onDelayedOrderSelected()"></select>
+                    <label style="color:#0f172a; font-size:0.85rem; display:block; margin-bottom:4px; font-weight:900;">اختر الطلب للتأجيل:</label>
+                    <select id="delayedOrderSelect" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; margin-bottom:6px;" onchange="onDelayedOrderSelected()"></select>
                     
                     <div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;">
                         <div style="flex-grow:1;">
-                            <label style="color:#475569; font-size:0.72rem; display:block; margin-bottom:2px;">تاريخ التنفيذ المستهدف:</label>
-                            <input type="date" id="delayDateInput" style="width:100%; padding:6px; border-radius:6px; border:1px solid #cbd5e1; font-size:0.8rem;">
+                            <label style="color:#0f172a; font-size:0.78rem; display:block; margin-bottom:2px; font-weight:900;">تاريخ التنفيذ المستهدف:</label>
+                            <input type="date" id="delayDateInput" style="width:100%; padding:7px; border-radius:6px; border:1px solid #94a3b8; font-size:0.82rem; font-weight:800;">
                         </div>
-                        <button type="button" onclick="saveDelayedOrderDate()" class="admin-btn" style="background:#8b5cf6; margin-top:14px; width:auto; padding:6px 12px; font-size:0.78rem; white-space:nowrap;">حفظ التاريخ 📅</button>
+                        <button type="button" onclick="saveDelayedOrderDate()" class="admin-btn" style="background:#8b5cf6; margin-top:16px; width:auto; padding:7px 12px; font-size:0.82rem; white-space:nowrap;">حفظ التاريخ 📅</button>
                     </div>
                     <div style="display:flex; gap:6px;">
-                        <button type="button" onclick="returnDelayedToActive()" class="admin-btn" style="background:#2563eb; font-size:0.78rem; padding:6px;">إرجاع للجارية 🔄</button>
-                        <button type="button" onclick="deleteDelayedOrder()" class="del-btn" style="font-size:0.78rem; padding:6px;">حذف ❌</button>
+                        <button type="button" onclick="returnDelayedToActive()" class="admin-btn" style="background:#2563eb; font-size:0.82rem; padding:8px;">إرجاع للجارية 🔄</button>
+                        <button type="button" onclick="deleteDelayedOrder()" class="del-btn" style="font-size:0.82rem; padding:8px;">حذف ❌</button>
                     </div>
                 </div>
             </div>
@@ -799,7 +800,7 @@
                     <button type="submit" class="admin-btn">إضافة القسم للمتجر</button>
                 </form>
                 <div>
-                    <label style="color:#64748b; font-size:0.78rem; display:block; margin-bottom:3px;">الأقسام الحالية:</label>
+                    <label style="color:#0f172a; font-size:0.85rem; font-weight:900; display:block; margin-bottom:4px;">الأقسام الحالية:</label>
                     <div id="adminCatsList" style="max-height: 80px; overflow-y: auto;"></div>
                 </div>
 
@@ -811,7 +812,7 @@
                     </div>
                     <div class="form-group">
                         <label>نوع المنتج/الخدمة:</label>
-                        <select id="pType" required style="font-weight: bold; color: #2563eb;">
+                        <select id="pType" required style="font-weight: 900; color: #1e3a8a;">
                             <option value="physical">📦 منتج عادي / جهاز مادي (يتطلب توصيل أو شحن)</option>
                             <option value="digital">🛠️ خدمة رقمية / صيانة عن بُعد (بدون شحن أو موقع)</option>
                         </select>
@@ -846,7 +847,7 @@
                     </div>
                     <div class="form-group">
                         <label>اختر الصور من الاستوديو (متعددة):</label>
-                        <input type="file" id="pImageFiles" accept="image/*" multiple style="font-size:0.8rem;">
+                        <input type="file" id="pImageFiles" accept="image/*" multiple style="font-size:0.85rem;">
                     </div>
                     <div class="form-group">
                         <label>الوصف:</label>
@@ -855,7 +856,7 @@
                     <button type="submit" class="admin-btn">إضافة المنتج/الخدمة للمتجر</button>
                 </form>
                 <div>
-                    <label style="color:#64748b; font-size:0.78rem; display:block; margin-bottom:3px;">المنتجات والمخزون الحالي:</label>
+                    <label style="color:#0f172a; font-size:0.85rem; font-weight:900; display:block; margin-bottom:4px;">المنتجات والمخزون الحالي:</label>
                     <div id="adminItemsList" style="max-height: 120px; overflow-y: auto;"></div>
                 </div>
             </div>
@@ -1387,7 +1388,7 @@
             if(!list) return;
             
             if(!db) {
-                list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد قاعدة بيانات متصلة</p>';
+                list.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; margin-top:40px;">لا توجد قاعدة بيانات متصلة</p>';
                 return;
             }
 
@@ -1395,7 +1396,7 @@
                 let data = snapshot.val();
                 list.innerHTML = '';
                 if (!data) {
-                    list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن. كن أول من يقيّم!</p>';
+                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن. كن أول من يقيّم!</p>';
                     return;
                 }
 
@@ -1493,7 +1494,7 @@
             if(!list) return;
 
             if(!db) {
-                list.innerHTML = '<p style="color:#64748b; font-size:0.85rem; text-align:center;">لا يوجد اتصال بقاعدة البيانات.</p>';
+                list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.88rem; text-align:center;">لا يوجد اتصال بقاعدة البيانات.</p>';
                 return;
             }
 
@@ -1502,7 +1503,7 @@
                 list.innerHTML = '';
                 
                 if (!data) {
-                    list.innerHTML = '<p style="color:#64748b; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
+                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
                     return;
                 }
 
@@ -1512,11 +1513,11 @@
                     let div = document.createElement('div');
                     div.className = 'pending-review-card';
                     div.innerHTML = `
-                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
-                            <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}</strong>
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #cbd5e1; padding-bottom:6px;">
+                            <strong style="font-size:0.95rem; color:#0f172a; font-weight:900;">👤 ${rev.name}</strong>
                             <span style="color:#006400; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
-                        <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
+                        <p style="font-size:0.9rem; color:#0f172a; font-weight:800; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         ${imgHtml}
                         <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:4px;">
                             <button class="approve-btn" onclick="approveReview('${key}')">قبول ونشر ⭐</button>
@@ -1567,7 +1568,7 @@
                 list.innerHTML = '';
 
                 if (!data) {
-                    list.innerHTML = '<p style="color:#64748b; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات منشورة حالياً.</p>';
+                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات منشورة حالياً.</p>';
                     return;
                 }
 
@@ -1577,11 +1578,11 @@
                     let div = document.createElement('div');
                     div.className = 'pending-review-card';
                     div.innerHTML = `
-                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
-                            <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}</strong>
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #cbd5e1; padding-bottom:6px;">
+                            <strong style="font-size:0.95rem; color:#0f172a; font-weight:900;">👤 ${rev.name}</strong>
                             <span style="color:#006400; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
-                        <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
+                        <p style="font-size:0.9rem; color:#0f172a; font-weight:800; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         ${imgHtml}
                         <div style="display:flex; justify-content:flex-end; margin-top:4px;">
                             <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف التقييم نهائياً ❌</button>
@@ -1727,7 +1728,7 @@
             grid.innerHTML = '';
 
             if (!products || products.length === 0) {
-                grid.innerHTML = '<p style="color:#64748b; text-align:center; grid-column: 1/-1;">لا توجد منتجات مطابقة أو معروضة حالياً.</p>';
+                grid.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; grid-column: 1/-1;">لا توجد منتجات مطابقة أو معروضة حالياً.</p>';
                 return;
             }
 
@@ -1741,7 +1742,7 @@
                 if (imgsList.length > 0) {
                     imgTag = `<img src="${imgsList[0]}" alt="${p.title}">`;
                 } else {
-                    imgTag = `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:0.7rem;">بدون صورة</div>`;
+                    imgTag = `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#64748b; font-weight:800; font-size:0.75rem;">بدون صورة</div>`;
                 }
 
                 let isLiked = wishlist.some(item => item.id === p.id);
@@ -1828,7 +1829,7 @@
                     });
                     suggestionsBox.style.display = 'block';
                 } else {
-                    suggestionsBox.innerHTML = '<div style="padding:10px; color:#64748b; text-align:center;">لا توجد نتائج مطابقة</div>';
+                    suggestionsBox.innerHTML = '<div style="padding:10px; color:#0f172a; font-weight:800; text-align:center;">لا توجد نتائج مطابقة</div>';
                     suggestionsBox.style.display = 'block';
                 }
             });
@@ -1859,7 +1860,7 @@
             list.innerHTML = '';
 
             if (cart.length === 0) {
-                list.innerHTML = '<p id="txt-cart-empty" style="color:#64748b; text-align:center; margin-top:20px;">السلة فارغة حالياً</p>';
+                list.innerHTML = '<p id="txt-cart-empty" style="color:#0f172a; font-weight:800; text-align:center; margin-top:20px;">السلة فارغة حالياً</p>';
                 if(footer) footer.style.display = 'none';
                 return;
             }
@@ -2158,7 +2159,7 @@
             list.innerHTML = '';
 
             if (wishlist.length === 0) {
-                list.innerHTML = '<p style="color:#64748b; text-align:center; margin-top:20px;">قائمة المفضلة فارغة</p>';
+                list.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; margin-top:20px;">قائمة المفضلة فارغة</p>';
                 return;
             }
 
@@ -2171,7 +2172,7 @@
                         <p>${item.price} ر.س</p>
                     </div>
                     <div style="display:flex; gap:4px;">
-                        <button class="add-to-cart-btn" style="padding:4px 8px; font-size:0.7rem;" onclick='addToCart(${JSON.stringify(item)}); toggleWishlistModal();'>أضف للسلة</button>
+                        <button class="add-to-cart-btn" style="padding:4px 8px; font-size:0.75rem; font-weight:900;" onclick='addToCart(${JSON.stringify(item)}); toggleWishlistModal();'>أضف للسلة</button>
                         <button class="del-wishlist-item" onclick="removeWishlistIndex(${index})">حذف</button>
                     </div>
                 `;
@@ -2273,7 +2274,7 @@
                         const row = document.createElement('div');
                         row.className = 'item-row';
                         row.innerHTML = `
-                            <span style="font-size: 0.78rem; color:#0f172a;">${c.name}</span>
+                            <span style="font-size: 0.85rem; color:#0f172a; font-weight:900;">${c.name}</span>
                             <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
                         `;
                         list.appendChild(row);
@@ -2294,7 +2295,7 @@
                         const row = document.createElement('div');
                         row.className = 'item-row';
                         row.innerHTML = `
-                            <span style="font-size: 0.78rem; color:#0f172a;">${p.title} <small style="color:#2563eb;">(الكمية: ${stockVal})</small></span>
+                            <span style="font-size: 0.85rem; color:#0f172a; font-weight:900;">${p.title} <small style="color:#2563eb; font-weight:900;">(الكمية: ${stockVal})</small></span>
                             <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
                         `;
                         list.appendChild(row);
