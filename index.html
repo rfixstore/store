@@ -192,7 +192,6 @@
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
         .footer-title { color: #ffffff; font-size: 1.05rem; font-weight: 700; }
         
-        /* تصميم اسم المستخدم الفخم في التوقيع والفوتر */
         .brand-signature {
             font-size: 0.9rem;
             background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
@@ -209,7 +208,6 @@
         .social-icon-btn:hover { background: #22bf5b; transform: translateY(-2px); }
         .footer-copy { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
 
-        /* نوافذ الشاشة المنبثقة */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .modal-card { background: #ffffff; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .modal-card h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
@@ -386,7 +384,6 @@
                     💬 مراسلة واتساب 
                 </a>
             </div>
-            <!-- اسمك أو اسم المستخدم الفخم في التوقيع -->
             <div style="margin-top: 4px;">
                 <span style="font-size: 0.75rem; color: #94a3b8;">إدارة وتطوير:</span> 
                 <span class="brand-signature">Rayyan Al-Sulami • ريان السلمي</span>
@@ -413,7 +410,7 @@
         </div>
     </div>
 
-    <!-- نافذة إدخال بيانات التقييم الجديدة للعميل (مع خيار إرفاق صورة) -->
+    <!-- نافذة إدخال بيانات التقييم الجديدة للعميل -->
     <div id="addReviewModal" class="add-review-modal">
         <div class="add-review-box">
             <h3>
@@ -421,15 +418,15 @@
                 <button onclick="closeAddReviewModal()" class="close-cart">&times;</button>
             </h3>
             <div>
-                <label style="font-size:0.78rem; font-weight:bold;">الاسم الكريم (اسم فريد):</label>
-                <input type="text" id="revName" placeholder="مثال: خالد العمري">
+                <label style="font-size:0.78rem; font-weight:bold;">اسمك أو اسم مستخدم (عربي أو إنجليزي):</label>
+                <input type="text" id="revName" placeholder="مثال: محمد / Rayyan">
             </div>
             <div style="background:#f8fafc; padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between;">
                 <span style="font-size:0.78rem; font-weight:bold; color:#1e293b;">التقييم المعتمد:</span>
                 <span style="color:#f59e0b; font-size:0.9rem; letter-spacing:1px;">⭐⭐⭐⭐⭐ (ممتاز جداً)</span>
             </div>
             <div>
-                <label style="font-size:0.78rem; font-weight:bold;">تعليقك / تجربتك:</label>
+                <label style="font-size:0.78rem; font-weight:bold;">تقييمك و تجربتك:</label>
                 <textarea id="revComment" rows="2" placeholder="اكتب رأيك وتجربتك هنا..."></textarea>
             </div>
             <div>
@@ -1202,7 +1199,7 @@
             const fileInput = document.getElementById('revImageFile');
 
             if (!name || !comment) {
-                showToast('يرجى تعبئة الاسم والتعليق!');
+                showToast('يرجى تعبئة الاسم والتقييم!');
                 return;
             }
 
@@ -1220,7 +1217,7 @@
                     let nameExists = allReviews.some(r => r.name.trim().toLowerCase() === name.toLowerCase());
 
                     if (nameExists) {
-                        showToast('⚠️ هذا الاسم مستخدم مسبقاً، يرجى إضافة اسم العائلة أو حرف للتفريق!');
+                        showToast('⚠️ الاسم مستخدم مسبقاً، يرجى إضافة اسم آخر او اسم مستخدم');
                         return;
                     }
 
