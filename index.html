@@ -191,23 +191,37 @@
         .site-footer { background: #0f172a; color: #94a3b8; padding: 25px 15px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; width: 100%; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
         .footer-title { color: #ffffff; font-size: 1.05rem; font-weight: 700; }
+        
+        /* تصميم اسم المستخدم الفخم في التوقيع والفوتر */
+        .brand-signature {
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
         .footer-social { display: flex; gap: 12px; align-items: center; justify-content: center; }
         .social-icon-btn { background: #25d366; color: #ffffff; padding: 8px 18px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); transition: 0.2s; }
         .social-icon-btn:hover { background: #22bf5b; transform: translateY(-2px); }
-        .footer-copy { font-size: 0.75rem; color: #64748b; margin-top: 6px; }
+        .footer-copy { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
 
         /* نوافذ الشاشة المنبثقة */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .modal-card { background: #ffffff; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .modal-card h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
 
-        .reviews-list { display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; margin-bottom: 8px; }
-        .review-item { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.82rem; }
-        .review-header { display: flex; justify-content: space-between; font-weight: bold; color: #0f172a; margin-bottom: 2px; }
+        .reviews-list { display: flex; flex-direction: column; gap: 8px; max-height: 240px; overflow-y: auto; margin-bottom: 8px; }
+        .review-item { background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.82rem; display: flex; flex-direction: column; gap: 6px; }
+        .review-header { display: flex; justify-content: space-between; font-weight: bold; color: #0f172a; }
         .review-stars { color: #f59e0b; }
+        .review-img-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer; margin-top: 4px; }
 
         .add-review-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2700; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
-        .add-review-box { background: #ffffff; width: 100%; max-width: 400px; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
+        .add-review-box { background: #ffffff; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .add-review-box h3 { color: #0f172a; font-size: 1.1rem; font-weight: 800; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
 
         .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
@@ -287,7 +301,6 @@
 
         .custom-toast { display: none; position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff; padding: 8px 18px; border-radius: 30px; font-size: 0.85rem; z-index: 3000; box-shadow: 0 6px 20px rgba(0,0,0,0.25); border: 1px solid #3b82f6; font-weight: 700; text-align: center; }
 
-        /* نافذة التأكيد المخصصة للحذف */
         .custom-confirm-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 3500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .custom-confirm-box { background: #ffffff; width: 100%; max-width: 340px; padding: 22px; border-radius: 14px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.25); direction: rtl; text-align: center; }
         .custom-confirm-box h4 { color: #0f172a; font-size: 1.1rem; font-weight: 800; }
@@ -353,7 +366,6 @@
 
     <div id="customToast" class="custom-toast">رسالة تنبيه</div>
 
-    <!-- نافذة تأكيد الحذف المخصصة والمصممة للمتجر -->
     <div id="customConfirmModal" class="custom-confirm-overlay">
         <div class="custom-confirm-box">
             <div style="font-size: 2rem; color: #ef4444; line-height: 1;">⚠️</div>
@@ -374,6 +386,11 @@
                     💬 مراسلة واتساب 
                 </a>
             </div>
+            <!-- اسمك أو اسم المستخدم الفخم في التوقيع -->
+            <div style="margin-top: 4px;">
+                <span style="font-size: 0.75rem; color: #94a3b8;">إدارة وتطوير:</span> 
+                <span class="brand-signature">Rayyan Al-Sulami • ريان السلمي</span>
+            </div>
             <p class="footer-copy">جميع الحقوق محفوظة © المتخصصون في صيانة الأجهزة</p>
         </div>
     </footer>
@@ -382,7 +399,7 @@
     <div id="publicReviewsModal" class="modal-overlay">
         <div class="modal-card" style="height: 85vh; display: flex; flex-direction: column;">
             <h3>
-                <span>⭐ التقييمات</span>
+                <span>⭐ التقييمات والآراء</span>
                 <button onclick="closePublicReviewsModal()" class="close-cart">&times;</button>
             </h3>
             
@@ -391,12 +408,12 @@
             </div>
             
             <div style="padding-top: 10px; border-top: 1px solid #e2e8f0; margin-top: auto;">
-                <button onclick="openAddReviewModal()" class="admin-btn">إضافة تقييم</button>
+                <button onclick="openAddReviewModal()" class="admin-btn">إضافة تقييم جديد ⭐</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة إدخال بيانات التقييم الجديدة للعميل -->
+    <!-- نافذة إدخال بيانات التقييم الجديدة للعميل (مع خيار إرفاق صورة) -->
     <div id="addReviewModal" class="add-review-modal">
         <div class="add-review-box">
             <h3>
@@ -404,8 +421,8 @@
                 <button onclick="closeAddReviewModal()" class="close-cart">&times;</button>
             </h3>
             <div>
-                <label style="font-size:0.78rem; font-weight:bold;">الاسم الكريم:</label>
-                <input type="text" id="revName" placeholder="أدخل اسمك الكريم">
+                <label style="font-size:0.78rem; font-weight:bold;">الاسم الكريم (اسم فريد):</label>
+                <input type="text" id="revName" placeholder="مثال: خالد العمري">
             </div>
             <div style="background:#f8fafc; padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between;">
                 <span style="font-size:0.78rem; font-weight:bold; color:#1e293b;">التقييم المعتمد:</span>
@@ -413,9 +430,13 @@
             </div>
             <div>
                 <label style="font-size:0.78rem; font-weight:bold;">تعليقك / تجربتك:</label>
-                <textarea id="revComment" rows="3" placeholder="اكتب رأيك وتجربتك هنا..."></textarea>
+                <textarea id="revComment" rows="2" placeholder="اكتب رأيك وتجربتك هنا..."></textarea>
             </div>
-            <button onclick="submitNewReview()" class="admin-btn" style="margin-top: 5px;">إرسال التقييم ⭐</button>
+            <div>
+                <label style="font-size:0.78rem; font-weight:bold; color:#2563eb;">📸 إرفاق صورة المنتج أو الجهاز (اختياري):</label>
+                <input type="file" id="revImageFile" accept="image/*" style="font-size:0.78rem; margin-top:3px;">
+            </div>
+            <button onclick="submitNewReview()" class="admin-btn" style="margin-top: 4px;">إرسال التقييم ⭐</button>
         </div>
     </div>
 
@@ -1156,12 +1177,19 @@
                 Object.values(data).forEach(rev => {
                     let div = document.createElement('div');
                     div.className = 'review-item';
+                    
+                    let imgHtml = '';
+                    if (rev.image) {
+                        imgHtml = `<img src="${rev.image}" class="review-img-thumb" onclick="openDetailsModal({title:'صورة تقييم العميل: ' + '${rev.name}', images:['${rev.image}'], desc:'${rev.comment}'})" alt="صورة التقييم">`;
+                    }
+
                     div.innerHTML = `
                         <div class="review-header">
                             <span>${rev.name}</span>
                             <span class="review-stars">⭐⭐⭐⭐⭐</span>
                         </div>
-                        <p style="color:#475569; margin-top:2px;">${rev.comment}</p>
+                        <p style="color:#475569;">${rev.comment}</p>
+                        ${imgHtml}
                     `;
                     list.appendChild(div);
                 });
@@ -1171,6 +1199,7 @@
         function submitNewReview() {
             const name = document.getElementById('revName').value.trim();
             const comment = document.getElementById('revComment').value.trim();
+            const fileInput = document.getElementById('revImageFile');
 
             if (!name || !comment) {
                 showToast('يرجى تعبئة الاسم والتعليق!');
@@ -1182,22 +1211,51 @@
                 return;
             }
 
-            let newRevId = 'rev-' + Date.now();
-            let newRev = {
-                id: newRevId,
-                name: name,
-                comment: comment,
-                createdAt: new Date().toISOString()
-            };
+            db.ref('approvedReviews').once('value', appSnap => {
+                let approved = appSnap.val() ? Object.values(appSnap.val()) : [];
+                db.ref('pendingReviews').once('value', pendSnap => {
+                    let pending = pendSnap.val() ? Object.values(pendSnap.val()) : [];
+                    
+                    let allReviews = [...approved, ...pending];
+                    let nameExists = allReviews.some(r => r.name.trim().toLowerCase() === name.toLowerCase());
 
-            db.ref('pendingReviews/' + newRevId).set(newRev).then(() => {
-                showToast('تم إرسال تقييمك بنجاح، بانتظار مراجعة الإدارة ⭐');
-                document.getElementById('revName').value = '';
-                document.getElementById('revComment').value = '';
-                closeAddReviewModal();
-                updatePendingBadgeCount();
-            }).catch(err => {
-                showToast('حدث خطأ أثناء الإرسال');
+                    if (nameExists) {
+                        showToast('⚠️ هذا الاسم مستخدم مسبقاً، يرجى إضافة اسم العائلة أو حرف للتفريق!');
+                        return;
+                    }
+
+                    let processReviewWithImage = (imgBase64) => {
+                        let newRevId = 'rev-' + Date.now();
+                        let newRev = {
+                            id: newRevId,
+                            name: name,
+                            comment: comment,
+                            image: imgBase64 || '',
+                            createdAt: new Date().toISOString()
+                        };
+
+                        db.ref('pendingReviews/' + newRevId).set(newRev).then(() => {
+                            showToast('تم إرسال تقييمك بنجاح، بانتظار مراجعة الإدارة ⭐');
+                            document.getElementById('revName').value = '';
+                            document.getElementById('revComment').value = '';
+                            if(fileInput) fileInput.value = '';
+                            closeAddReviewModal();
+                            updatePendingBadgeCount();
+                        }).catch(err => {
+                            showToast('حدث خطأ أثناء الإرسال');
+                        });
+                    };
+
+                    if (fileInput && fileInput.files && fileInput.files[0]) {
+                        let reader = new FileReader();
+                        reader.onload = function(e) {
+                            processReviewWithImage(e.target.result);
+                        };
+                        reader.readAsDataURL(fileInput.files[0]);
+                    } else {
+                        processReviewWithImage('');
+                    }
+                });
             });
         }
 
@@ -1221,6 +1279,7 @@
 
                 Object.keys(data).forEach(key => {
                     let rev = data[key];
+                    let imgHtml = rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : '';
                     let div = document.createElement('div');
                     div.className = 'pending-review-card';
                     div.innerHTML = `
@@ -1229,6 +1288,7 @@
                             <span style="color:#f59e0b; font-size:0.85rem;">⭐⭐⭐⭐⭐</span>
                         </div>
                         <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
+                        ${imgHtml}
                         <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:4px;">
                             <button class="approve-btn" onclick="approveReview('${key}')">قبول ونشر ⭐</button>
                             <button class="del-btn" onclick="deletePendingReview('${key}')">حذف ❌</button>
@@ -1284,6 +1344,7 @@
 
                 Object.keys(data).forEach(key => {
                     let rev = data[key];
+                    let imgHtml = rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : '';
                     let div = document.createElement('div');
                     div.className = 'pending-review-card';
                     div.innerHTML = `
@@ -1292,6 +1353,7 @@
                             <span style="color:#f59e0b; font-size:0.85rem;">⭐⭐⭐⭐⭐</span>
                         </div>
                         <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
+                        ${imgHtml}
                         <div style="display:flex; justify-content:flex-end; margin-top:4px;">
                             <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف التقييم نهائياً ❌</button>
                         </div>
@@ -1700,7 +1762,6 @@
                     }
                 });
             } else if (openParam === 'review') {
-                // فتح نافذة التقييمات مباشرة ومفتوحة على إضافة تقييم أو عرض التقييمات كما في الصورة
                 let modal = document.getElementById('publicReviewsModal');
                 if(modal) modal.style.display = 'flex';
                 loadApprovedReviews();
@@ -2063,7 +2124,7 @@
                 let ctitle = document.getElementById('txt-cat-title');
                 if(ctitle) ctitle.innerText = 'الأقسام:';
                 let ptitle = document.getElementById('txt-products-title');
-                if(ptitle) ptitle.innerText = ' المنتجات والخدمات المعروضة';
+                if(ptitle) ptitle.innerText = 'المنتجات والخدمات المعروضة';
                 let contact = document.getElementById('contactBtn');
                 if(contact) contact.innerText = 'للتواصل واتساب';
                 let search = document.getElementById('searchInput');
