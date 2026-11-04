@@ -171,10 +171,16 @@
         .card h3 { color: #1e293b; font-size: 0.88rem; cursor: pointer; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.35; }
         .card h3:hover { color: #2563eb; }
         
-        .card-price { display: flex; align-items: baseline; gap: 4px; margin-top: 2px; }
+        /* تنسيق السعر الجديد والقديم والخصم زي الصورة بالضبط */
+        .card-price-box { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
+        .card-price-main { display: flex; align-items: baseline; gap: 4px; }
         .price-currency { font-size: 0.7rem; color: #475569; font-weight: bold; }
         .price-amount { font-size: 1.1rem; color: #0f172a; font-weight: 800; }
         
+        .card-old-price-row { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #94a3b8; }
+        .old-price-val { text-decoration: line-through; }
+        .discount-badge-tag { color: #16a34a; font-weight: bold; font-size: 0.7rem; background: #dcfce7; padding: 1px 4px; border-radius: 4px; }
+
         .card-rating { font-size: 0.7rem; color: #64748b; display: flex; align-items: center; gap: 4px; }
         .stars { color: #f59e0b; }
 
@@ -431,9 +437,15 @@
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 10px;">
                     <span id="detBadge" class="badge"></span>
-                    <div class="card-price">
-                        <span class="price-currency">ر.س.‏</span>
-                        <span id="detPrice" class="price-amount" style="font-size: 1.4rem;"></span>
+                    <div class="card-price-box">
+                        <div class="card-price-main">
+                            <span class="price-currency">ر.س.‏</span>
+                            <span id="detPrice" class="price-amount" style="font-size: 1.4rem;"></span>
+                        </div>
+                        <div id="detOldPriceRow" class="card-old-price-row" style="display:none;">
+                            <span id="detOldPrice" class="old-price-val"></span> ر.س
+                            <span id="detDiscountTag" class="discount-badge-tag"></span>
+                        </div>
                     </div>
                     <p id="detDesc" style="color: #475569; font-size: 0.85rem; line-height: 1.4; white-space: pre-wrap;"></p>
                     <button id="detAddToCartBtn" class="admin-btn" style="margin-top: auto;">أضف إلى السلة 🛒</button>
@@ -579,15 +591,19 @@
             <form id="addProductForm">
                 <div class="form-group">
                     <label>عنوان المنتج / الخدمة:</label>
-                    <input type="text" id="pTitle" required placeholder="مثال: بي سي قيمنق">
+                    <input type="text" id="pTitle" required placeholder="مثال: كمبيوتر ألعاب i5">
                 </div>
                 <div class="form-group">
                     <label>اختر القسم:</label>
                     <select id="pCategory" required></select>
                 </div>
                 <div class="form-group">
-                    <label>السعر (ر.س):</label>
-                    <input type="text" id="pPrice" required placeholder="مثال: 3519">
+                    <label>السعر الحالي (ر.س):</label>
+                    <input type="text" id="pPrice" required placeholder="مثال: 5449">
+                </div>
+                <div class="form-group">
+                    <label>السعر قبل الخصم (اختياري - اتركه فارغاً إذا لم يوجد):</label>
+                    <input type="text" id="pOldPrice" placeholder="مثال: 5999">
                 </div>
                 <div class="form-group">
                     <label>الشارة (Badge):</label>
@@ -1136,6 +1152,36 @@
 
                 let isLiked = wishlist.some(item => item.id === p.id);
 
+                // حساب نسبة الخصم تلقائياً إذا وُجد سعر قديم
+                let priceSectionHTML = '';
+                let currentP = parseFloat(p.price || 0);
+                let oldP = parseFloat(p.oldPrice || 0);
+
+                if (oldP && oldP > currentP) {
+                    let discountPercent = Math.round(((oldP - currentP) / oldP) * 100);
+                    priceSectionHTML = `
+                        <div class="card-price-box">
+                            <div class="card-price-main">
+                                <span class="price-currency">ر.س.‏</span>
+                                <span class="price-amount">${p.price}</span>
+                            </div>
+                            <div class="card-old-price-row">
+                                <span class="old-price-val">${p.oldPrice}</span> ر.س 
+                                <span class="discount-badge-tag">خصم ${discountPercent}%</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    priceSectionHTML = `
+                        <div class="card-price-box">
+                            <div class="card-price-main">
+                                <span class="price-currency">ر.س.‏</span>
+                                <span class="price-amount">${p.price || '0'}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
                 card.innerHTML = `
                     <div class="wishlist-btn ${isLiked ? 'active' : ''}" onclick='toggleWishlist(${JSON.stringify(p)}, event)'>${isLiked ? '❤️' : '🤍'}</div>
                     <div class="card-img-wrap" onclick='openDetailsModal(${JSON.stringify(p)})'>
@@ -1143,10 +1189,7 @@
                     </div>
                     <span class="badge">${p.badge}</span>
                     <h3 onclick='openDetailsModal(${JSON.stringify(p)})'>${p.title}</h3>
-                    <div class="card-price">
-                        <span class="price-currency">ر.س.‏</span>
-                        <span class="price-amount">${p.price || '0'}</span>
-                    </div>
+                    ${priceSectionHTML}
                     <div class="card-rating">
                         <span class="stars">★★★★★</span>
                     </div>
@@ -1437,6 +1480,22 @@
             document.getElementById('detPrice').innerText = p.price || '0';
             document.getElementById('detDesc').innerText = p.desc;
             
+            let oldPriceRow = document.getElementById('detOldPriceRow');
+            let oldPriceVal = document.getElementById('detOldPrice');
+            let discountTag = document.getElementById('detDiscountTag');
+
+            let currentP = parseFloat(p.price || 0);
+            let oldP = parseFloat(p.oldPrice || 0);
+
+            if (oldP && oldP > currentP) {
+                let discountPercent = Math.round(((oldP - currentP) / oldP) * 100);
+                oldPriceVal.innerText = p.oldPrice;
+                discountTag.innerText = `خصم ${discountPercent}%`;
+                oldPriceRow.style.display = 'flex';
+            } else {
+                oldPriceRow.style.display = 'none';
+            }
+
             let mainImg = document.getElementById('mainDetailImg');
             let thumbs = document.getElementById('detThumbnails');
             if(thumbs) thumbs.innerHTML = '';
@@ -1592,6 +1651,7 @@
                     title: document.getElementById('pTitle').value,
                     category: document.getElementById('pCategory').value,
                     price: document.getElementById('pPrice').value,
+                    oldPrice: document.getElementById('pOldPrice').value || '',
                     badge: document.getElementById('pBadge').value || 'إكسبرس',
                     images: imagesArray,
                     desc: document.getElementById('pDesc').value
