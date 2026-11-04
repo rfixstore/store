@@ -46,7 +46,6 @@
         .logo h1 { font-size: 1.05rem; color: #ffffff; font-weight: 800; line-height: 1.2; letter-spacing: 0.3px; }
         .logo p { font-size: 0.7rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
         
-        /* صندوق التقييمات أصبح مرتباً ومنفصلاً في الأعلى لعدم التداخل */
         .header-ratings-box {
             display: flex;
             align-items: center;
@@ -202,7 +201,10 @@
         .review-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .review-author-side { display: flex; align-items: center; gap: 8px; }
         .review-author { font-weight: 800; color: #0f172a; font-size: 0.92rem; }
-        .review-stars { color: #eab308; font-size: 0.95rem; letter-spacing: 0.5px; }
+        
+        /* لون النجوم في التقييمات صار أخضر غامق تماماً مثل طلبك */
+        .review-stars { color: #006400; font-size: 0.95rem; letter-spacing: 0.5px; }
+        
         .review-time { font-size: 0.72rem; color: #64748b; font-weight: 600; }
         .review-comment { color: #334155; line-height: 1.4; font-size: 0.85rem; }
         .review-img-thumb { width: 65px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; cursor: pointer; margin-top: 4px; }
@@ -307,7 +309,7 @@
                 <p id="txt-logo-sub">صيانة أجهزة • خدمات رقمية وحكومية</p>
             </div>
 
-            <!-- تم جعل صندوق التقييمات في سطر مستقل مع الشعار لعدم التداخل تماماً -->
+            <!-- صندوق التقييمات في الهيدر متضمن النجوم ورقم 5.5 وعدد التقييمات -->
             <div class="header-ratings-box" onclick="openPublicReviewsModal(event)">
                 <div style="color: #eab308; font-size: 14px; letter-spacing: 1px; line-height: 1; display: flex; align-items: center; gap: 2px;">
                     <i class="fa-solid fa-star"></i>
@@ -316,6 +318,7 @@
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
                 </div>
+                <span style="color: #ffffff; font-size: 11px; font-weight: bold; margin: 0 2px;">5.5</span>
                 <span style="color: #93c5fd; font-size: 11px; font-weight: bold;">
                     (<span id="rating-count">0</span>) تقييمات
                 </span>
@@ -386,7 +389,7 @@
     <div id="publicReviewsModal" class="modal-overlay">
         <div class="modal-card" style="height: 85vh; display: flex; flex-direction: column;">
             <h3>
-                <span><i class="fa-solid fa-star" style="color: #eab308;"></i> التقييمات والآراء</span>
+                <span><i class="fa-solid fa-star" style="color: #006400;"></i> التقييمات والآراء</span>
                 <button onclick="closePublicReviewsModal()" class="close-cart">&times;</button>
             </h3>
             
@@ -404,7 +407,7 @@
     <div id="addReviewModal" class="add-review-modal">
         <div class="add-review-box">
             <h3>
-                <span><i class="fa-solid fa-star" style="color: #eab308;"></i> إضافة تقييم جديد</span>
+                <span><i class="fa-solid fa-star" style="color: #006400;"></i> إضافة تقييم جديد</span>
                 <button onclick="closeAddReviewModal()" class="close-cart">&times;</button>
             </h3>
             <div>
@@ -413,7 +416,7 @@
             </div>
             <div style="background:#f8fafc; padding:6px 8px; border-radius:6px; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between;">
                 <span style="font-size:0.78rem; font-weight:bold; color:#1e293b;">التقييم المعتمد:</span>
-                <span style="color:#eab308; font-size:0.9rem; letter-spacing:1px; display:flex; align-items:center; gap:2px;">
+                <span style="color:#006400; font-size:0.9rem; letter-spacing:1px; display:flex; align-items:center; gap:2px;">
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (ممتاز جداً)
                 </span>
             </div>
@@ -446,7 +449,7 @@
     <div id="adminApprovedModal" class="admin-reviews-modal">
         <div class="admin-reviews-box">
             <div class="admin-header">
-                <h3><i class="fa-solid fa-star" style="color: #eab308;"></i> إدارة التقييمات المنشورة (للحذف)</h3>
+                <h3><i class="fa-solid fa-star" style="color: #006400;"></i> إدارة التقييمات المنشورة (للحذف)</h3>
                 <button onclick="closeAdminApprovedModal()" class="close-cart">&times;</button>
             </div>
             <div id="adminApprovedReviewsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto;">
@@ -620,7 +623,7 @@
 
             <div style="margin-top: 6px;">
                 <button onclick="openAdminApprovedModal()" class="admin-btn" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem;">
-                    <span><i class="fa-solid fa-star" style="color: #fef08a;"></i> إدارة التقييمات المنشورة (حذف)</span>
+                    <span><i class="fa-solid fa-star" style="color: #006400;"></i> إدارة التقييمات المنشورة (حذف)</span>
                     <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;" id="approvedBadgeCount">0</span>
                 </button>
             </div>
@@ -1297,7 +1300,7 @@
                     div.innerHTML = `
                         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
                             <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}</strong>
-                            <span style="color:#eab308; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                            <span style="color:#006400; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
                         <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         ${imgHtml}
@@ -1362,7 +1365,7 @@
                     div.innerHTML = `
                         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:6px;">
                             <strong style="font-size:0.95rem; color:#0f172a;">👤 ${rev.name}</strong>
-                            <span style="color:#eab308; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                            <span style="color:#006400; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
                         <p style="font-size:0.9rem; color:#1e293b; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         ${imgHtml}
