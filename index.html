@@ -546,7 +546,6 @@
         <div class="categories-grid" id="categoriesBar"></div>
     </div>
 
-    <!-- شبكة عرض الإعلانات والخدمات بشكل عشوائي ومنوع تلقائياً -->
     <div class="grid" id="mainMixedGrid"></div>
 
     <div id="customToast" class="custom-toast">رسالة تنبيه</div>
@@ -865,14 +864,22 @@
             </div>
 
             <div id="tab-orders" class="admin-tab-content">
-                <h4 class="admin-sec-title">📦 الطلبات الجارية وتعديل الرسوم</h4>
+                <h4 class="admin-sec-title">📦 إدارة الطلب وتعديل السعر والرسوم</h4>
                 <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
                     <label style="color:#0f172a; font-size:0.85rem; display:block; margin-bottom:4px; font-weight:900;">اختر الطلب الجاري:</label>
                     <select id="adminOrderSelect" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; margin-bottom:8px;" onchange="onOrderSelectedInAdmin()"></select>
                     
                     <div style="display:flex; gap:8px; align-items:center; margin-bottom: 8px;">
                         <div style="flex-grow:1;">
-                            <label style="color:#0f172a; font-size:0.82rem; display:block; margin-bottom:2px; font-weight:900;">رسوم التوصيل (ر.س):</label>
+                            <label style="color:#0f172a; font-size:0.82rem; display:block; margin-bottom:2px; font-weight:900;">💵 سعر الخدمة / المنتج (ر.س):</label>
+                            <input type="number" id="adminServicePriceInput" placeholder="مثال: 100" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.88rem; font-weight:800;">
+                        </div>
+                        <button type="button" onclick="updateOrderServicePrice()" class="admin-btn" style="background:#2563eb; margin-top:16px; width:auto; padding:9px 12px; white-space:nowrap;">حفظ السعر ✔️</button>
+                    </div>
+
+                    <div style="display:flex; gap:8px; align-items:center; margin-bottom: 8px;">
+                        <div style="flex-grow:1;">
+                            <label style="color:#0f172a; font-size:0.82rem; display:block; margin-bottom:2px; font-weight:900;">🚚 رسوم التوصيل (ر.س):</label>
                             <input type="number" id="adminShippingFeeInput" placeholder="مثال: 15" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.88rem; font-weight:800;">
                         </div>
                         <button type="button" onclick="updateOrderShippingFee()" class="admin-btn" style="background:#10b981; margin-top:16px; width:auto; padding:9px 12px; white-space:nowrap;">حفظ الرسوم ✔️</button>
@@ -1291,9 +1298,20 @@
         function onOrderSelectedInAdmin() {
             let select = document.getElementById('adminOrderSelect');
             let feeInput = document.getElementById('adminShippingFeeInput');
-            if(!select || !feeInput) return;
+            let servicePriceInput = document.getElementById('adminServicePriceInput');
+            if(!select) return;
             let orderKey = select.value;
-            feeInput.value = (orderKey && adminLoadedOrders[orderKey]) ? (adminLoadedOrders[orderKey].shippingFee || 0) : '';
+            if (orderKey && adminLoadedOrders[orderKey]) {
+                if(feeInput) feeInput.value = adminLoadedOrders[orderKey].shippingFee || 0;
+                if(servicePriceInput && adminLoadedOrders[orderKey].items && adminLoadedOrders[orderKey].items.length > 0) {
+                    servicePriceInput.value = adminLoadedOrders[orderKey].items[0].price || 0;
+                } else if(servicePriceInput) {
+                    servicePriceInput.value = '';
+                }
+            } else {
+                if(feeInput) feeInput.value = '';
+                if(servicePriceInput) servicePriceInput.value = '';
+            }
         }
 
         function onDelayedOrderSelected() {
@@ -1312,9 +1330,27 @@
             let newFee = parseFloat(feeInput.value) || 0;
             if(!orderKey) { showToast('يرجى اختيار طلب أولاً!'); return; }
             db.ref('orders/' + orderKey + '/shippingFee').set(newFee).then(() => {
-                showToast('تم تحديث رسوم التوصيل وحفظ الفاتورة بنجاح ✔️');
+                showToast('تم تحديث رسوم التوصيل بنجاح ✔️');
                 adminLoadedOrders[orderKey].shippingFee = newFee;
             });
+        }
+
+        function updateOrderServicePrice() {
+            let select = document.getElementById('adminOrderSelect');
+            let servicePriceInput = document.getElementById('adminServicePriceInput');
+            if(!select || !servicePriceInput || !db) return;
+            let orderKey = select.value;
+            let newPrice = parseFloat(servicePriceInput.value) || 0;
+            if(!orderKey) { showToast('يرجى اختيار طلب أولاً!'); return; }
+            let orderObj = adminLoadedOrders[orderKey];
+            if(orderObj && orderObj.items && orderObj.items.length > 0) {
+                orderObj.items[0].price = newPrice;
+                db.ref('orders/' + orderKey + '/items').set(orderObj.items).then(() => {
+                    showToast('تم تحديث سعر الخدمة في الفاتورة بنجاح ✔️');
+                });
+            } else {
+                showToast('لا توجد منتجات داخل هذا الطلب!');
+            }
         }
 
         function markOrderAsSold() {
@@ -2445,7 +2481,7 @@
                 document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
                 document.getElementById('txt-cat-title').innerText = 'الأقسام:';
                 document.getElementById('contactBtn').innerHTML = '<i class="fa-brands fa-whatsapp" style="margin-left: 4px; font-size: 0.9rem;"></i> للتواصل واتساب';
-                document.getElementById('searchInput').placeholder = 'ما الذي تبحث عنه؟';
+                document.getElementById('searchInput').placeholder = 'What are you looking for?';
             }
         }
 
