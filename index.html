@@ -238,9 +238,10 @@
         .wishlist-btn:hover { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
         .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
 
+        /* تعديل حاويات الصور لتكون بخلفية نظيفة وبيضاء بدون أطراف سوداء */
         .card-img-container, .details-img-container {
             width: 100%;
-            background-color: #12121a; 
+            background-color: #ffffff; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -258,6 +259,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            background-color: #ffffff;
         }
         
         .quick-add-btn {
@@ -992,7 +994,7 @@
                         <input type="text" id="pBadge" placeholder="مثال: خدمة فوريّة / إكسبرس">
                     </div>
                     <div class="form-group">
-                        <label>اختر الصور من الاستوديو (متعددة):</label>
+                        <label>اختر الصور من الاستوديو (اختر كمية الصور التي تبيها):</label>
                         <input type="file" id="pImageFiles" accept="image/*" multiple style="font-size:0.85rem;">
                     </div>
                     <div class="form-group">
