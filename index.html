@@ -134,7 +134,7 @@
             display: flex; 
             gap: 10px; 
             overflow-x: auto; 
-            padding-bottom: 6px; 
+            padding-bottom: 8px; 
             white-space: nowrap; 
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
@@ -147,25 +147,25 @@
             background-color: #ffffff; 
             color: #1e293b; 
             border: 1px solid #94a3b8; 
-            padding: 6px 14px; 
-            border-radius: 25px; 
+            padding: 8px 18px; 
+            border-radius: 30px; 
             font-weight: 800; 
-            font-size: 0.8rem; 
+            font-size: 0.95rem; 
             cursor: pointer; 
             transition: 0.2s; 
             flex-shrink: 0; 
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03); 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px; 
             min-width: max-content; 
         }
         .category-btn img {
-            width: 24px;
-            height: 24px;
+            width: 42px; 
+            height: 42px; 
             object-fit: cover;
             border-radius: 50%;
-            border: 1px solid #cbd5e1;
+            border: 2px solid #3b82f6;
         }
         .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #3b82f6; }
         .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
@@ -810,14 +810,14 @@
             </div>
 
             <div id="tab-products" class="admin-tab-content">
-                <h4 class="admin-sec-title">📁 إدارة الأقسام (مع الصور الاختيارية)</h4>
+                <h4 class="admin-sec-title">📁 إدارة الأقسام (مع الصور الواضحة)</h4>
                 <form id="addCategoryForm">
                     <div class="form-group">
                         <label id="catFormLabel">اسم القسم الجديد:</label>
                         <input type="text" id="catName" required placeholder="مثال: قسم صيانة البلايستيشن">
                     </div>
                     <div class="form-group">
-                        <label><i class="fa-solid fa-camera"></i> صورة القسم (اختياري - تظهر بجوار الاسم):</label>
+                        <label><i class="fa-solid fa-camera"></i> صورة القسم (اختياري):</label>
                         <input type="file" id="catImageFile" accept="image/*" style="font-size:0.85rem;">
                     </div>
                     <button type="submit" id="catSubmitBtn" class="admin-btn">إضافة القسم للمتجر</button>
@@ -919,7 +919,6 @@
             if(!modal || !yesBtn) return;
             
             modal.style.display = 'flex';
-            
             let newYesBtn = yesBtn.cloneNode(true);
             yesBtn.parentNode.replaceChild(newYesBtn, yesBtn);
             
@@ -993,24 +992,19 @@
                 showToast('متصفحك لا يدعم تحديد الموقع الجغرافي');
                 return;
             }
-            
             showToast('جاري تحديد موقعك الحالي بدقة... 📍');
-            
             navigator.geolocation.getCurrentPosition(async function(position) {
                 let lat = position.coords.latitude;
                 let lon = position.coords.longitude;
-                
                 try {
                     let response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`, {
                         headers: { 'Accept-Language': 'ar' }
                     });
                     let data = await response.json();
-                    
                     if (data && data.address) {
                         let city = data.address.city || data.address.town || data.address.state || 'السعودية';
                         let suburb = data.address.suburb || data.address.neighbourhood || '';
                         let road = data.address.road || '';
-                        
                         let fullLocationText = `${city} ${suburb ? '- ' + suburb : ''} ${road ? '- ' + road : ''}`;
                         document.getElementById('custLocation').value = fullLocationText;
                         showToast('تم تحديد موقعك بنجاح ✔️');
@@ -1045,10 +1039,7 @@
             let modal = document.getElementById('passModal');
             if(modal) modal.style.display = 'flex';
             let input = document.getElementById('adminPassInput');
-            if(input) {
-                input.value = '';
-                input.focus();
-            }
+            if(input) { input.value = ''; input.focus(); }
         }
 
         function closePasswordModal() {
@@ -1086,7 +1077,6 @@
         function switchAdminTab(tabId, btnElem) {
             document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
-
             let targetTab = document.getElementById(tabId);
             if(targetTab) targetTab.classList.add('active');
             if(btnElem) btnElem.classList.add('active');
@@ -1098,7 +1088,6 @@
             db.ref('orders').once('value', snapshot => {
                 let data = snapshot.val();
                 adminLoadedOrders = data ? data : {};
-                
                 let activeSelect = document.getElementById('adminOrderSelect');
                 let soldSelect = document.getElementById('soldOrderSelect');
                 let delayedSelect = document.getElementById('delayedOrderSelect');
@@ -1130,7 +1119,6 @@
                         if(activeSelect) activeSelect.appendChild(opt);
                     }
                 });
-
                 onOrderSelectedInAdmin();
                 onDelayedOrderSelected();
             });
@@ -1141,21 +1129,13 @@
             db.ref('orders').once('value', snapshot => {
                 let data = snapshot.val();
                 if(!data) return;
-
                 let filterType = document.getElementById('reportFilterType').value;
                 let now = new Date();
-                
-                let totalSales = 0;
-                let netProfit = 0;
-                let cashSales = 0;
-                let cardSales = 0;
-                let transferSales = 0;
+                let totalSales = 0, netProfit = 0, cashSales = 0, cardSales = 0, transferSales = 0;
 
                 Object.values(data).forEach(ord => {
                     if (ord.status !== 'sold') return;
-
                     let ordDate = new Date(ord.createdAt || Date.now());
-                    
                     if (filterType === 'today') {
                         if (ordDate.toDateString() !== now.toDateString()) return;
                     } else if (filterType === 'week') {
@@ -1167,15 +1147,11 @@
                         if (ordDate.getFullYear() !== now.getFullYear()) return;
                     }
 
-                    let orderItemsTotal = 0;
-                    let orderItemsCost = 0;
-
+                    let orderItemsTotal = 0, orderItemsCost = 0;
                     if (ord.items && Array.isArray(ord.items)) {
                         ord.items.forEach(item => {
-                            let price = parseFloat(item.price || 0);
-                            let cost = parseFloat(item.cost || 0);
-                            orderItemsTotal += price;
-                            orderItemsCost += cost;
+                            orderItemsTotal += parseFloat(item.price || 0);
+                            orderItemsCost += parseFloat(item.cost || 0);
                         });
                     }
 
@@ -1209,11 +1185,7 @@
             let feeInput = document.getElementById('adminShippingFeeInput');
             if(!select || !feeInput) return;
             let orderKey = select.value;
-            if(orderKey && adminLoadedOrders[orderKey]) {
-                feeInput.value = adminLoadedOrders[orderKey].shippingFee || 0;
-            } else {
-                feeInput.value = '';
-            }
+            feeInput.value = (orderKey && adminLoadedOrders[orderKey]) ? (adminLoadedOrders[orderKey].shippingFee || 0) : '';
         }
 
         function onDelayedOrderSelected() {
@@ -1221,31 +1193,19 @@
             let dateInput = document.getElementById('delayDateInput');
             if(!select || !dateInput) return;
             let orderKey = select.value;
-            if(orderKey && adminLoadedOrders[orderKey]) {
-                dateInput.value = adminLoadedOrders[orderKey].delayDate || '';
-            } else {
-                dateInput.value = '';
-            }
+            dateInput.value = (orderKey && adminLoadedOrders[orderKey]) ? (adminLoadedOrders[orderKey].delayDate || '') : '';
         }
 
         function updateOrderShippingFee() {
             let select = document.getElementById('adminOrderSelect');
             let feeInput = document.getElementById('adminShippingFeeInput');
             if(!select || !feeInput || !db) return;
-
             let orderKey = select.value;
             let newFee = parseFloat(feeInput.value) || 0;
-
-            if(!orderKey) {
-                showToast('يرجى اختيار طلب أولاً!');
-                return;
-            }
-
+            if(!orderKey) { showToast('يرجى اختيار طلب أولاً!'); return; }
             db.ref('orders/' + orderKey + '/shippingFee').set(newFee).then(() => {
                 showToast('تم تحديث رسوم التوصيل وحفظ الفاتورة بنجاح ✔️');
                 adminLoadedOrders[orderKey].shippingFee = newFee;
-            }).catch(err => {
-                showToast('حدث خطأ أثناء التحديث');
             });
         }
 
@@ -1253,11 +1213,7 @@
             let select = document.getElementById('adminOrderSelect');
             if(!select || !db) return;
             let orderKey = select.value;
-            if(!orderKey) {
-                showToast('يرجى اختيار طلب أولاً!');
-                return;
-            }
-
+            if(!orderKey) { showToast('يرجى اختيار طلب أولاً!'); return; }
             db.ref('orders/' + orderKey + '/status').set('sold').then(() => {
                 showToast('تم نقل الطلب إلى قسم (تم البيع) وتسجيل الأرباح ✔️');
                 loadAdminAllOrders();
@@ -1269,11 +1225,7 @@
             let select = document.getElementById('soldOrderSelect');
             if(!select || !db) return;
             let orderKey = select.value;
-            if(!orderKey) {
-                showToast('يرجى اختيار طلب أولاً!');
-                return;
-            }
-
+            if(!orderKey) { showToast('يرجى اختيار طلب أولاً!'); return; }
             db.ref('orders/' + orderKey + '/status').set('active').then(() => {
                 showToast('تم إرجاع الطلب إلى الطلبات الجارية 🔄');
                 loadAdminAllOrders();
@@ -1285,19 +1237,10 @@
             let select = document.getElementById('delayedOrderSelect');
             let dateInput = document.getElementById('delayDateInput');
             if(!select || !dateInput || !db) return;
-
             let orderKey = select.value;
             let dateVal = dateInput.value;
-
-            if(!orderKey) {
-                showToast('يرجى اختيار طلب مؤجل أولاً!');
-                return;
-            }
-            if(!dateVal) {
-                showToast('يرجى تحديد تاريخ التأجيل!');
-                return;
-            }
-
+            if(!orderKey) { showToast('يرجى اختيار طلب مؤجل أولاً!'); return; }
+            if(!dateVal) { showToast('يرجى تحديد تاريخ التأجيل!'); return; }
             db.ref('orders/' + orderKey).update({ status: 'delayed', delayDate: dateVal }).then(() => {
                 showToast('تم حفظ تاريخ التأجيل بنجاح 📅');
                 adminLoadedOrders[orderKey].delayDate = dateVal;
@@ -1308,11 +1251,7 @@
             let select = document.getElementById('delayedOrderSelect');
             if(!select || !db) return;
             let orderKey = select.value;
-            if(!orderKey) {
-                showToast('يرجى اختيار طلب أولاً!');
-                return;
-            }
-
+            if(!orderKey) { showToast('يرجى اختيار طلب أولاً!'); return; }
             db.ref('orders/' + orderKey).update({ status: 'active', delayDate: null }).then(() => {
                 showToast('تم إرجاع الطلب إلى الطلبات الجارية 🔄');
                 loadAdminAllOrders();
@@ -1326,18 +1265,12 @@
         function deleteOrderGeneric(selectElem) {
             if(!selectElem || !db) return;
             let orderKey = selectElem.value;
-            if(!orderKey) {
-                showToast('يرجى اختيار طلب لحذفه!');
-                return;
-            }
-
+            if(!orderKey) { showToast('يرجى اختيار طلب لحذفه!'); return; }
             showCustomConfirm(function() {
                 db.ref('orders/' + orderKey).remove().then(() => {
                     showToast('تم حذف الطلب بنجاح 🗑️');
                     loadAdminAllOrders();
                     updateFinancialReport();
-                }).catch(err => {
-                    showToast('حدث خطأ أثناء الحذف');
                 });
             });
         }
@@ -1356,9 +1289,8 @@
             if(!db) return;
             db.ref('pendingReviews').once('value', snapshot => {
                 let data = snapshot.val();
-                let count = data ? Object.keys(data).length : 0;
                 let badge = document.getElementById('pendingBadgeCount');
-                if(badge) badge.innerText = count;
+                if(badge) badge.innerText = data ? Object.keys(data).length : 0;
             });
         }
         updatePendingBadgeCount();
@@ -1367,9 +1299,8 @@
             if(!db) return;
             db.ref('approvedReviews').once('value', snapshot => {
                 let data = snapshot.val();
-                let count = data ? Object.keys(data).length : 0;
                 let badge = document.getElementById('approvedBadgeCount');
-                if(badge) badge.innerText = count;
+                if(badge) badge.innerText = data ? Object.keys(data).length : 0;
             });
         }
         updateApprovedBadgeCount();
@@ -1379,7 +1310,6 @@
             let now = new Date();
             let past = new Date(dateString);
             let diffSeconds = Math.floor((now - past) / 1000);
-
             if (diffSeconds < 60) return 'الآن';
             let diffMinutes = Math.floor(diffSeconds / 60);
             if (diffMinutes < 60) return `قبل ${diffMinutes} دقيقة`;
@@ -1389,41 +1319,30 @@
             if (diffDays < 30) return `قبل ${diffDays} يوم`;
             let diffMonths = Math.floor(diffDays / 30);
             if (diffMonths < 12) return `قبل ${diffMonths} شهر`;
-            let diffYears = Math.floor(diffDays / 365);
-            return `قبل ${diffYears} سنة`;
+            return `قبل ${Math.floor(diffDays / 365)} سنة`;
         }
 
         function loadApprovedReviews() {
             const list = document.getElementById('approvedReviewsList');
-            if(!list) return;
-            
-            if(!db) {
-                list.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; margin-top:40px;">لا توجد قاعدة بيانات متصلة</p>';
-                return;
-            }
-
+            if(!list || !db) return;
             db.ref('approvedReviews').once('value', snapshot => {
                 let data = snapshot.val();
                 list.innerHTML = '';
                 if (!data) {
-                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن. كن أول من يقيّم!</p>';
+                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; margin-top:40px;">لا توجد تقييمات حتى الآن.</p>';
                     return;
                 }
-
                 Object.values(data).forEach(rev => {
                     let div = document.createElement('div');
                     div.className = 'review-item';
-                    
-                    let timeAgoText = getTimeAgo(rev.createdAt);
                     let imgHtml = rev.image ? `<img src="${rev.image}" class="review-img-thumb" onclick='openDetailsModal({title:"صورة تقييم: " + "${rev.name}", images:["${rev.image}"], desc:"${rev.comment}"})' alt="صورة التقييم">` : '';
-
                     div.innerHTML = `
                         <div class="review-top-row">
                             <div class="review-author-side">
                                 <span class="review-author">👤 ${rev.name}</span>
                                 <span class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                             </div>
-                            <span class="review-time">${timeAgoText}</span>
+                            <span class="review-time">${getTimeAgo(rev.createdAt)}</span>
                         </div>
                         <p class="review-comment">${rev.comment}</p>
                         ${imgHtml}
@@ -1437,59 +1356,35 @@
             const name = document.getElementById('revName').value.trim();
             const comment = document.getElementById('revComment').value.trim();
             const fileInput = document.getElementById('revImageFile');
-
-            if (!name || !comment) {
-                showToast('يرجى تعبئة الاسم والتقييم!');
-                return;
-            }
-
-            if(!db) {
-                showToast('خطأ في الاتصال بقاعدة البيانات!');
-                return;
-            }
+            if (!name || !comment) { showToast('يرجى تعبئة الاسم والتقييم!'); return; }
+            if(!db) { showToast('خطأ في الاتصال بقاعدة البيانات!'); return; }
 
             db.ref('approvedReviews').once('value', appSnap => {
                 let approved = appSnap.val() ? Object.values(appSnap.val()) : [];
                 db.ref('pendingReviews').once('value', pendSnap => {
                     let pending = pendSnap.val() ? Object.values(pendSnap.val()) : [];
-                    
                     let allReviews = [...approved, ...pending];
-                    let nameExists = allReviews.some(r => r.name.trim().toLowerCase() === name.toLowerCase());
-
-                    if (nameExists) {
+                    if (allReviews.some(r => r.name.trim().toLowerCase() === name.toLowerCase())) {
                         showToast('⚠️ الاسم مستخدم مسبقاً، يرجى إضافة اسم آخر');
                         return;
                     }
-
                     let processReviewWithImage = (imgBase64) => {
                         let newRevId = 'rev-' + Date.now();
-                        let newRev = {
-                            id: newRevId,
-                            name: name,
-                            comment: comment,
-                            image: imgBase64 || '',
-                            createdAt: new Date().toISOString()
-                        };
-
+                        let newRev = { id: newRevId, name: name, comment: comment, image: imgBase64 || '', createdAt: new Date().toISOString() };
                         db.ref('pendingReviews/' + newRevId).set(newRev).then(() => {
-                            showToast('تم إرسال تقييمك بنجاح، بانتظار مراجعة الإدارة ⭐');
+                            showToast('تم إرسال تقييمك بنجاح، بانتظار المراجعة ⭐');
                             document.getElementById('revName').value = '';
                             document.getElementById('revComment').value = '';
                             if(fileInput) fileInput.value = '';
                             closeAddReviewModal();
                             updatePendingBadgeCount();
-                        }).catch(err => {
-                            showToast('حدث خطأ أثناء الإرسال');
                         });
                     };
-
                     if (fileInput && fileInput.files && fileInput.files[0]) {
                         let reader = new FileReader();
                         reader.onload = function(e) { processReviewWithImage(e.target.result); };
                         reader.readAsDataURL(fileInput.files[0]);
-                    } else {
-                        processReviewWithImage('');
-                    }
+                    } else { processReviewWithImage(''); }
                 });
             });
         }
@@ -1497,19 +1392,12 @@
         function renderAdminPendingReviews() {
             const list = document.getElementById('adminPendingReviewsList');
             if(!list || !db) return;
-
             db.ref('pendingReviews').once('value', snapshot => {
                 let data = snapshot.val();
                 list.innerHTML = '';
-                
-                if (!data) {
-                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات معلقة.</p>';
-                    return;
-                }
-
+                if (!data) { list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات معلقة.</p>'; return; }
                 Object.keys(data).forEach(key => {
                     let rev = data[key];
-                    let imgHtml = rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : '';
                     let div = document.createElement('div');
                     div.className = 'pending-review-card';
                     div.innerHTML = `
@@ -1518,12 +1406,14 @@
                             <span style="color:#006400; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
                         <p style="font-size:0.9rem; color:#0f172a; font-weight:800; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
-                        ${imgHtml}
+                        ${rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : ''}
                         <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:4px;">
-                            <button class="approve-btn" onclick="approveReview('${key}')">قبول ونشر ⭐</button>
-                            <button class="del-btn" onclick="deletePendingReview('${key}')">حذف ❌</button>
+                            <button class="approve-btn">قبول ونشر ⭐</button>
+                            <button class="del-btn">حذف ❌</button>
                         </div>
                     `;
+                    div.querySelector('.approve-btn').onclick = () => approveReview(key);
+                    div.querySelector('.del-btn').onclick = () => deletePendingReview(key);
                     list.appendChild(div);
                 });
             });
@@ -1534,8 +1424,7 @@
             db.ref('pendingReviews/' + key).once('value', snapshot => {
                 let revData = snapshot.val();
                 if(revData) {
-                    let approvedRef = db.ref('approvedReviews').push();
-                    approvedRef.set(revData).then(() => {
+                    db.ref('approvedReviews').push().set(revData).then(() => {
                         db.ref('pendingReviews/' + key).remove().then(() => {
                             showToast('تم قبول ونشر التقييم بنجاح ✔️');
                             renderAdminPendingReviews();
@@ -1551,7 +1440,7 @@
         function deletePendingReview(key) {
             if(!db) return;
             db.ref('pendingReviews/' + key).remove().then(() => {
-                showToast('تم حذف التقييم المعلق');
+                showToast('تم حذف التقييم');
                 renderAdminPendingReviews();
                 updatePendingBadgeCount();
             });
@@ -1560,19 +1449,12 @@
         function renderAdminApprovedReviews() {
             const list = document.getElementById('adminApprovedReviewsList');
             if(!list || !db) return;
-
             db.ref('approvedReviews').once('value', snapshot => {
                 let data = snapshot.val();
                 list.innerHTML = '';
-
-                if (!data) {
-                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات منشورة.</p>';
-                    return;
-                }
-
+                if (!data) { list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات منشورة.</p>'; return; }
                 Object.keys(data).forEach(key => {
                     let rev = data[key];
-                    let imgHtml = rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : '';
                     let div = document.createElement('div');
                     div.className = 'pending-review-card';
                     div.innerHTML = `
@@ -1581,11 +1463,12 @@
                             <span style="color:#006400; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
                         <p style="font-size:0.9rem; color:#0f172a; font-weight:800; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
-                        ${imgHtml}
+                        ${rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : ''}
                         <div style="display:flex; justify-content:flex-end; margin-top:4px;">
-                            <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف نهائياً ❌</button>
+                            <button class="del-btn">حذف نهائياً ❌</button>
                         </div>
                     `;
+                    div.querySelector('.del-btn').onclick = () => deleteApprovedReview(key);
                     list.appendChild(div);
                 });
             });
@@ -1603,10 +1486,7 @@
 
         function getCategories(callback) {
             if(!db) { callback({}); return; }
-            db.ref('categories').once('value', (snapshot) => {
-                const data = snapshot.val() || {};
-                callback(data);
-            });
+            db.ref('categories').once('value', (snapshot) => { callback(snapshot.val() || {}); });
         }
 
         function saveCategoriesToCloud(cats) {
@@ -1622,14 +1502,10 @@
             if(!db) { callback([]); return; }
             db.ref('products').once('value', (snapshot) => {
                 const data = snapshot.val() || [];
-                let uniqueProducts = [];
-                let idsMap = {};
+                let uniqueProducts = [], idsMap = {};
                 if (Array.isArray(data)) {
                     data.forEach(p => {
-                        if (p && p.id && !idsMap[p.id]) {
-                            idsMap[p.id] = true;
-                            uniqueProducts.push(p);
-                        }
+                        if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
                     });
                 }
                 cleanupCartAndWishlist(uniqueProducts);
@@ -1638,29 +1514,16 @@
         }
 
         function cleanupCartAndWishlist(serverProducts) {
-            let cart = getCart();
-            let wishlist = getWishlist();
-
+            let cart = getCart(), wishlist = getWishlist();
             let validCart = cart.filter(cartItem => serverProducts.some(p => p.id == cartItem.id));
             let validWishlist = wishlist.filter(wishItem => serverProducts.some(p => p.id == wishItem.id));
-
-            if (validCart.length !== cart.length) {
-                localStorage.setItem('storeCart', JSON.stringify(validCart));
-                renderCart();
-            }
-
-            if (validWishlist.length !== wishlist.length) {
-                localStorage.setItem('storeWishlist', JSON.stringify(validWishlist));
-                renderWishlist();
-            }
+            if (validCart.length !== cart.length) { localStorage.setItem('storeCart', JSON.stringify(validCart)); renderCart(); }
+            if (validWishlist.length !== wishlist.length) { localStorage.setItem('storeWishlist', JSON.stringify(validWishlist)); renderWishlist(); }
         }
 
         function saveProductsToCloud(products) {
             if(!db) return;
-            db.ref('products').set(products).then(() => {
-                renderProducts();
-                renderAdminProducts();
-            });
+            db.ref('products').set(products).then(() => { renderProducts(); renderAdminProducts(); });
         }
 
         function getCart() {
@@ -1703,15 +1566,12 @@
                 const container = document.getElementById('categoriesBar');
                 if(!container) return;
                 container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)">الكل</button>';
-
                 if (cats && Array.isArray(cats)) {
                     cats.forEach(c => {
                         const btn = document.createElement('button');
                         btn.className = 'category-btn';
-                        
                         let imgTag = c.image ? `<img src="${c.image}" alt="">` : '';
                         btn.innerHTML = `${imgTag}<span>${c.name}</span>`;
-                        
                         btn.onclick = function() { filterCategory(c.id, btn); };
                         container.appendChild(btn);
                     });
@@ -1721,20 +1581,14 @@
 
         function renderProducts(filterList = null) {
             const wishlist = getWishlist();
-            if (filterList) {
-                renderProductsList(filterList, wishlist);
-            } else {
-                getProducts(products => {
-                    renderProductsList(products, wishlist);
-                });
-            }
+            if (filterList) { renderProductsList(filterList, wishlist); }
+            else { getProducts(products => renderProductsList(products, wishlist)); }
         }
 
         function renderProductsList(products, wishlist) {
             const grid = document.getElementById('productsGrid');
             if(!grid) return;
             grid.innerHTML = '';
-
             if (!products || products.length === 0) {
                 grid.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; grid-column: 1/-1;">لا توجد منتجات أو خدمات مطابقة حالياً.</p>';
                 return;
@@ -1745,41 +1599,25 @@
                 card.className = 'card';
                 card.setAttribute('data-category', p.category);
 
-                let imgTag = '';
-                let imgsList = p.images || [];
-                if (imgsList.length > 0) {
-                    imgTag = `<img src="${imgsList[0]}" alt="${p.title}">`;
-                } else {
-                    imgTag = `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#64748b; font-weight:800; font-size:0.75rem;">بدون صورة</div>`;
-                }
-
+                let imgTag = (p.images && p.images.length > 0) ? `<img src="${p.images[0]}" alt="${p.title}">` : `<div style="height:100%; display:flex; align-items:center; justify-content:center; color:#64748b; font-weight:800; font-size:0.75rem;">بدون صورة</div>`;
                 let isLiked = wishlist.some(item => item.id === p.id);
 
-                let priceSectionHTML = '';
                 let currentP = parseFloat(p.price || 0);
                 let oldP = parseFloat(p.oldPrice || 0);
+                let priceSectionHTML = '';
 
                 if (oldP && oldP > currentP) {
                     let discountPercent = Math.round(((oldP - currentP) / oldP) * 100);
                     priceSectionHTML = `
                         <div class="card-price-box">
-                            <div class="card-price-main">
-                                <span class="price-currency">ر.س.‏</span>
-                                <span class="price-amount">${p.price}</span>
-                            </div>
-                            <div class="card-old-price-row">
-                                <span class="old-price-val">${p.oldPrice}</span> ر.س 
-                                <span class="discount-badge-tag">خصم ${discountPercent}%</span>
-                            </div>
+                            <div class="card-price-main"><span class="price-currency">ر.س.‏</span><span class="price-amount">${p.price}</span></div>
+                            <div class="card-old-price-row"><span class="old-price-val">${p.oldPrice}</span> ر.س <span class="discount-badge-tag">خصم ${discountPercent}%</span></div>
                         </div>
                     `;
                 } else {
                     priceSectionHTML = `
                         <div class="card-price-box">
-                            <div class="card-price-main">
-                                <span class="price-currency">ر.س.‏</span>
-                                <span class="price-amount">${p.price || '0'}</span>
-                            </div>
+                            <div class="card-price-main"><span class="price-currency">ر.س.‏</span><span class="price-amount">${p.price || '0'}</span></div>
                         </div>
                     `;
                 }
@@ -1798,12 +1636,10 @@
                     </div>
                 `;
 
-                // ربط الأحداث بأمان تام لتفادي أي خطأ
                 card.querySelector('.wishlist-btn').onclick = (e) => toggleWishlist(p, e);
                 card.querySelector('.card-img-container').onclick = () => openDetailsModal(p);
                 card.querySelector('.quick-add-btn').onclick = (e) => { e.stopPropagation(); addToCart(p); };
                 card.querySelector('h3').onclick = () => openDetailsModal(p);
-
                 grid.appendChild(card);
             });
         }
@@ -1812,23 +1648,11 @@
             const query = document.getElementById('searchInput').value.trim().toLowerCase();
             const suggestionsBox = document.getElementById('searchSuggestions');
             if(!suggestionsBox) return;
-            
             getProducts(products => {
-                if (!products || products.length === 0) {
-                    suggestionsBox.style.display = 'none';
-                    renderProducts([]);
-                    return;
-                }
-
-                if (query === '') {
-                    suggestionsBox.style.display = 'none';
-                    renderProducts(products);
-                    return;
-                }
-
+                if (!products || products.length === 0) { suggestionsBox.style.display = 'none'; renderProducts([]); return; }
+                if (query === '') { suggestionsBox.style.display = 'none'; renderProducts(products); return; }
                 const matched = products.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
                 renderProducts(matched);
-
                 if (matched.length > 0) {
                     suggestionsBox.innerHTML = '';
                     matched.forEach(item => {
@@ -1852,9 +1676,7 @@
 
         document.addEventListener('click', function(e) {
             let sb = document.getElementById('searchSuggestions');
-            if (sb && !e.target.closest('.search-container')) {
-                sb.style.display = 'none';
-            }
+            if (sb && !e.target.closest('.search-container')) { sb.style.display = 'none'; }
         });
 
         function addToCart(p) {
@@ -1869,19 +1691,15 @@
             let list = document.getElementById('cartItemsList');
             let countBadge = document.getElementById('cartCount');
             let footer = document.getElementById('cartFooter');
-            
             if(countBadge) countBadge.innerText = cart.length;
             if(!list) return;
             list.innerHTML = '';
-
             if (cart.length === 0) {
                 list.innerHTML = '<p id="txt-cart-empty" style="color:#0f172a; font-weight:800; text-align:center; margin-top:20px;">السلة فارغة حالياً</p>';
                 if(footer) footer.style.display = 'none';
                 return;
             }
-
             if(footer) footer.style.display = 'block';
-
             cart.forEach((item, index) => {
                 let div = document.createElement('div');
                 div.className = 'cart-item-card';
@@ -1902,15 +1720,12 @@
             let cart = getCart();
             let hasPhysicalItem = cart.some(item => item.type === 'physical' || item.type === 'product');
             if(hasPhysicalItem) return;
-
             let shippingSelect = document.getElementById('shippingMethod');
             let payMethodSelect = document.getElementById('payMethod');
             if(!shippingSelect || !payMethodSelect) return;
-
-            let selectedVal = shippingSelect.value;
-            if (selectedVal === 'تنفيذ الخدمة عن بُعد') {
+            if (shippingSelect.value === 'تنفيذ الخدمة عن بُعد') {
                 payMethodSelect.innerHTML = `<option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>`;
-            } else if (selectedVal === 'إحضار الجهاز') {
+            } else {
                 payMethodSelect.innerHTML = `
                     <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
                     <option value="نقدي (كاش)">نقدي (كاش)</option>
@@ -1920,11 +1735,7 @@
 
         function openCheckoutModal() {
             let cart = getCart();
-            if (cart.length === 0) {
-                showToast('السلة فارغة!');
-                return;
-            }
-
+            if (cart.length === 0) { showToast('السلة فارغة!'); return; }
             let hasPhysicalItem = cart.some(item => item.type === 'physical' || item.type === 'product' || (item.category && item.category.includes('product')));
             let locationBlock = document.getElementById('locationFieldBlock');
             let nameFieldBlock = document.getElementById('nameFieldBlock');
@@ -1962,39 +1773,25 @@
                     <option value="نقدي (كاش)">نقدي (كاش)</option>
                 `;
             }
-
-            let modal = document.getElementById('checkoutModal');
-            if(modal) modal.style.display = 'flex';
+            document.getElementById('checkoutModal').style.display = 'flex';
             toggleCart();
         }
 
-        function closeCheckoutModal() {
-            let modal = document.getElementById('checkoutModal');
-            if(modal) modal.style.display = 'none';
-        }
+        function closeCheckoutModal() { document.getElementById('checkoutModal').style.display = 'none'; }
 
         function sendToWhatsApp() {
             const nameInput = document.getElementById('custName');
             const name = (nameInput && nameInput.style.display !== 'none') ? nameInput.value.trim() : '';
             const phone = document.getElementById('custPhone').value.trim();
-            const shippingSelect = document.getElementById('shippingMethod');
-            const shippingText = shippingSelect.value;
+            const shippingText = document.getElementById('shippingMethod').value;
             const payMethod = document.getElementById('payMethod').value;
             let cart = getCart();
-
             let hasPhysicalItem = cart.some(item => item.type === 'physical' || item.type === 'product' || (item.category && item.category.includes('product')));
             const location = document.getElementById('custLocation').value.trim();
             const extraAddr = document.getElementById('custExtraAddr').value.trim();
 
-            if (hasPhysicalItem && (!name || !phone)) {
-                showToast('يرجى تعبئة الاسم ورقم الجوال!');
-                return;
-            }
-
-            if (hasPhysicalItem && !location) {
-                showToast('يرجى تحديد موقع التوصيل والعنوان!');
-                return;
-            }
+            if (hasPhysicalItem && (!name || !phone)) { showToast('يرجى تعبئة الاسم ورقم الجوال!'); return; }
+            if (hasPhysicalItem && !location) { showToast('يرجى تحديد موقع التوصيل والعنوان!'); return; }
 
             let fullAddress = hasPhysicalItem ? (location + (extraAddr ? ` (${extraAddr})` : '')) : 'غير مطلوب (خدمة رقمية / عن بُعد)';
             let orderId = "ORD-" + Date.now().toString().slice(-6);
@@ -2013,16 +1810,12 @@
                 createdAt: new Date().toISOString()
             };
 
-            if(db) {
-                db.ref('orders/' + orderId).set(orderData).catch(err => console.log(err));
-            }
+            if(db) { db.ref('orders/' + orderId).set(orderData).catch(err => console.log(err)); }
 
             let invoiceLink = `${baseUrl}?order_id=${orderId}`;
             let cartTextDetails = "";
-
             cart.forEach(item => {
-                let productLink = `${baseUrl}?product_id=${item.id}`;
-                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n🔗 الرابط: ${productLink}\n\n`;
+                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n🔗 الرابط: ${baseUrl}?product_id=${item.id}\n\n`;
             });
 
             let clientDetailsMsg = hasPhysicalItem ? `👤 *اسم العميل:* ${name}\n📱 *رقم الجوال:* ${phone}\n📍 *الموقع:* ${fullAddress}\n` : ``;
@@ -2062,9 +1855,8 @@
                 });
             } else if (orderId && db) {
                 db.ref('orders/' + orderId).on('value', (snapshot) => {
-                    if (snapshot.exists()) {
-                        openInvoiceModal(snapshot.val());
-                    } else {
+                    if (snapshot.exists()) { openInvoiceModal(snapshot.val()); }
+                    else {
                         showToast('الطلب غير موجود أو انتهت صلاحيته');
                         let invModal = document.getElementById('invoiceModal');
                         if(invModal) invModal.style.display = 'none';
@@ -2080,28 +1872,16 @@
         function openInvoiceModal(order) {
             document.getElementById('invOrderId').innerText = order.orderId;
             let nameRow = document.getElementById('invCustNameRow');
-            if (order.name && order.name.includes('غير مطلوب')) {
-                if(nameRow) nameRow.style.display = 'none';
-            } else {
-                if(nameRow) nameRow.style.display = 'block';
-                document.getElementById('invCustName').innerText = order.name;
-            }
+            if (order.name && order.name.includes('غير مطلوب')) { if(nameRow) nameRow.style.display = 'none'; }
+            else { if(nameRow) nameRow.style.display = 'block'; document.getElementById('invCustName').innerText = order.name; }
             
             let phoneRow = document.getElementById('invCustPhoneRow');
-            if (order.phone && order.phone.includes('غير مطلوب')) {
-                if(phoneRow) phoneRow.style.display = 'none';
-            } else {
-                if(phoneRow) phoneRow.style.display = 'block';
-                document.getElementById('invCustPhone').innerText = order.phone;
-            }
+            if (order.phone && order.phone.includes('غير مطلوب')) { if(phoneRow) phoneRow.style.display = 'none'; }
+            else { if(phoneRow) phoneRow.style.display = 'block'; document.getElementById('invCustPhone').innerText = order.phone; }
             
             let cityRow = document.getElementById('invCustCityRow');
-            if (order.city && order.city.includes('غير مطلوب')) {
-                if(cityRow) cityRow.style.display = 'none';
-            } else {
-                if(cityRow) cityRow.style.display = 'block';
-                document.getElementById('invCustCity').innerText = order.city;
-            }
+            if (order.city && order.city.includes('غير مطلوب')) { if(cityRow) cityRow.style.display = 'none'; }
+            else { if(cityRow) cityRow.style.display = 'block'; document.getElementById('invCustCity').innerText = order.city; }
             
             document.getElementById('invShipping').innerText = order.shipping || 'خدمة صيانة';
             document.getElementById('invPayMethod').innerText = order.payMethod;
@@ -2109,7 +1889,6 @@
             let list = document.getElementById('invProductsList');
             list.innerHTML = '';
             let productsTotal = 0;
-
             order.items.forEach(item => {
                 productsTotal += parseFloat(item.price || 0);
                 let div = document.createElement('div');
@@ -2121,13 +1900,10 @@
             let shippingFee = parseFloat(order.shippingFee || 0);
             let shippingFeeRow = document.getElementById('invShippingFeeRow');
             let shippingPriceText = document.getElementById('invShippingPrice');
-
             if (shippingFee > 0) {
                 if(shippingPriceText) shippingPriceText.innerText = `${shippingFee} ر.س`;
                 if(shippingFeeRow) shippingFeeRow.style.display = 'flex';
-            } else {
-                if(shippingFeeRow) shippingFeeRow.style.display = 'none';
-            }
+            } else { if(shippingFeeRow) shippingFeeRow.style.display = 'none'; }
 
             document.getElementById('invTotalPrice').innerText = productsTotal + shippingFee;
             document.getElementById('invoiceModal').style.display = 'flex';
@@ -2151,16 +1927,13 @@
             let wishlist = getWishlist();
             let list = document.getElementById('wishlistItemsList');
             let countBadge = document.getElementById('wishlistCount');
-            
             if(countBadge) countBadge.innerText = wishlist.length;
             if(!list) return;
             list.innerHTML = '';
-
             if (wishlist.length === 0) {
                 list.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; margin-top:20px;">قائمة المفضلة فارغة</p>';
                 return;
             }
-
             wishlist.forEach((item, index) => {
                 let div = document.createElement('div');
                 div.className = 'wishlist-item-card';
@@ -2195,7 +1968,6 @@
             let oldPriceRow = document.getElementById('detOldPriceRow');
             let oldPriceVal = document.getElementById('detOldPrice');
             let discountTag = document.getElementById('detDiscountTag');
-
             let currentP = parseFloat(p.price || 0);
             let oldP = parseFloat(p.oldPrice || 0);
 
@@ -2204,14 +1976,11 @@
                 oldPriceVal.innerText = p.oldPrice;
                 discountTag.innerText = `خصم ${discountPercent}%`;
                 oldPriceRow.style.display = 'flex';
-            } else {
-                oldPriceRow.style.display = 'none';
-            }
+            } else { oldPriceRow.style.display = 'none'; }
 
             let mainImg = document.getElementById('mainDetailImg');
             let thumbs = document.getElementById('detThumbnails');
             if(thumbs) thumbs.innerHTML = '';
-            
             let imgsList = p.images || [];
             if (imgsList.length > 0) {
                 mainImg.src = imgsList[0];
@@ -2226,20 +1995,13 @@
                     };
                     thumbs.appendChild(thumb);
                 });
-            } else if(mainImg) {
-                mainImg.src = '';
-            }
+            } else if(mainImg) { mainImg.src = ''; }
 
             let addBtn = document.getElementById('detAddToCartBtn');
             if(addBtn) {
-                addBtn.onclick = function() {
-                    addToCart(p);
-                    closeDetailsModal();
-                };
+                addBtn.onclick = function() { addToCart(p); closeDetailsModal(); };
             }
-
-            let modal = document.getElementById('detailsModal');
-            if(modal) modal.style.display = 'flex';
+            document.getElementById('detailsModal').style.display = 'flex';
         }
 
         function closeDetailsModal() { document.getElementById('detailsModal').style.display = 'none'; }
@@ -2265,10 +2027,9 @@
                 const list = document.getElementById('adminCatsList');
                 if(!list) return;
                 list.innerHTML = '';
-
                 if (cats && Array.isArray(cats)) {
                     cats.forEach(c => {
-                        let imgThumb = c.image ? `<img src="${c.image}" style="width:28px; height:28px; object-fit:cover; border-radius:50%; vertical-align:middle; margin-left:4px;">` : '';
+                        let imgThumb = c.image ? `<img src="${c.image}" style="width:32px; height:32px; object-fit:cover; border-radius:50%; vertical-align:middle; margin-left:6px;">` : '';
                         const row = document.createElement('div');
                         row.className = 'item-row';
                         row.innerHTML = `
@@ -2300,7 +2061,6 @@
                 const list = document.getElementById('adminItemsList');
                 if(!list) return;
                 list.innerHTML = '';
-
                 if (products && Array.isArray(products)) {
                     products.forEach(p => {
                         let stockVal = p.stock !== undefined ? p.stock : 10;
@@ -2337,7 +2097,6 @@
             let submitBtn = document.getElementById('submitProductBtn');
             submitBtn.innerText = "حفظ تعديلات المنتج/الخدمة";
             submitBtn.style.backgroundColor = "#f59e0b";
-            
             let tabBtn = document.querySelector('.admin-tab-btn:nth-child(3)');
             if(tabBtn) switchAdminTab('tab-products', tabBtn);
         }
@@ -2352,7 +2111,6 @@
                 let processCatSave = (imgBase64) => {
                     getCategories(cats => {
                         let currentCats = Array.isArray(cats) ? cats : [];
-                        
                         if (editingCategoryId) {
                             let catObj = currentCats.find(c => c.id === editingCategoryId);
                             if (catObj) {
@@ -2365,14 +2123,9 @@
                             document.getElementById('catSubmitBtn').style.backgroundColor = "";
                             showToast('تم تعديل القسم بنجاح ✔️');
                         } else {
-                            currentCats.push({ 
-                                id: 'cat-' + Date.now(), 
-                                name: nameInput,
-                                image: imgBase64 || ''
-                            });
+                            currentCats.push({ id: 'cat-' + Date.now(), name: nameInput, image: imgBase64 || '' });
                             showToast('تمت إضافة القسم مع الصورة بنجاح ✔️');
                         }
-
                         saveCategoriesToCloud(currentCats);
                         this.reset();
                     });
@@ -2399,8 +2152,7 @@
         function deleteCategory(id) {
             getCategories(cats => {
                 if (Array.isArray(cats)) {
-                    let updatedCats = cats.filter(c => c.id !== id);
-                    saveCategoriesToCloud(updatedCats);
+                    saveCategoriesToCloud(cats.filter(c => c.id !== id));
                     showToast('تم حذف القسم بنجاح');
                 }
             });
@@ -2412,10 +2164,8 @@
                 e.preventDefault();
                 const fileInput = document.getElementById('pImageFiles');
                 const files = fileInput.files;
-                
                 if (files.length > 0) {
-                    let imagesArray = [];
-                    let processed = 0;
+                    let imagesArray = [], processed = 0;
                     for (let i = 0; i < files.length; i++) {
                         let reader = new FileReader();
                         reader.onload = function(event) {
@@ -2441,7 +2191,6 @@
         function saveProductData(imagesArray) {
             getProducts(products => {
                 let currentProducts = Array.isArray(products) ? products : [];
-                
                 if (editingProductId) {
                     let index = currentProducts.findIndex(p => p.id === editingProductId);
                     if (index > -1) {
@@ -2465,7 +2214,7 @@
                     submitBtn.style.backgroundColor = "";
                     showToast('تم تحديث وحفظ المنتج بنجاح ✔️');
                 } else {
-                    const newProduct = {
+                    currentProducts.push({
                         id: Date.now(),
                         title: document.getElementById('pTitle').value,
                         type: document.getElementById('pType').value || 'physical',
@@ -2477,11 +2226,9 @@
                         badge: document.getElementById('pBadge').value || 'إكسبرس',
                         images: imagesArray,
                         desc: document.getElementById('pDesc').value
-                    };
-                    currentProducts.push(newProduct);
+                    });
                     showToast('تمت إضافة المنتج والمخزون سحابياً بنجاح ✔️');
                 }
-
                 saveProductsToCloud(currentProducts);
                 let form = document.getElementById('addProductForm');
                 if(form) form.reset();
@@ -2491,8 +2238,7 @@
         function deleteProduct(id) {
             getProducts(products => {
                 if (Array.isArray(products)) {
-                    let updatedProducts = products.filter(p => p.id !== id);
-                    saveProductsToCloud(updatedProducts);
+                    saveProductsToCloud(products.filter(p => p.id !== id));
                     showToast('تم حذف المنتج بنجاح');
                 }
             });
@@ -2501,14 +2247,11 @@
         function filterCategory(cat, btn) {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             if(btn) btn.classList.add('active');
-
             let cards = document.querySelectorAll('#productsGrid .card');
             cards.forEach(card => {
                 if (cat === 'all' || card.getAttribute('data-category') === cat) {
                     card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                } else { card.style.display = 'none'; }
             });
         }
 
