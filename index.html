@@ -172,30 +172,11 @@
         .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #3b82f6; }
         .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
 
-        .section-header-box {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 18px auto 6px;
-            padding: 0 15px;
-            width: 100%;
-        }
-        .section-title-text { 
-            font-size: 1.05rem; 
-            color: #0f172a; 
-            font-weight: 900; 
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .section-title-text i { color: #2563eb; }
-
         .grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
             gap: 10px; 
-            padding: 5px 12px 15px; 
+            padding: 15px 12px; 
             max-width: 1200px; 
             margin: 0 auto; 
             width: 100%; 
@@ -565,10 +546,7 @@
         <div class="categories-grid" id="categoriesBar"></div>
     </div>
 
-    <!-- قسم العرض العشوائي المدمج للإعلانات -->
-    <div class="section-header-box">
-        <div class="section-title-text"><i class="fa-solid fa-shuffle"></i> جميع الإعلانات والخدمات (منوع)</div>
-    </div>
+    <!-- شبكة عرض الإعلانات والخدمات بشكل عشوائي ومنوع تلقائياً -->
     <div class="grid" id="mainMixedGrid"></div>
 
     <div id="customToast" class="custom-toast">رسالة تنبيه</div>
@@ -1709,7 +1687,6 @@
             });
         }
 
-        // دالة خلط عشوائية (Fisher-Yates Shuffle) لتوزيع الإعلانات والخدمات بشكل منوع
         function shuffleArray(array) {
             let arr = [...array];
             for (let i = arr.length - 1; i > 0; i--) {
@@ -1725,7 +1702,6 @@
                 renderMixedProducts(filterList, wishlist); 
             } else { 
                 getProducts(products => {
-                    // خلط المنتجات والإعلانات عشوائياً عند جلبها لتظهر منوعة ومخلوطة
                     let mixedProducts = shuffleArray(products);
                     renderMixedProducts(mixedProducts, wishlist);
                 });
