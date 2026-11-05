@@ -132,7 +132,7 @@
         .categories-title { font-size: 0.95rem; color: #0f172a; margin-bottom: 8px; font-weight: 900; }
         .categories-grid { 
             display: flex; 
-            gap: 8px; 
+            gap: 10px; 
             overflow-x: auto; 
             padding-bottom: 6px; 
             white-space: nowrap; 
@@ -143,7 +143,30 @@
         .categories-grid::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
         .categories-grid::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-        .category-btn { background-color: #ffffff; color: #1e293b; border: 1px solid #94a3b8; padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; cursor: pointer; transition: 0.2s; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); min-width: max-content; }
+        .category-btn { 
+            background-color: #ffffff; 
+            color: #1e293b; 
+            border: 1px solid #94a3b8; 
+            padding: 6px 14px; 
+            border-radius: 25px; 
+            font-weight: 800; 
+            font-size: 0.8rem; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            flex-shrink: 0; 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03); 
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-width: max-content; 
+        }
+        .category-btn img {
+            width: 24px;
+            height: 24px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 1px solid #cbd5e1;
+        }
         .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #3b82f6; }
         .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
 
@@ -180,7 +203,6 @@
         .wishlist-btn:hover { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
         .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
 
-        /* تعديل حاوية الصور لضمان ظهور الصورة كاملة بدون قص */
         .card-img-container, .details-img-container {
             width: 100%;
             background-color: #12121a; 
@@ -205,7 +227,7 @@
         .card-img-container img, .details-img-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* يضمن ظهور الصورة كاملة 100% دون قص أي جزء منها */
+            object-fit: contain;
         }
         
         .quick-add-btn {
@@ -806,17 +828,21 @@
             </div>
 
             <div id="tab-products" class="admin-tab-content">
-                <h4 class="admin-sec-title">📁 إدارة الأقسام (إضافة / تعديل / حذف)</h4>
+                <h4 class="admin-sec-title">📁 إدارة الأقسام (مع إمكانية إضافة صورة القسم اختياريًا)</h4>
                 <form id="addCategoryForm">
                     <div class="form-group">
                         <label id="catFormLabel">اسم القسم الجديد:</label>
                         <input type="text" id="catName" required placeholder="مثال: قسم صيانة البلايستيشن">
                     </div>
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-camera"></i> صورة القسم (اختياري - تظهر بجوار الاسم):</label>
+                        <input type="file" id="catImageFile" accept="image/*" style="font-size:0.85rem;">
+                    </div>
                     <button type="submit" id="catSubmitBtn" class="admin-btn">إضافة القسم للمتجر</button>
                 </form>
                 <div>
                     <label style="color:#0f172a; font-size:0.85rem; font-weight:900; display:block; margin-bottom:4px;">الأقسام الحالية:</label>
-                    <div id="adminCatsList" style="max-height: 100px; overflow-y: auto;"></div>
+                    <div id="adminCatsList" style="max-height: 120px; overflow-y: auto;"></div>
                 </div>
 
                 <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة للأرباح</h4>
@@ -1725,7 +1751,10 @@
                     cats.forEach(c => {
                         const btn = document.createElement('button');
                         btn.className = 'category-btn';
-                        btn.innerText = c.name;
+                        
+                        let imgTag = c.image ? `<img src="${c.image}" alt="">` : '';
+                        btn.innerHTML = `${imgTag}<span>${c.name}</span>`;
+                        
                         btn.onclick = function() { filterCategory(c.id, btn); };
                         container.appendChild(btn);
                     });
@@ -2293,10 +2322,11 @@
 
                 if (cats && Array.isArray(cats)) {
                     cats.forEach(c => {
+                        let imgThumb = c.image ? `<img src="${c.image}" style="width:28px; height:28px; object-fit:cover; border-radius:50%; vertical-align:middle; margin-left:4px;">` : '';
                         const row = document.createElement('div');
                         row.className = 'item-row';
                         row.innerHTML = `
-                            <span style="font-size: 0.85rem; color:#0f172a; font-weight:900;">${c.name}</span>
+                            <span style="font-size: 0.85rem; color:#0f172a; font-weight:900; display:flex; align-items:center;">${imgThumb} ${c.name}</span>
                             <div>
                                 <button class="edit-btn" onclick="startEditCategory('${c.id}', '${c.name}')">تعديل</button>
                                 <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
@@ -2367,25 +2397,54 @@
             catForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const nameInput = document.getElementById('catName').value;
-                getCategories(cats => {
-                    let currentCats = Array.isArray(cats) ? cats : [];
-                    
-                    if (editingCategoryId) {
-                        let catObj = currentCats.find(c => c.id === editingCategoryId);
-                        if (catObj) catObj.name = nameInput;
-                        editingCategoryId = null;
-                        document.getElementById('catFormLabel').innerText = "اسم القسم الجديد:";
-                        document.getElementById('catSubmitBtn').innerText = "إضافة القسم للمتجر";
-                        document.getElementById('catSubmitBtn').style.backgroundColor = "";
-                        showToast('تم تعديل القسم بنجاح ✔️');
-                    } else {
-                        currentCats.push({ id: 'cat-' + Date.now(), name: nameInput });
-                        showToast('تمت إضافة القسم السحابي بنجاح ✔️');
-                    }
+                const fileInput = document.getElementById('catImageFile');
 
-                    saveCategoriesToCloud(currentCats);
-                    this.reset();
-                });
+                let processCatSave = (imgBase64) => {
+                    getCategories(cats => {
+                        let currentCats = Array.isArray(cats) ? cats : [];
+                        
+                        if (editingCategoryId) {
+                            let catObj = currentCats.find(c => c.id === editingCategoryId);
+                            if (catObj) {
+                                catObj.name = nameInput;
+                                if(imgBase64) catObj.image = imgBase64;
+                            }
+                            editingCategoryId = null;
+                            document.getElementById('catFormLabel').innerText = "اسم القسم الجديد:";
+                            document.getElementById('catSubmitBtn').innerText = "إضافة القسم للمتجر";
+                            document.getElementById('catSubmitBtn').style.backgroundColor = "";
+                            showToast('تم تعديل القسم بنجاح ✔️');
+                        } else {
+                            currentCats.push({ 
+                                id: 'cat-' + Date.now(), 
+                                name: nameInput,
+                                image: imgBase64 || ''
+                            });
+                            showToast('تمت إضافة القسم مع الصورة بنجاح ✔️');
+                        }
+
+                        saveCategoriesToCloud(currentCats);
+                        this.reset();
+                    }.bind(this));
+                };
+
+                if (fileInput && fileInput.files && fileInput.files[0]) {
+                    let reader = new FileReader();
+                    reader.onload = function(e) {
+                        processCatSave(e.target.result);
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    getCategories(cats => {
+                        let currentCats = Array.isArray(cats) ? cats : [];
+                        let existingImg = '';
+                        if (editingCategoryId) {
+                            let oldCat = currentCats.find(c => c.id === editingCategoryId);
+                            if(oldCat) existingImg = oldCat.image || '';
+                        }
+                        processCatSave(existingImg);
+                    });
+                }
             });
         }
 
