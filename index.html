@@ -216,13 +216,8 @@
             border: 1px solid #e2e8f0;
         }
 
-        .card-img-container {
-            height: 160px;
-        }
-
-        .details-img-container {
-            max-height: 350px;
-        }
+        .card-img-container { height: 160px; }
+        .details-img-container { max-height: 350px; }
 
         .card-img-container img, .details-img-container img {
             width: 100%;
@@ -249,11 +244,7 @@
             transition: 0.2s;
             z-index: 3;
         }
-        .quick-add-btn:hover {
-            background: #2563eb;
-            color: #ffffff;
-            border-color: #2563eb;
-        }
+        .quick-add-btn:hover { background: #2563eb; color: #ffffff; border-color: #2563eb; }
 
         .card h3 { color: #0f172a; font-size: 0.85rem; cursor: pointer; font-weight: 800; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; min-height: 2.1rem; }
         .card h3:hover { color: #2563eb; }
@@ -371,24 +362,15 @@
             flex: 1;
             text-align: center;
         }
-        .admin-tab-btn:hover {
-            background: #94a3b8;
-            color: #ffffff;
-        }
+        .admin-tab-btn:hover { background: #94a3b8; color: #ffffff; }
         .admin-tab-btn.active {
             background: #1e3a8a;
             color: #ffffff;
             box-shadow: 0 2px 6px rgba(30, 58, 138, 0.3);
         }
 
-        .admin-tab-content {
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .admin-tab-content.active {
-            display: flex;
-        }
+        .admin-tab-content { display: none; flex-direction: column; gap: 12px; }
+        .admin-tab-content.active { display: flex; }
 
         .admin-sec-title { color: #1e3a8a; font-size: 1rem; border-bottom: 2px dashed #94a3b8; padding-bottom: 5px; margin-top: 6px; font-weight: 900; display: flex; justify-content: space-between; align-items: center; }
         
@@ -537,7 +519,7 @@
                 <button onclick="closeAddReviewModal()" class="close-cart">&times;</button>
             </h3>
             <div>
-                <label style="font-size:0.85rem; font-weight:900; color:#0f172a;">اسمك أو اسم مستخدم (عربي أو إنجليزي):</label>
+                <label style="font-size:0.85rem; font-weight:900; color:#0f172a;">اسمك أو اسم مستخدم:</label>
                 <input type="text" id="revName" placeholder="مثال: محمد / Rayyan">
             </div>
             <div style="background:#f8fafc; padding:8px 10px; border-radius:6px; border:1px solid #cbd5e1; display:flex; align-items:center; justify-content:space-between;">
@@ -573,7 +555,7 @@
     <div id="adminApprovedModal" class="admin-reviews-modal">
         <div class="admin-reviews-box">
             <div class="admin-header">
-                <h3><i class="fa-solid fa-star" style="color: #006400;"></i> إدارة التقييمات المنشورة (للحذف)</h3>
+                <h3><i class="fa-solid fa-star" style="color: #006400;"></i> إدارة التقييمات المنشورة</h3>
                 <button onclick="closeAdminApprovedModal()" class="close-cart">&times;</button>
             </div>
             <div id="adminApprovedReviewsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto;">
@@ -654,7 +636,7 @@
             </div>
 
             <div id="locationFieldBlock">
-                <label><i class="fa-solid fa-location-dot"></i> الموقع (العنوان الشارع والحي):</label>
+                <label><i class="fa-solid fa-location-dot"></i> الموقع (الشارع والحي):</label>
                 <div style="display: flex; gap: 6px; margin-bottom: 4px;">
                     <input type="text" id="custLocation" placeholder="اضغط زر تحديد الموقع تلقائياً أو اكتبه" readonly style="background: #f8fafc; font-size: 0.82rem;">
                     <button type="button" onclick="getDeviceLocation()" style="background: #2563eb; color: white; border: none; padding: 6px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 900; cursor: pointer; white-space: nowrap;"><i class="fa-solid fa-location-crosshairs"></i> حدد موقعي</button>
@@ -738,7 +720,7 @@
             </div>
             
             <div id="tab-reports" class="admin-tab-content active">
-                <h4 class="admin-sec-title">📈 التقارير المالية والأرباح (اليوم / الشهر / السنة)</h4>
+                <h4 class="admin-sec-title">📈 التقارير المالية والأرباح</h4>
                 <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #cbd5e1; display:flex; flex-direction:column; gap:8px;">
                     <div style="display:flex; gap:6px; align-items:center;">
                         <select id="reportFilterType" onchange="updateFinancialReport()" style="padding:7px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; flex:1;">
@@ -793,7 +775,7 @@
                     </div>
 
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-top:6px;">
-                        <button type="button" onclick="markOrderAsSold()" class="admin-btn" style="background:#2563eb; font-size:0.82rem; padding:9px;">✅ تم البيع (تسجيل المبيعات)</button>
+                        <button type="button" onclick="markOrderAsSold()" class="admin-btn" style="background:#2563eb; font-size:0.82rem; padding:9px;">✅ تم البيع</button>
                         <button type="button" onclick="deleteActiveOrder()" class="del-btn" style="font-size:0.82rem; padding:9px;">حذف نهائي ❌</button>
                     </div>
                 </div>
@@ -808,7 +790,7 @@
                     </div>
                 </div>
 
-                <h4 class="admin-sec-title">⏳ قسم "تأجيل البيع" (تحديد تاريخ)</h4>
+                <h4 class="admin-sec-title">⏳ قسم "تأجيل البيع"</h4>
                 <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
                     <label style="color:#0f172a; font-size:0.85rem; display:block; margin-bottom:4px; font-weight:900;">اختر الطلب للتأجيل:</label>
                     <select id="delayedOrderSelect" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; margin-bottom:6px;" onchange="onDelayedOrderSelected()"></select>
@@ -828,7 +810,7 @@
             </div>
 
             <div id="tab-products" class="admin-tab-content">
-                <h4 class="admin-sec-title">📁 إدارة الأقسام (مع إمكانية إضافة صورة القسم اختياريًا)</h4>
+                <h4 class="admin-sec-title">📁 إدارة الأقسام (مع الصور الاختيارية)</h4>
                 <form id="addCategoryForm">
                     <div class="form-group">
                         <label id="catFormLabel">اسم القسم الجديد:</label>
@@ -845,7 +827,7 @@
                     <div id="adminCatsList" style="max-height: 120px; overflow-y: auto;"></div>
                 </div>
 
-                <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة للأرباح</h4>
+                <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة</h4>
                 <form id="addProductForm">
                     <div class="form-group">
                         <label>عنوان المنتج / الخدمة:</label>
@@ -1277,7 +1259,7 @@
             }
 
             db.ref('orders/' + orderKey + '/status').set('sold').then(() => {
-                showToast('تم نقل الطلب إلى قسم (تم البيع) وتسجيل المبيعات في الأرباح ✔️');
+                showToast('تم نقل الطلب إلى قسم (تم البيع) وتسجيل الأرباح ✔️');
                 loadAdminAllOrders();
                 updateFinancialReport();
             });
@@ -1337,20 +1319,9 @@
             });
         }
 
-        function deleteActiveOrder() {
-            let select = document.getElementById('adminOrderSelect');
-            deleteOrderGeneric(select);
-        }
-
-        function deleteSoldOrder() {
-            let select = document.getElementById('soldOrderSelect');
-            deleteOrderGeneric(select);
-        }
-
-        function deleteDelayedOrder() {
-            let select = document.getElementById('delayedOrderSelect');
-            deleteOrderGeneric(select);
-        }
+        function deleteActiveOrder() { deleteOrderGeneric(document.getElementById('adminOrderSelect')); }
+        function deleteSoldOrder() { deleteOrderGeneric(document.getElementById('soldOrderSelect')); }
+        function deleteDelayedOrder() { deleteOrderGeneric(document.getElementById('delayedOrderSelect')); }
 
         function deleteOrderGeneric(selectElem) {
             if(!selectElem || !db) return;
@@ -1376,9 +1347,7 @@
             db.ref('approvedReviews').once('value', snapshot => {
                 let reviews = snapshot.val() ? Object.values(snapshot.val()) : [];
                 let countElem = document.getElementById('rating-count');
-                if (countElem) {
-                    countElem.innerText = reviews.length;
-                }
+                if (countElem) countElem.innerText = reviews.length;
             });
         }
         updateRatingCountUI();
@@ -1446,10 +1415,7 @@
                     div.className = 'review-item';
                     
                     let timeAgoText = getTimeAgo(rev.createdAt);
-                    let imgHtml = '';
-                    if (rev.image) {
-                        imgHtml = `<img src="${rev.image}" class="review-img-thumb" onclick="openDetailsModal({title:'صورة تقييم العميل: ' + '${rev.name}', images:['${rev.image}'], desc:'${rev.comment}'})" alt="صورة التقييم">`;
-                    }
+                    let imgHtml = rev.image ? `<img src="${rev.image}" class="review-img-thumb" onclick='openDetailsModal({title:"صورة تقييم: " + "${rev.name}", images:["${rev.image}"], desc:"${rev.comment}"})' alt="صورة التقييم">` : '';
 
                     div.innerHTML = `
                         <div class="review-top-row">
@@ -1491,7 +1457,7 @@
                     let nameExists = allReviews.some(r => r.name.trim().toLowerCase() === name.toLowerCase());
 
                     if (nameExists) {
-                        showToast('⚠️ الاسم مستخدم مسبقاً، يرجى إضافة اسم آخر او اسم مستخدم');
+                        showToast('⚠️ الاسم مستخدم مسبقاً، يرجى إضافة اسم آخر');
                         return;
                     }
 
@@ -1519,9 +1485,7 @@
 
                     if (fileInput && fileInput.files && fileInput.files[0]) {
                         let reader = new FileReader();
-                        reader.onload = function(e) {
-                            processReviewWithImage(e.target.result);
-                        };
+                        reader.onload = function(e) { processReviewWithImage(e.target.result); };
                         reader.readAsDataURL(fileInput.files[0]);
                     } else {
                         processReviewWithImage('');
@@ -1532,19 +1496,14 @@
 
         function renderAdminPendingReviews() {
             const list = document.getElementById('adminPendingReviewsList');
-            if(!list) return;
-
-            if(!db) {
-                list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.88rem; text-align:center;">لا يوجد اتصال بقاعدة البيانات.</p>';
-                return;
-            }
+            if(!list || !db) return;
 
             db.ref('pendingReviews').once('value', snapshot => {
                 let data = snapshot.val();
                 list.innerHTML = '';
                 
                 if (!data) {
-                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات معلقة بانتظار الموافقة.</p>';
+                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات معلقة.</p>';
                     return;
                 }
 
@@ -1600,16 +1559,14 @@
 
         function renderAdminApprovedReviews() {
             const list = document.getElementById('adminApprovedReviewsList');
-            if(!list) return;
-
-            if(!db) return;
+            if(!list || !db) return;
 
             db.ref('approvedReviews').once('value', snapshot => {
                 let data = snapshot.val();
                 list.innerHTML = '';
 
                 if (!data) {
-                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات منشورة حالياً.</p>';
+                    list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات منشورة.</p>';
                     return;
                 }
 
@@ -1626,7 +1583,7 @@
                         <p style="font-size:0.9rem; color:#0f172a; font-weight:800; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
                         ${imgHtml}
                         <div style="display:flex; justify-content:flex-end; margin-top:4px;">
-                            <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف التقييم نهائياً ❌</button>
+                            <button class="del-btn" onclick="deleteApprovedReview('${key}')">حذف نهائياً ❌</button>
                         </div>
                     `;
                     list.appendChild(div);
@@ -1637,7 +1594,7 @@
         function deleteApprovedReview(key) {
             if(!db) return;
             db.ref('approvedReviews/' + key).remove().then(() => {
-                showToast('تم حذف التقييم المنشور بنجاح 🗑️');
+                showToast('تم حذف التقييم بنجاح 🗑️');
                 renderAdminApprovedReviews();
                 updateRatingCountUI();
                 updateApprovedBadgeCount();
@@ -1728,7 +1685,7 @@
         }
 
         function toggleWishlist(product, event) {
-            event.stopPropagation();
+            if(event) event.stopPropagation();
             let wishlist = getWishlist();
             let index = wishlist.findIndex(item => item.id === product.id);
             if (index > -1) {
@@ -1745,7 +1702,7 @@
             getCategories(cats => {
                 const container = document.getElementById('categoriesBar');
                 if(!container) return;
-                container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)" id="cat-all">الكل</button>';
+                container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)">الكل</button>';
 
                 if (cats && Array.isArray(cats)) {
                     cats.forEach(c => {
@@ -1779,7 +1736,7 @@
             grid.innerHTML = '';
 
             if (!products || products.length === 0) {
-                grid.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; grid-column: 1/-1;">لا توجد منتجات مطابقة أو معروضة حالياً.</p>';
+                grid.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; grid-column: 1/-1;">لا توجد منتجات أو خدمات مطابقة حالياً.</p>';
                 return;
             }
 
@@ -1828,18 +1785,25 @@
                 }
 
                 card.innerHTML = `
-                    <div class="wishlist-btn ${isLiked ? 'active' : ''}" onclick='toggleWishlist(${JSON.stringify(p)}, event)'>${isLiked ? '<i class="fa-solid fa-heart"></i>' : '<i class="fa-regular fa-heart"></i>'}</div>
-                    <div class="card-img-container" onclick='openDetailsModal(${JSON.stringify(p)})'>
+                    <div class="wishlist-btn ${isLiked ? 'active' : ''}"></div>
+                    <div class="card-img-container">
                         ${imgTag}
-                        <button class="quick-add-btn" onclick='addToCart(${JSON.stringify(p)}); event.stopPropagation();' title="أضف للسلة"><i class="fa-solid fa-plus"></i></button>
+                        <button class="quick-add-btn" title="أضف للسلة"><i class="fa-solid fa-plus"></i></button>
                     </div>
-                    <span class="badge">${p.badge}</span>
-                    <h3 onclick='openDetailsModal(${JSON.stringify(p)})'>${p.title}</h3>
+                    <span class="badge">${p.badge || 'إكسبرس'}</span>
+                    <h3>${p.title}</h3>
                     ${priceSectionHTML}
                     <div class="card-rating">
                         <span class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                     </div>
                 `;
+
+                // ربط الأحداث بأمان تام لتفادي أي خطأ
+                card.querySelector('.wishlist-btn').onclick = (e) => toggleWishlist(p, e);
+                card.querySelector('.card-img-container').onclick = () => openDetailsModal(p);
+                card.querySelector('.quick-add-btn').onclick = (e) => { e.stopPropagation(); addToCart(p); };
+                card.querySelector('h3').onclick = () => openDetailsModal(p);
+
                 grid.appendChild(card);
             });
         }
@@ -1923,11 +1887,13 @@
                 div.className = 'cart-item-card';
                 div.innerHTML = `
                     <div class="cart-item-info">
-                        <h4 style="cursor:pointer; color:#2563eb;" onclick='openDetailsModal(${JSON.stringify(item)})'>${item.title} <i class="fa-solid fa-magnifying-glass"></i></h4>
+                        <h4 style="cursor:pointer; color:#2563eb;">${item.title} <i class="fa-solid fa-magnifying-glass"></i></h4>
                         <p>${item.price} ر.س</p>
                     </div>
-                    <button class="del-cart-item" onclick="removeFromCart(${index})">حذف</button>
+                    <button class="del-cart-item">حذف</button>
                 `;
+                div.querySelector('h4').onclick = () => openDetailsModal(item);
+                div.querySelector('.del-cart-item').onclick = () => removeFromCart(index);
                 list.appendChild(div);
             });
         }
@@ -1943,9 +1909,7 @@
 
             let selectedVal = shippingSelect.value;
             if (selectedVal === 'تنفيذ الخدمة عن بُعد') {
-                payMethodSelect.innerHTML = `
-                    <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
-                `;
+                payMethodSelect.innerHTML = `<option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>`;
             } else if (selectedVal === 'إحضار الجهاز') {
                 payMethodSelect.innerHTML = `
                     <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
@@ -1981,7 +1945,7 @@
                 `;
                 payMethodSelect.innerHTML = `
                     <option value="دفع إلكترونياً (تحويل بنكي / مدى)">دفع إلكترونياً (تحويل بنكي / مدى)</option>
-                    <option value="الدفع عند الاستلام (شحن قيمة الشحن مقدماً)">الدفع عند الاستلام (شحن قيمة الشحن مقدماً)</option>
+                    <option value="الدفع عند الاستلام">الدفع عند الاستلام</option>
                     <option value="نقدي (كاش)">نقدي (كاش)</option>
                 `;
             } else {
@@ -2058,16 +2022,11 @@
 
             cart.forEach(item => {
                 let productLink = `${baseUrl}?product_id=${item.id}`;
-                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n🔗 رابط الخدمة/المنتج: ${productLink}\n\n`;
+                cartTextDetails += `▪️ ${item.title} — *(${item.price} ر.س)*\n🔗 الرابط: ${productLink}\n\n`;
             });
 
-            let clientDetailsMsg = hasPhysicalItem 
-                ? `👤 *اسم العميل:* ${name}\n📱 *رقم الجوال:* ${phone}\n📍 *الموقع (الشارع والحي):* ${fullAddress}\n` 
-                : ``;
-
-            let executionLine = hasPhysicalItem 
-                ? `🚚 *طريقة التوصيل:* ${shippingText}` 
-                : `🛠️ *طريقة تنفيذ الخدمة:* ${shippingText}`;
+            let clientDetailsMsg = hasPhysicalItem ? `👤 *اسم العميل:* ${name}\n📱 *رقم الجوال:* ${phone}\n📍 *الموقع:* ${fullAddress}\n` : ``;
+            let executionLine = hasPhysicalItem ? `🚚 *طريقة التوصيل:* ${shippingText}` : `🛠️ *طريقة التنفيذ:* ${shippingText}`;
 
             let fullMsg = encodeURIComponent(
                 `📌 *بيانات الطلب:*\n` +
@@ -2098,9 +2057,7 @@
                 getProducts(products => {
                     if (products && Array.isArray(products)) {
                         let targetProduct = products.find(p => p.id == productId);
-                        if (targetProduct) {
-                            openDetailsModal(targetProduct);
-                        }
+                        if (targetProduct) openDetailsModal(targetProduct);
                     }
                 });
             } else if (orderId && db) {
@@ -2122,7 +2079,6 @@
 
         function openInvoiceModal(order) {
             document.getElementById('invOrderId').innerText = order.orderId;
-            
             let nameRow = document.getElementById('invCustNameRow');
             if (order.name && order.name.includes('غير مطلوب')) {
                 if(nameRow) nameRow.style.display = 'none';
@@ -2147,11 +2103,7 @@
                 document.getElementById('invCustCity').innerText = order.city;
             }
             
-            let shippingElem = document.getElementById('invShipping');
-            if (shippingElem) {
-                shippingElem.innerText = order.shipping || 'خدمة صيانة';
-            }
-
+            document.getElementById('invShipping').innerText = order.shipping || 'خدمة صيانة';
             document.getElementById('invPayMethod').innerText = order.payMethod;
 
             let list = document.getElementById('invProductsList');
@@ -2177,18 +2129,13 @@
                 if(shippingFeeRow) shippingFeeRow.style.display = 'none';
             }
 
-            let finalGrandTotal = productsTotal + shippingFee;
-            document.getElementById('invTotalPrice').innerText = finalGrandTotal;
+            document.getElementById('invTotalPrice').innerText = productsTotal + shippingFee;
             document.getElementById('invoiceModal').style.display = 'flex';
         }
 
-        function closeInvoiceModal() {
-            document.getElementById('invoiceModal').style.display = 'none';
-        }
-
+        function closeInvoiceModal() { document.getElementById('invoiceModal').style.display = 'none'; }
         function copyIban() {
-            let iban = document.getElementById('ibanText').innerText;
-            navigator.clipboard.writeText(iban).then(() => {
+            navigator.clipboard.writeText(document.getElementById('ibanText').innerText).then(() => {
                 showToast('تم نسخ رقم الآيبان بنجاح 📋');
             });
         }
@@ -2223,10 +2170,12 @@
                         <p>${item.price} ر.س</p>
                     </div>
                     <div style="display:flex; gap:4px;">
-                        <button class="add-to-cart-btn" style="padding:4px 8px; font-size:0.75rem; font-weight:900;" onclick='addToCart(${JSON.stringify(item)}); toggleWishlistModal();'>أضف للسلة</button>
-                        <button class="del-wishlist-item" onclick="removeWishlistIndex(${index})">حذف</button>
+                        <button class="add-to-cart-btn" style="padding:4px 8px; font-size:0.75rem; font-weight:900;">أضف للسلة</button>
+                        <button class="del-wishlist-item">حذف</button>
                     </div>
                 `;
+                div.querySelector('.add-to-cart-btn').onclick = () => { addToCart(item); toggleWishlistModal(); };
+                div.querySelector('.del-wishlist-item').onclick = () => removeWishlistIndex(index);
                 list.appendChild(div);
             });
         }
@@ -2239,9 +2188,9 @@
 
         function openDetailsModal(p) {
             document.getElementById('detTitle').innerText = p.title;
-            document.getElementById('detBadge').innerText = p.badge;
+            document.getElementById('detBadge').innerText = p.badge || 'إكسبرس';
             document.getElementById('detPrice').innerText = p.price || '0';
-            document.getElementById('detDesc').innerText = p.desc;
+            document.getElementById('detDesc').innerText = p.desc || '';
             
             let oldPriceRow = document.getElementById('detOldPriceRow');
             let oldPriceVal = document.getElementById('detOldPrice');
@@ -2275,7 +2224,7 @@
                         document.querySelectorAll('.thumbnails img').forEach(t => t.classList.remove('active'));
                         thumb.className = 'active';
                     };
-                    if(thumbs) thumbs.appendChild(thumb);
+                    thumbs.appendChild(thumb);
                 });
             } else if(mainImg) {
                 mainImg.src = '';
@@ -2293,10 +2242,7 @@
             if(modal) modal.style.display = 'flex';
         }
 
-        function closeDetailsModal() {
-            let modal = document.getElementById('detailsModal');
-            if(modal) modal.style.display = 'none';
-        }
+        function closeDetailsModal() { document.getElementById('detailsModal').style.display = 'none'; }
 
         function updateCategorySelectOptions() {
             getCategories(cats => {
@@ -2328,10 +2274,12 @@
                         row.innerHTML = `
                             <span style="font-size: 0.85rem; color:#0f172a; font-weight:900; display:flex; align-items:center;">${imgThumb} ${c.name}</span>
                             <div>
-                                <button class="edit-btn" onclick="startEditCategory('${c.id}', '${c.name}')">تعديل</button>
-                                <button class="del-btn" onclick="deleteCategory('${c.id}')">حذف</button>
+                                <button class="edit-btn">تعديل</button>
+                                <button class="del-btn">حذف</button>
                             </div>
                         `;
+                        row.querySelector('.edit-btn').onclick = () => startEditCategory(c.id, c.name);
+                        row.querySelector('.del-btn').onclick = () => deleteCategory(c.id);
                         list.appendChild(row);
                     });
                 }
@@ -2361,10 +2309,12 @@
                         row.innerHTML = `
                             <span style="font-size: 0.85rem; color:#0f172a; font-weight:900;">${p.title} <small style="color:#2563eb; font-weight:900;">(الكمية: ${stockVal})</small></span>
                             <div>
-                                <button class="edit-btn" onclick='startEditProduct(${JSON.stringify(p)})'>تعديل</button>
-                                <button class="del-btn" onclick="deleteProduct(${p.id})">حذف</button>
+                                <button class="edit-btn">تعديل</button>
+                                <button class="del-btn">حذف</button>
                             </div>
                         `;
+                        row.querySelector('.edit-btn').onclick = () => startEditProduct(p);
+                        row.querySelector('.del-btn').onclick = () => deleteProduct(p.id);
                         list.appendChild(row);
                     });
                 }
@@ -2425,14 +2375,12 @@
 
                         saveCategoriesToCloud(currentCats);
                         this.reset();
-                    }.bind(this));
+                    });
                 };
 
                 if (fileInput && fileInput.files && fileInput.files[0]) {
                     let reader = new FileReader();
-                    reader.onload = function(e) {
-                        processCatSave(e.target.result);
-                    };
+                    reader.onload = function(e) { processCatSave(e.target.result); };
                     reader.readAsDataURL(fileInput.files[0]);
                 } else {
                     getCategories(cats => {
@@ -2473,9 +2421,7 @@
                         reader.onload = function(event) {
                             imagesArray.push(event.target.result);
                             processed++;
-                            if (processed === files.length) {
-                                saveProductData(imagesArray);
-                            }
+                            if (processed === files.length) { saveProductData(imagesArray); }
                         };
                         reader.readAsDataURL(files[i]);
                     }
@@ -2572,46 +2518,28 @@
                 currentLang = 'en';
                 document.documentElement.lang = 'en';
                 document.documentElement.dir = 'ltr';
-                let btn = document.getElementById('langBtn');
-                if(btn) btn.innerHTML = '<i class="fa-solid fa-globe"></i> عربي';
-                let title = document.getElementById('txt-logo-title');
-                if(title) title.innerText = 'Hardware Maintenance Specialists';
-                let sub = document.getElementById('txt-logo-sub');
-                if(sub) sub.innerText = 'Hardware Repair • Digital & Gov Services';
-                let htitle = document.getElementById('txt-hero-title');
-                if(htitle) htitle.innerText = 'Hardware Maintenance Specialists';
-                let hdesc = document.getElementById('txt-hero-desc');
-                if(hdesc) hdesc.innerText = 'Buy parts & accessories, remote PC repair, and fast government digital solutions.';
-                let ctitle = document.getElementById('txt-cat-title');
-                if(ctitle) ctitle.innerText = 'Categories:';
-                let ptitle = document.getElementById('txt-products-title');
-                if(ptitle) ptitle.innerText = 'Featured Products & Services';
-                let contact = document.getElementById('contactBtn');
-                if(contact) contact.innerHTML = '<i class="fa-brands fa-whatsapp" style="margin-left: 4px; font-size: 0.9rem;"></i> واتساب';
-                let search = document.getElementById('searchInput');
-                if(search) search.placeholder = 'What are you looking for?';
+                document.getElementById('langBtn').innerHTML = '<i class="fa-solid fa-globe"></i> عربي';
+                document.getElementById('txt-logo-title').innerText = 'Hardware Maintenance Specialists';
+                document.getElementById('txt-logo-sub').innerText = 'Hardware Repair • Digital & Gov Services';
+                document.getElementById('txt-hero-title').innerText = 'Hardware Maintenance Specialists';
+                document.getElementById('txt-hero-desc').innerText = 'Buy parts & accessories, remote PC repair, and fast government digital solutions.';
+                document.getElementById('txt-cat-title').innerText = 'Categories:';
+                document.getElementById('txt-products-title').innerText = 'Featured Products & Services';
+                document.getElementById('contactBtn').innerHTML = '<i class="fa-brands fa-whatsapp" style="margin-left: 4px; font-size: 0.9rem;"></i> واتساب';
+                document.getElementById('searchInput').placeholder = 'What are you looking for?';
             } else {
                 currentLang = 'ar';
                 document.documentElement.lang = 'ar';
                 document.documentElement.dir = 'rtl';
-                let btn = document.getElementById('langBtn');
-                if(btn) btn.innerHTML = '<i class="fa-solid fa-globe"></i> EN';
-                let title = document.getElementById('txt-logo-title');
-                if(title) title.innerText = 'المتخصصون في صيانة الأجهزة';
-                let sub = document.getElementById('txt-logo-sub');
-                if(sub) sub.innerText = 'صيانة أجهزة • خدمات رقمية وحكومية';
-                let htitle = document.getElementById('txt-hero-title');
-                if(htitle) htitle.innerText = 'المتخصصون في صيانة الأجهزة';
-                let hdesc = document.getElementById('txt-hero-desc');
-                if(hdesc) hdesc.innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
-                let ctitle = document.getElementById('txt-cat-title');
-                if(ctitle) ctitle.innerText = 'الأقسام:';
-                let ptitle = document.getElementById('txt-products-title');
-                if(ptitle) ptitle.innerText = 'المنتجات والخدمات المعروضة';
-                let contact = document.getElementById('contactBtn');
-                if(contact) contact.innerHTML = '<i class="fa-brands fa-whatsapp" style="margin-left: 4px; font-size: 0.9rem;"></i> للتواصل واتساب';
-                let search = document.getElementById('searchInput');
-                if(search) search.placeholder = 'ما الذي تبحث عنه؟';
+                document.getElementById('langBtn').innerHTML = '<i class="fa-solid fa-globe"></i> EN';
+                document.getElementById('txt-logo-title').innerText = 'المتخصصون في صيانة الأجهزة';
+                document.getElementById('txt-logo-sub').innerText = 'صيانة أجهزة • خدمات رقمية وحكومية';
+                document.getElementById('txt-hero-title').innerText = 'المتخصصون في صيانة الأجهزة';
+                document.getElementById('txt-hero-desc').innerText = 'عرض وشراء القطع والإكسسوارات، طلب صيانة الحواسيب والأجهزة عن بُعد، وإنجاز المعاملات والحسابات الرقمية بسرعة وأمان.';
+                document.getElementById('txt-cat-title').innerText = 'الأقسام:';
+                document.getElementById('txt-products-title').innerText = 'المنتجات والخدمات المعروضة';
+                document.getElementById('contactBtn').innerHTML = '<i class="fa-brands fa-whatsapp" style="margin-left: 4px; font-size: 0.9rem;"></i> للتواصل واتساب';
+                document.getElementById('searchInput').placeholder = 'ما الذي تبحث عنه؟';
             }
         }
 
