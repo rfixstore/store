@@ -1729,6 +1729,8 @@
                 }
 
                 let featuredSection = document.createElement('div');
+                featuredSection.className = 'category-block-sec';
+                featuredSection.setAttribute('data-sec-cat', 'featured');
                 featuredSection.innerHTML = `
                     <div class="section-header-box">
                         <div class="section-title-text"><i class="fa-solid fa-fire"></i> الأكثر طلباً والخدمات السريعة</div>
@@ -2146,7 +2148,6 @@
             document.getElementById('detPrice').innerText = p.price || '0';
             document.getElementById('detDesc').innerText = p.desc || '';
             
-            // عرض المميزات المكتوبة يدوياً في لوحة التحكم
             let featuresList = document.getElementById('detFeaturesList');
             let featuresBoxContainer = document.querySelector('.features-box');
             if (featuresList) {
