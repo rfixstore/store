@@ -147,22 +147,22 @@
             background-color: #ffffff; 
             color: #1e293b; 
             border: 1px solid #94a3b8; 
-            padding: 8px 18px; 
+            padding: 6px 14px; /* تقليل الحشو ليكون الزر أصغر وأنسب */
             border-radius: 30px; 
             font-weight: 800; 
-            font-size: 0.95rem; 
+            font-size: 0.82rem; /* تصغير حجم الخط قليلاً */
             cursor: pointer; 
             transition: 0.2s; 
             flex-shrink: 0; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
             display: inline-flex;
             align-items: center;
-            gap: 10px; 
+            gap: 8px; 
             min-width: max-content; 
         }
         .category-btn img {
-            width: 52px; /* تم تكبير الدائرة والصورة بوضوح لتجنب الشكل الصغير */
-            height: 52px; 
+            width: 65px; /* تكبير دائرة الصورة وحدها بوضوح */
+            height: 65px; 
             object-fit: cover;
             border-radius: 50%;
             border: 2px solid #3b82f6;
@@ -199,7 +199,6 @@
         }
         .card:hover { box-shadow: 0 6px 16px rgba(30, 58, 138, 0.08); transform: translateY(-2px); border-color: #94a3b8; }
         
-        /* تعديل زر المفضلة ليعرض أيقونة القلب بشكل صحيح وواضح تماماً */
         .wishlist-btn { 
             position: absolute; 
             top: 8px; 
