@@ -180,11 +180,11 @@
         .wishlist-btn:hover { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
         .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
 
-        /* تعديلات حاوية الصور المطلوبة */
+        /* حاوية الصور المحدثة لتغطية الارتفاع بالكامل بدون فراغات */
         .card-img-container, .details-img-container {
             width: 100%;
-            height: 180px; /* تثبيت ارتفاع موحد لكل كارد */
-            background-color: #12121a; /* خلفية متناسقة تملأ أي فراغ جانبي بسيط بلون موحد */
+            height: 180px; 
+            background-color: #12121a; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -195,10 +195,10 @@
             border: 1px solid #e2e8f0;
         }
 
-        .card-img-container img, .card img {
+        .card-img-container img, .details-img-container img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* يضمن ظهور الصورة كاملة دون قص أي جزء منها */
+            object-fit: cover; /* يملأ الحاوية والارتفاع الموحد بالكامل بدون أي فراغات */
         }
         
         .quick-add-btn {
@@ -1611,7 +1611,6 @@
             });
         }
 
-        // جلب الأقسام من السحابة
         function getCategories(callback) {
             if(!db) { callback({}); return; }
             db.ref('categories').once('value', (snapshot) => {
@@ -1629,7 +1628,6 @@
             });
         }
 
-        // جلب المنتجات كـ مصفوفة خالية من التكرار
         function getProducts(callback) {
             if(!db) { callback([]); return; }
             db.ref('products').once('value', (snapshot) => {
