@@ -238,7 +238,7 @@
         .wishlist-btn:hover { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
         .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
 
-        /* تعديل حاويات الصور لتكون بخلفية نظيفة وبيضاء بدون أطراف سوداء */
+        /* تعديل حاويات الصور لتظهر كاملة تماماً بدون أي قص (contain) وخلفية بيضاء */
         .card-img-container, .details-img-container {
             width: 100%;
             background-color: #ffffff; 
@@ -250,14 +250,15 @@
             cursor: pointer;
             position: relative;
             border: 1px solid #e2e8f0;
+            padding: 4px;
         }
 
         .card-img-container { height: 160px; }
-        .details-img-container { max-height: 320px; }
+        .details-img-container { max-height: 320px; min-height: 250px; }
 
         .card-img-container img, .details-img-container img {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
             background-color: #ffffff;
         }
@@ -321,7 +322,7 @@
         .review-stars { color: #006400; font-size: 0.95rem; letter-spacing: 0.5px; }
         .review-time { font-size: 0.75rem; color: #475569; font-weight: 700; }
         .review-comment { color: #1e293b; font-weight: 700; line-height: 1.4; font-size: 0.88rem; }
-        .review-img-thumb { width: 65px; height: 65px; object-fit: cover; border-radius: 6px; border: 1px solid #94a3b8; cursor: pointer; margin-top: 4px; }
+        .review-img-thumb { width: 65px; height: 65px; object-fit: contain; background: #fff; border-radius: 6px; border: 1px solid #94a3b8; cursor: pointer; margin-top: 4px; }
 
         .add-review-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2700; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .add-review-box { background: #ffffff; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
@@ -368,7 +369,7 @@
         @media(max-width: 650px) { .details-content-grid { grid-template-columns: 1fr; } }
         
         .thumbnails { display: flex; gap: 6px; margin-top: 6px; overflow-x: auto; }
-        .thumbnails img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #94a3b8; }
+        .thumbnails img { width: 45px; height: 45px; object-fit: contain; background: #fff; border-radius: 6px; cursor: pointer; border: 1px solid #94a3b8; padding: 2px; }
         .thumbnails img.active { border-color: #2563eb; border-width: 2px; }
 
         .features-box {
@@ -660,7 +661,7 @@
         </div>
     </div>
 
-    <!-- نافذة تفاصيل المنتج بتصميم نظرة عامة والمميزات المخصصة -->
+    <!-- نافذة تفاصيل المنتج -->
     <div id="detailsModal" class="details-modal">
         <div class="details-box">
             <div class="admin-header">
@@ -668,13 +669,11 @@
                 <button onclick="closeDetailsModal()" class="close-cart">&times;</button>
             </div>
 
-            <!-- تبويبات نون (نظرة عامة على المنتج / التقييم والمراجعات) -->
             <div class="product-tabs-header">
                 <button class="product-tab-btn active" onclick="switchProductTab('tabOverview', this)">نظرة عامة على المنتج</button>
                 <button class="product-tab-btn" onclick="switchProductTab('tabReviews', this)">التقييم والمراجعات</button>
             </div>
 
-            <!-- محتوى تبويب نظرة عامة -->
             <div id="tabOverview" class="product-tab-content active">
                 <div class="details-content-grid">
                     <div>
@@ -699,7 +698,6 @@
                     </div>
                 </div>
 
-                <!-- سكشن المميزات الأساسية (المكتوبة يدوياً من لوحة التحكم) -->
                 <div class="features-box">
                     <h4>المميزات الأساسية:</h4>
                     <ul id="detFeaturesList"></ul>
@@ -708,7 +706,6 @@
                 <button id="detAddToCartBtn" class="admin-btn" style="margin-top: 6px;">أضف إلى السلة <i class="fa-solid fa-cart-shopping"></i></button>
             </div>
 
-            <!-- محتوى تبويب التقييم والمراجعات -->
             <div id="tabReviews" class="product-tab-content">
                 <div style="text-align: center; padding: 20px 0;">
                     <div style="color: #ca8a04; font-size: 1.2rem; margin-bottom: 6px;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
@@ -994,7 +991,7 @@
                         <input type="text" id="pBadge" placeholder="مثال: خدمة فوريّة / إكسبرس">
                     </div>
                     <div class="form-group">
-                        <label>اختر الصور من الاستوديو (اختر كمية الصور التي تبيها):</label>
+                        <label>اختر الصور من الاستوديو (رفع صور متعددة بلا قيود):</label>
                         <input type="file" id="pImageFiles" accept="image/*" multiple style="font-size:0.85rem;">
                     </div>
                     <div class="form-group">
@@ -1535,7 +1532,7 @@
                             <span style="color:#006400; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
                         <p style="font-size:0.9rem; color:#0f172a; font-weight:800; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
-                        ${rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : ''}
+                        ${rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:4px; margin-top:4px;" alt="صورة">` : ''}
                         <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:4px;">
                             <button class="approve-btn">قبول ونشر ⭐</button>
                             <button class="del-btn">حذف ❌</button>
@@ -1592,7 +1589,7 @@
                             <span style="color:#006400; font-size:0.85rem;"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
                         </div>
                         <p style="font-size:0.9rem; color:#0f172a; font-weight:800; line-height:1.4; padding: 4px 0;">"${rev.comment}"</p>
-                        ${rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : ''}
+                        ${rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:contain; background:#fff; border-radius:4px; margin-top:4px;" alt="صورة">` : ''}
                         <div style="display:flex; justify-content:flex-end; margin-top:4px;">
                             <button class="del-btn">حذف نهائياً ❌</button>
                         </div>
@@ -2236,7 +2233,7 @@
                 list.innerHTML = '';
                 if (cats && Array.isArray(cats)) {
                     cats.forEach(c => {
-                        let imgThumb = c.image ? `<img src="${c.image}" style="width:32px; height:32px; object-fit:cover; border-radius:50%; vertical-align:middle; margin-left:6px;">` : '';
+                        let imgThumb = c.image ? `<img src="${c.image}" style="width:32px; height:32px; object-fit:contain; background:#fff; border-radius:50%; vertical-align:middle; margin-left:6px;">` : '';
                         const row = document.createElement('div');
                         row.className = 'item-row';
                         row.innerHTML = `
