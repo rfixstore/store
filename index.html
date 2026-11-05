@@ -325,11 +325,9 @@
         .add-review-box { background: #ffffff; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); direction: rtl; }
         .add-review-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 900; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
 
-        /* تعديلات تصميم نافذة تفاصيل المنتج (نظرة عامة على المنتج) */
         .details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); z-index: 2300; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
         .details-box { background: #ffffff; width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 14px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); direction: rtl; }
         
-        /* ترويسة نون (نظرة عامة على المنتج / التقييم) */
         .product-tabs-header {
             display: flex;
             gap: 15px;
@@ -371,7 +369,6 @@
         .thumbnails img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 1px solid #94a3b8; }
         .thumbnails img.active { border-color: #2563eb; border-width: 2px; }
 
-        /* سكشن المميزات الأساسية زي نون */
         .features-box {
             background: #f8fafc;
             border: 1px solid #cbd5e1;
@@ -661,7 +658,7 @@
         </div>
     </div>
 
-    <!-- نافذة تفاصيل المنتج بتصميم نظرة عامة والمميزات (مثل نون) -->
+    <!-- نافذة تفاصيل المنتج بتصميم نظرة عامة والمميزات المخصصة -->
     <div id="detailsModal" class="details-modal">
         <div class="details-box">
             <div class="admin-header">
@@ -700,14 +697,10 @@
                     </div>
                 </div>
 
-                <!-- سكشن المميزات الأساسية (دعم للنقاط) -->
+                <!-- سكشن المميزات الأساسية (المكتوبة يدوياً من لوحة التحكم) -->
                 <div class="features-box">
                     <h4>المميزات الأساسية:</h4>
-                    <ul id="detFeaturesList">
-                        <li>ضمان الجودة والاعتمادية في أسرع وقت.</li>
-                        <li>تنفيذ احترافي ودعم فني متواصل للعملاء.</li>
-                        <li>توفير أفضل الحلول والأداء العالي للأجهزة.</li>
-                    </ul>
+                    <ul id="detFeaturesList"></ul>
                 </div>
 
                 <button id="detAddToCartBtn" class="admin-btn" style="margin-top: 6px;">أضف إلى السلة <i class="fa-solid fa-cart-shopping"></i></button>
@@ -957,7 +950,7 @@
                     <div id="adminCatsList" style="max-height: 120px; overflow-y: auto;"></div>
                 </div>
 
-                <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة</h4>
+                <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة والمميزات</h4>
                 <form id="addProductForm">
                     <div class="form-group">
                         <label>عنوان المنتج / الخدمة:</label>
@@ -1003,8 +996,12 @@
                         <input type="file" id="pImageFiles" accept="image/*" multiple style="font-size:0.85rem;">
                     </div>
                     <div class="form-group">
-                        <label>الوصف والمميزات:</label>
-                        <textarea id="pDesc" rows="3" required placeholder="اكتب المواصفات هنا..."></textarea>
+                        <label>الوصف العام للمنتج:</label>
+                        <textarea id="pDesc" rows="3" required placeholder="اكتب الوصف العام هنا..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>⭐ المميزات الأساسية (اكتب كل ميزة في سطر مستقل):</label>
+                        <textarea id="pFeatures" rows="3" placeholder="مثال:&#10;دعم دقة عالية وسرعة فائقة&#10;ضمان لمدة سنة&#10;مصنوع من مواد عالية الجودة"></textarea>
                     </div>
                     <button type="submit" id="submitProductBtn" class="admin-btn">إضافة المنتج/الخدمة للمتجر</button>
                 </form>
@@ -2149,18 +2146,23 @@
             document.getElementById('detPrice').innerText = p.price || '0';
             document.getElementById('detDesc').innerText = p.desc || '';
             
-            // تحويل الوصف أو المميزات إلى نقاط أساسية
+            // عرض المميزات المكتوبة يدوياً في لوحة التحكم
             let featuresList = document.getElementById('detFeaturesList');
+            let featuresBoxContainer = document.querySelector('.features-box');
             if (featuresList) {
                 featuresList.innerHTML = '';
-                let descText = p.desc || 'خدمة احترافية وآمنة';
-                let sentences = descText.split('\n').filter(s => s.trim() !== '');
-                if (sentences.length === 0) sentences = [descText];
-                sentences.forEach(s => {
-                    let li = document.createElement('li');
-                    li.innerText = s;
-                    featuresList.appendChild(li);
-                });
+                let featuresText = p.features || '';
+                let lines = featuresText.split('\n').filter(l => l.trim() !== '');
+                if (lines.length > 0) {
+                    if(featuresBoxContainer) featuresBoxContainer.style.display = 'block';
+                    lines.forEach(line => {
+                        let li = document.createElement('li');
+                        li.innerText = line;
+                        featuresList.appendChild(li);
+                    });
+                } else {
+                    if(featuresBoxContainer) featuresBoxContainer.style.display = 'none';
+                }
             }
 
             let oldPriceRow = document.getElementById('detOldPriceRow');
@@ -2200,7 +2202,6 @@
                 addBtn.onclick = function() { addToCart(p); closeDetailsModal(); };
             }
 
-            // افتراضيا فتح تبويب نظرة عامة
             let firstTabBtn = document.querySelector('.product-tab-btn');
             switchProductTab('tabOverview', firstTabBtn);
 
@@ -2296,6 +2297,7 @@
             document.getElementById('pStock').value = p.stock || '10';
             document.getElementById('pBadge').value = p.badge || '';
             document.getElementById('pDesc').value = p.desc || '';
+            document.getElementById('pFeatures').value = p.features || '';
 
             let submitBtn = document.getElementById('submitProductBtn');
             submitBtn.innerText = "حفظ تعديلات المنتج/الخدمة";
@@ -2408,7 +2410,8 @@
                             stock: document.getElementById('pStock').value || '10',
                             badge: document.getElementById('pBadge').value || 'إكسبرس',
                             images: imagesArray,
-                            desc: document.getElementById('pDesc').value
+                            desc: document.getElementById('pDesc').value,
+                            features: document.getElementById('pFeatures').value
                         };
                     }
                     editingProductId = null;
@@ -2428,7 +2431,8 @@
                         stock: document.getElementById('pStock').value || '10',
                         badge: document.getElementById('pBadge').value || 'إكسبرس',
                         images: imagesArray,
-                        desc: document.getElementById('pDesc').value
+                        desc: document.getElementById('pDesc').value,
+                        features: document.getElementById('pFeatures').value
                     });
                     showToast('تمت إضافة المنتج والمخزون سحابياً بنجاح ✔️');
                 }
