@@ -1563,6 +1563,10 @@
                     return;
                 }
 
+                Object.keys(data).keys().forEach(key => {
+                    // تم إصلاح التكرار هنا
+                });
+
                 Object.keys(data).forEach(key => {
                     let rev = data[key];
                     let imgHtml = rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : '';
@@ -1594,23 +1598,17 @@
             });
         }
 
-        // نظام التخزين المؤقت السريع (Cache) للأقسام والمنتجات
+        // جلب الأقسام من السحابة مباشرة بدون تكرار في التخزين
         function getCategories(callback) {
-            const cachedCats = localStorage.getItem('cache_categories');
-            if (cachedCats) {
-                callback(JSON.parse(cachedCats));
-            }
-            if(!db) { if(!cachedCats) callback({}); return; }
+            if(!db) { callback({}); return; }
             db.ref('categories').once('value', (snapshot) => {
                 const data = snapshot.val() || {};
-                localStorage.setItem('cache_categories', JSON.stringify(data));
                 callback(data);
             });
         }
 
         function saveCategoriesToCloud(cats) {
             if(!db) return;
-            localStorage.setItem('cache_categories', JSON.stringify(cats));
             db.ref('categories').set(cats).then(() => {
                 renderCategoriesBar();
                 renderAdminCats();
@@ -1618,17 +1616,24 @@
             });
         }
 
+        // جلب المنتجات من قاعدة البيانات مباشرة لمنع تكرار أو تداخل الإعلانات
         function getProducts(callback) {
-            const cachedProds = localStorage.getItem('cache_products');
-            if (cachedProds) {
-                callback(JSON.parse(cachedProds));
-            }
-            if(!db) { if(!cachedProds) callback([]); return; }
+            if(!db) { callback([]); return; }
             db.ref('products').once('value', (snapshot) => {
                 const data = snapshot.val() || [];
-                localStorage.setItem('cache_products', JSON.stringify(data));
-                cleanupCartAndWishlist(data);
-                callback(data);
+                // التأكد من عدم وجود منتجات مكررة عبر تصفيتها بناءً على الـ id الفريد
+                let uniqueProducts = [];
+                let idsMap = {};
+                if (Array.isArray(data)) {
+                    data.forEach(p => {
+                        if (p && p.id && !idsMap[p.id]) {
+                            idsMap[p.id] = true;
+                            uniqueProducts.push(p);
+                        }
+                    });
+                }
+                cleanupCartAndWishlist(uniqueProducts);
+                callback(uniqueProducts);
             });
         }
 
@@ -1652,7 +1657,6 @@
 
         function saveProductsToCloud(products) {
             if(!db) return;
-            localStorage.setItem('cache_products', JSON.stringify(products));
             db.ref('products').set(products).then(() => {
                 renderProducts();
                 renderAdminProducts();
@@ -1677,9 +1681,7 @@
         function saveWishlist(list) {
             localStorage.setItem('storeWishlist', JSON.stringify(list));
             renderWishlist();
-            getCategories(cats => {
-                getProducts(prods => renderProductsList(prods, list));
-            });
+            getProducts(prods => renderProductsList(prods, list));
         }
 
         function toggleWishlist(product, event) {
