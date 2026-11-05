@@ -240,7 +240,6 @@
         .wishlist-btn:hover { background: #fef2f2; border-color: #ef4444; color: #ef4444; }
         .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
 
-        /* تعديل تام لضمان ظهور الصورة كاملة بجميع تفاصيلها بدون قص نهائياً */
         .card-img-container, .details-img-container {
             width: 100%;
             background-color: #ffffff; 
@@ -566,7 +565,11 @@
         <div class="categories-grid" id="categoriesBar"></div>
     </div>
 
-    <div id="mainSectionsContainer"></div>
+    <!-- قسم العرض العشوائي المدمج للإعلانات -->
+    <div class="section-header-box">
+        <div class="section-title-text"><i class="fa-solid fa-shuffle"></i> جميع الإعلانات والخدمات (منوع)</div>
+    </div>
+    <div class="grid" id="mainMixedGrid"></div>
 
     <div id="customToast" class="custom-toast">رسالة تنبيه</div>
 
@@ -663,7 +666,6 @@
         </div>
     </div>
 
-    <!-- نافذة تفاصيل المنتج (تم ضبط عرض الصور بالكامل بدون قص) -->
     <div id="detailsModal" class="details-modal">
         <div class="details-box">
             <div class="admin-header">
@@ -1672,7 +1674,7 @@
         function saveWishlist(list) {
             localStorage.setItem('storeWishlist', JSON.stringify(list));
             renderWishlist();
-            getProducts(prods => renderProductsSectional(prods, list));
+            getProducts(prods => renderMixedProducts(prods, list));
         }
 
         function toggleWishlist(product, event) {
@@ -1707,67 +1709,41 @@
             });
         }
 
-        function renderProducts(filterList = null) {
-            const wishlist = getWishlist();
-            if (filterList) { renderProductsSectional(filterList, wishlist); }
-            else { getProducts(products => renderProductsSectional(products, wishlist)); }
+        // دالة خلط عشوائية (Fisher-Yates Shuffle) لتوزيع الإعلانات والخدمات بشكل منوع
+        function shuffleArray(array) {
+            let arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
         }
 
-        function renderProductsSectional(products, wishlist) {
-            const container = document.getElementById('mainSectionsContainer');
+        function renderProducts(filterList = null) {
+            const wishlist = getWishlist();
+            if (filterList) { 
+                renderMixedProducts(filterList, wishlist); 
+            } else { 
+                getProducts(products => {
+                    // خلط المنتجات والإعلانات عشوائياً عند جلبها لتظهر منوعة ومخلوطة
+                    let mixedProducts = shuffleArray(products);
+                    renderMixedProducts(mixedProducts, wishlist);
+                });
+            }
+        }
+
+        function renderMixedProducts(products, wishlist) {
+            const container = document.getElementById('mainMixedGrid');
             if(!container) return;
             container.innerHTML = '';
 
             if (!products || products.length === 0) {
-                container.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; padding: 40px 0;">لا توجد منتجات أو خدمات مطابقة حالياً.</p>';
+                container.innerHTML = '<p style="color:#0f172a; font-weight:800; text-align:center; padding: 40px 0; grid-column: span 2;">لا توجد منتجات أو خدمات مطابقة حالياً.</p>';
                 return;
             }
 
-            getCategories(cats => {
-                let catsMap = {};
-                if (cats && Array.isArray(cats)) {
-                    cats.forEach(c => catsMap[c.id] = c.name);
-                }
-
-                let featuredSection = document.createElement('div');
-                featuredSection.className = 'category-block-sec';
-                featuredSection.setAttribute('data-sec-cat', 'featured');
-                featuredSection.innerHTML = `
-                    <div class="section-header-box">
-                        <div class="section-title-text"><i class="fa-solid fa-fire"></i> الأكثر طلباً والخدمات السريعة</div>
-                    </div>
-                    <div class="grid" id="grid-featured"></div>
-                `;
-                container.appendChild(featuredSection);
-
-                let featuredGrid = featuredSection.querySelector('#grid-featured');
-                let featuredProducts = products.slice(0, 4);
-                featuredProducts.forEach(p => featuredGrid.appendChild(createProductCard(p, wishlist)));
-
-                let grouped = {};
-                products.forEach(p => {
-                    let cId = p.category || 'other';
-                    if (!grouped[cId]) grouped[cId] = [];
-                    grouped[cId].push(p);
-                });
-
-                Object.keys(grouped).forEach(cId => {
-                    let catName = catsMap[cId] || 'منتجات وخدمات أخرى';
-                    let secDiv = document.createElement('div');
-                    secDiv.className = 'category-block-sec';
-                    secDiv.setAttribute('data-sec-cat', cId);
-
-                    secDiv.innerHTML = `
-                        <div class="section-header-box">
-                            <div class="section-title-text"><i class="fa-solid fa-layer-group"></i> ${catName}</div>
-                        </div>
-                        <div class="grid"></div>
-                    `;
-
-                    let grid = secDiv.querySelector('.grid');
-                    grouped[cId].forEach(p => grid.appendChild(createProductCard(p, wishlist)));
-                    container.appendChild(secDiv);
-                });
+            products.forEach(p => {
+                container.appendChild(createProductCard(p, wishlist));
             });
         }
 
@@ -2457,12 +2433,13 @@
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             if(btn) btn.classList.add('active');
 
-            let blocks = document.querySelectorAll('#mainSectionsContainer .category-block-sec');
-            blocks.forEach(block => {
-                if (cat === 'all' || block.getAttribute('data-sec-cat') === cat) {
-                    block.style.display = 'block';
+            getProducts(products => {
+                const wishlist = getWishlist();
+                if (cat === 'all') {
+                    renderMixedProducts(shuffleArray(products), wishlist);
                 } else {
-                    block.style.display = 'none';
+                    let filtered = products.filter(p => p.category === cat);
+                    renderMixedProducts(shuffleArray(filtered), wishlist);
                 }
             });
         }
