@@ -1563,10 +1563,6 @@
                     return;
                 }
 
-                Object.keys(data).keys().forEach(key => {
-                    // تم إصلاح التكرار هنا
-                });
-
                 Object.keys(data).forEach(key => {
                     let rev = data[key];
                     let imgHtml = rev.image ? `<img src="${rev.image}" style="width:50px; height:50px; object-fit:cover; border-radius:4px; margin-top:4px;" alt="صورة">` : '';
@@ -1598,7 +1594,7 @@
             });
         }
 
-        // جلب الأقسام من السحابة مباشرة بدون تكرار في التخزين
+        // جلب الأقسام من السحابة
         function getCategories(callback) {
             if(!db) { callback({}); return; }
             db.ref('categories').once('value', (snapshot) => {
@@ -1616,12 +1612,11 @@
             });
         }
 
-        // جلب المنتجات من قاعدة البيانات مباشرة لمنع تكرار أو تداخل الإعلانات
+        // جلب المنتجات كـ مصفوفة خالية من التكرار
         function getProducts(callback) {
             if(!db) { callback([]); return; }
             db.ref('products').once('value', (snapshot) => {
                 const data = snapshot.val() || [];
-                // التأكد من عدم وجود منتجات مكررة عبر تصفيتها بناءً على الـ id الفريد
                 let uniqueProducts = [];
                 let idsMap = {};
                 if (Array.isArray(data)) {
