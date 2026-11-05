@@ -132,7 +132,7 @@
         .categories-title { font-size: 0.95rem; color: #0f172a; margin-bottom: 8px; font-weight: 900; }
         .categories-grid { 
             display: flex; 
-            gap: 12px; 
+            gap: 10px; 
             overflow-x: auto; 
             padding-bottom: 8px; 
             white-space: nowrap; 
@@ -147,25 +147,25 @@
             background-color: #ffffff; 
             color: #1e293b; 
             border: 1px solid #94a3b8; 
-            padding: 6px 14px; /* تقليل الحشو ليكون الزر أصغر وأنسب */
+            padding: 4px 10px 4px 12px; /* تصغير حجم المستطيل بالكامل ليصبح مدمجاً وأنيقاً */
             border-radius: 30px; 
             font-weight: 800; 
-            font-size: 0.82rem; /* تصغير حجم الخط قليلاً */
+            font-size: 0.78rem; /* تصغير حجم النص قليلاً */
             cursor: pointer; 
             transition: 0.2s; 
             flex-shrink: 0; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
             display: inline-flex;
             align-items: center;
-            gap: 8px; 
+            gap: 6px; 
             min-width: max-content; 
         }
         .category-btn img {
-            width: 65px; /* تكبير دائرة الصورة وحدها بوضوح */
-            height: 65px; 
+            width: 44px; /* تصغير دائرة الصورة قليلاً لتتناسب مع المستطيل الأصغر */
+            height: 44px; 
             object-fit: cover;
             border-radius: 50%;
-            border: 2px solid #3b82f6;
+            border: 1.5px solid #3b82f6;
         }
         .category-btn:hover { background-color: #f1f5f9; color: #1e3a8a; border-color: #3b82f6; }
         .category-btn.active { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25); }
