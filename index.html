@@ -823,7 +823,7 @@
             </div>
             
             <div id="tab-reports" class="admin-tab-content active">
-                <h4 class="admin-sec-title">📈 التقارير المالية والأرباح</h4>
+                <h4 class="admin-sec-title">📈 التقارير المالية والأرباح حسب المصدر</h4>
                 <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #cbd5e1; display:flex; flex-direction:column; gap:8px;">
                     <div style="display:flex; gap:6px; align-items:center;">
                         <select id="reportFilterType" onchange="updateFinancialReport()" style="padding:7px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; flex:1;">
@@ -849,6 +849,14 @@
                         <div>💳 شبكة: <strong id="repCardSales">0 ر.س</strong></div>
                         <div>🏦 تحويل: <strong id="repTransferSales">0 ر.س</strong></div>
                     </div>
+
+                    <!-- أرباح كل مصدر -->
+                    <div style="background:#ffffff; padding:10px; border-radius:6px; border:1px solid #cbd5e1; margin-top:4px;">
+                        <span style="display:block; font-size:0.88rem; font-weight:900; color:#1e3a8a; margin-bottom:6px;"><i class="fa-solid fa-bullhorn"></i> الأرباح حسب مصدر الزبون:</span>
+                        <div id="repSourcesBreakdown" style="display:flex; flex-direction:column; gap:4px; font-size:0.82rem; font-weight:800; color:#334155;">
+                            <span>جاري حساب الأرباح لكل مصدر...</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div style="margin-top: 5px; display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -864,11 +872,28 @@
             </div>
 
             <div id="tab-orders" class="admin-tab-content">
-                <h4 class="admin-sec-title">📦 إدارة الطلب وتعديل السعر والرسوم</h4>
+                <h4 class="admin-sec-title">📦 إدارة الطلب وتعديل السعر والمصدر</h4>
                 <div style="background:#f8fafc; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
                     <label style="color:#0f172a; font-size:0.85rem; display:block; margin-bottom:4px; font-weight:900;">اختر الطلب الجاري:</label>
                     <select id="adminOrderSelect" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.85rem; font-weight:800; margin-bottom:8px;" onchange="onOrderSelectedInAdmin()"></select>
                     
+                    <div style="display:flex; gap:8px; align-items:center; margin-bottom: 8px;">
+                        <div style="flex-grow:1;">
+                            <label style="color:#0f172a; font-size:0.82rem; display:block; margin-bottom:2px; font-weight:900;">🌐 مصدر الزبون (من وين جاء؟):</label>
+                            <select id="adminOrderSourceInput" style="width:100%; padding:9px; border-radius:6px; border:1px solid #94a3b8; font-size:0.88rem; font-weight:800; color:#1e3a8a;">
+                                <option value="موقع حراج">موقع حراج</option>
+                                <option value="الواتساب">الواتساب</option>
+                                <option value="الموقع الإلكتروني">الموقع الإلكتروني</option>
+                                <option value="سناب شات">سناب شات</option>
+                                <option value="تيك توك">تيك توك</option>
+                                <option value="إعلان ممول / تسويق">إعلان ممول / تسويق</option>
+                                <option value="عميل سابق / توصية">عميل سابق / توصية</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                        </div>
+                        <button type="button" onclick="updateOrderSource()" class="admin-btn" style="background:#8b5cf6; margin-top:16px; width:auto; padding:9px 12px; white-space:nowrap;">حفظ المصدر 🌐</button>
+                    </div>
+
                     <div style="display:flex; gap:8px; align-items:center; margin-bottom: 8px;">
                         <div style="flex-grow:1;">
                             <label style="color:#0f172a; font-size:0.82rem; display:block; margin-bottom:2px; font-weight:900;">💵 سعر الخدمة / المنتج (ر.س):</label>
@@ -1224,7 +1249,7 @@
                     let status = ord.status || 'active';
                     let opt = document.createElement('option');
                     opt.value = k;
-                    opt.innerText = `${ord.orderId} - ${ord.name || 'عميل'} (${ord.payMethod || 'كاش'})`;
+                    opt.innerText = `${ord.orderId} - ${ord.name || 'عميل'} [${ord.orderSource || 'موقع حراج'}]`;
 
                     if(status === 'sold') {
                         if(soldSelect) soldSelect.appendChild(opt);
@@ -1243,10 +1268,16 @@
             if(!db) return;
             db.ref('orders').once('value', snapshot => {
                 let data = snapshot.val();
-                if(!data) return;
+                if(!data) {
+                    document.getElementById('repTotalSales').innerText = '0.00 ر.س';
+                    document.getElementById('repNetProfit').innerText = '0.00 ر.س';
+                    document.getElementById('repSourcesBreakdown').innerHTML = '<span>لا توجد بيانات مباعة مسجلة.</span>';
+                    return;
+                }
                 let filterType = document.getElementById('reportFilterType').value;
                 let now = new Date();
                 let totalSales = 0, netProfit = 0, cashSales = 0, cardSales = 0, transferSales = 0;
+                let sourcesProfitMap = {};
 
                 Object.values(data).forEach(ord => {
                     if (ord.status !== 'sold') return;
@@ -1277,6 +1308,14 @@
                     totalSales += ordTotal;
                     netProfit += ordProfit;
 
+                    let sourceName = ord.orderSource || 'موقع حراج';
+                    if (!sourcesProfitMap[sourceName]) {
+                        sourcesProfitMap[sourceName] = { sales: 0, profit: 0, count: 0 };
+                    }
+                    sourcesProfitMap[sourceName].sales += ordTotal;
+                    sourcesProfitMap[sourceName].profit += ordProfit;
+                    sourcesProfitMap[sourceName].count += 1;
+
                     let pay = (ord.payMethod || '').toLowerCase();
                     if (pay.includes('نقدي') || pay.includes('كاش')) {
                         cashSales += ordTotal;
@@ -1292,6 +1331,21 @@
                 document.getElementById('repCashSales').innerText = cashSales.toFixed(2) + ' ر.س';
                 document.getElementById('repCardSales').innerText = cardSales.toFixed(2) + ' ر.س';
                 document.getElementById('repTransferSales').innerText = transferSales.toFixed(2) + ' ر.س';
+
+                let breakdownContainer = document.getElementById('repSourcesBreakdown');
+                breakdownContainer.innerHTML = '';
+                let sourceKeys = Object.keys(sourcesProfitMap);
+                if (sourceKeys.length === 0) {
+                    breakdownContainer.innerHTML = '<span>لا توجد مبيعات في هذه الفترة.</span>';
+                } else {
+                    sourceKeys.forEach(src => {
+                        let dataObj = sourcesProfitMap[src];
+                        let div = document.createElement('div');
+                        div.style.cssText = "display:flex; justify-content:space-between; padding:4px 6px; background:#f8fafc; border-radius:4px; border:1px solid #e2e8f0; margin-bottom:2px;";
+                        div.innerHTML = `<span>🌐 ${src} (${dataObj.count} طلبات):</span> <strong style="color:#047857;">مبيعات: ${dataObj.sales.toFixed(2)} | أرباح: ${dataObj.profit.toFixed(2)} ر.س</strong>`;
+                        breakdownContainer.appendChild(div);
+                    });
+                }
             });
         }
 
@@ -1299,10 +1353,12 @@
             let select = document.getElementById('adminOrderSelect');
             let feeInput = document.getElementById('adminShippingFeeInput');
             let servicePriceInput = document.getElementById('adminServicePriceInput');
+            let sourceSelect = document.getElementById('adminOrderSourceInput');
             if(!select) return;
             let orderKey = select.value;
             if (orderKey && adminLoadedOrders[orderKey]) {
                 if(feeInput) feeInput.value = adminLoadedOrders[orderKey].shippingFee || 0;
+                if(sourceSelect) sourceSelect.value = adminLoadedOrders[orderKey].orderSource || 'موقع حراج';
                 if(servicePriceInput && adminLoadedOrders[orderKey].items && adminLoadedOrders[orderKey].items.length > 0) {
                     servicePriceInput.value = adminLoadedOrders[orderKey].items[0].price || 0;
                 } else if(servicePriceInput) {
@@ -1332,6 +1388,21 @@
             db.ref('orders/' + orderKey + '/shippingFee').set(newFee).then(() => {
                 showToast('تم تحديث رسوم التوصيل بنجاح ✔️');
                 adminLoadedOrders[orderKey].shippingFee = newFee;
+            });
+        }
+
+        function updateOrderSource() {
+            let select = document.getElementById('adminOrderSelect');
+            let sourceSelect = document.getElementById('adminOrderSourceInput');
+            if(!select || !sourceSelect || !db) return;
+            let orderKey = select.value;
+            let newSource = sourceSelect.value;
+            if(!orderKey) { showToast('يرجى اختيار طلب أولاً!'); return; }
+            db.ref('orders/' + orderKey + '/orderSource').set(newSource).then(() => {
+                showToast('تم تحديث مصدر الزبون بنجاح 🌐');
+                adminLoadedOrders[orderKey].orderSource = newSource;
+                loadAdminAllOrders();
+                updateFinancialReport();
             });
         }
 
@@ -1970,6 +2041,7 @@
                 shippingFee: 0,
                 status: 'active',
                 payMethod: payMethod,
+                orderSource: 'موقع حراج', // المصدر الافتراضي للطلب الجديد
                 items: cart,
                 createdAt: new Date().toISOString()
             };
