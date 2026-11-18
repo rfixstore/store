@@ -15,15 +15,13 @@
         .logo { cursor: pointer; user-select: none; flex-grow: 1; }
         .logo h1 { font-size: 1.05rem; color: #ffffff; font-weight: 800; line-height: 1.2; }
         .logo p { font-size: 0.7rem; color: #93c5fd; margin-top: 2px; font-weight: 500; }
-        .header-ratings-box { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 10px; border-radius: 6px; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2); }
         .search-container { position: relative; width: 100%; z-index: 9; }
         .search-box { display: flex; align-items: center; background: #ffffff; border-radius: 6px; padding: 0 10px; border: 1px solid rgba(255,255,255,0.3); height: 38px; width: 100%; }
         .search-box input { width: 100%; border: none; outline: none; background: transparent; font-size: 0.88rem; color: #0f172a; text-align: right; font-weight: 700; }
         .header-left { display: flex; align-items: center; gap: 6px; width: 100%; overflow-x: auto; padding: 2px 0; }
         .header-left::-webkit-scrollbar { display: none; }
-        .cart-btn, .wishlist-nav-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.15); color: #fff; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.3); white-space: nowrap; cursor: pointer; display: inline-flex; align-items: center; height: 34px; }
+        .cart-btn, .whatsapp-btn, .lang-btn { background-color: rgba(255, 255, 255, 0.15); color: #fff; padding: 6px 10px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.3); white-space: nowrap; cursor: pointer; display: inline-flex; align-items: center; height: 34px; }
         .whatsapp-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; }
-        .cart-badge, .wishlist-badge { background: #ef4444; color: #fff; border-radius: 50%; padding: 2px 5px; font-size: 0.6rem; position: absolute; top: -5px; right: -5px; font-weight: bold; }
         .hero { padding: 20px 15px; text-align: center; background: #ffffff; border-bottom: 1px solid #e2e8f0; }
         .categories-container { max-width: 1200px; margin: 15px auto 5px; padding: 0 15px; width: 100%; }
         .categories-title { font-size: 0.95rem; color: #0f172a; margin-bottom: 8px; font-weight: 900; }
@@ -33,11 +31,8 @@
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px 12px; max-width: 1200px; margin: 0 auto; width: 100%; }
         @media(min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; } }
         .card { background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 6px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-        .wishlist-btn { position: absolute; top: 8px; left: 8px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; z-index: 2; }
-        .wishlist-btn.active { color: #ef4444; background: #fff5f5; border-color: #fca5a5; }
-        .card-img-container { width: 100%; height: 160px; background-color: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 6px; border: 1px solid #e2e8f0; padding: 6px; position: relative; cursor: pointer; }
+        .card-img-container { width: 100%; height: 160px; background-color: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 6px; border: 1px solid #e2e8f0; padding: 6px; }
         .card-img-container img { width: 100%; height: 100%; object-fit: contain; }
-        .quick-add-btn { position: absolute; bottom: 6px; right: 6px; background: #ffffff; color: #2563eb; border: 1px solid #93c5fd; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3; }
         .card h3 { color: #0f172a; font-size: 0.85rem; font-weight: 800; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .card-price-main { display: flex; align-items: baseline; gap: 3px; }
         .price-currency { font-size: 0.7rem; color: #334155; font-weight: 900; }
@@ -45,14 +40,15 @@
         .badge { background-color: #eff6ff; color: #1e40af; border: 1px solid #93c5fd; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; width: fit-content; font-weight: 800; }
         .site-footer { background: #0f172a; color: #94a3b8; padding: 25px 15px; margin-top: auto; text-align: center; }
         .social-icon-btn { background: #25d366; color: #ffffff; padding: 8px 18px; border-radius: 30px; text-decoration: none; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
-        .modal-overlay, .admin-modal, .cart-modal, .wishlist-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(4px); }
-        .modal-card, .admin-box { background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; }
+        
+        /* نوافذ التحكم والكلمة السرية */
+        .pass-modal, .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.65); z-index: 2500; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); }
+        .pass-box { background: #ffffff; width: 100%; max-width: 300px; padding: 22px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .pass-box h3 { color: #0f172a; font-size: 1.15rem; font-weight: 900; }
+        .pass-box input { width: 100%; padding: 9px; border-radius: 6px; border: 1px solid #94a3b8; font-size: 1rem; font-weight: 900; text-align: center; letter-spacing: 3px; }
+        
+        .admin-box { background: #ffffff; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; gap: 12px; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-        .admin-tabs { display: flex; gap: 6px; background: #e2e8f0; padding: 5px; border-radius: 8px; }
-        .admin-tab-btn { background: #cbd5e1; border: none; padding: 8px 12px; border-radius: 6px; font-weight: 900; cursor: pointer; flex: 1; text-align: center; }
-        .admin-tab-btn.active { background: #1e3a8a; color: #ffffff; }
-        .admin-tab-content { display: none; flex-direction: column; gap: 10px; }
-        .admin-tab-content.active { display: flex; }
         .form-group label { display: block; margin-bottom: 4px; color: #0f172a; font-weight: 900; font-size: 0.88rem; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #94a3b8; font-weight: 800; }
         .admin-btn { background: #2563eb; color: #ffffff; border: none; padding: 10px; border-radius: 6px; font-weight: 900; cursor: pointer; width: 100%; }
@@ -75,8 +71,6 @@
             </div>
         </div>
         <div class="header-left">
-            <button onclick="toggleWishlistModal()" class="wishlist-nav-btn"><i class="fa-solid fa-heart" style="color: #f87171;"></i> المفضلة <span id="wishlistCount" class="wishlist-badge">0</span></button>
-            <button onclick="toggleCart()" class="cart-btn"><i class="fa-solid fa-cart-shopping"></i> السلة <span id="cartCount" class="cart-badge">0</span></button>
             <a href="https://wa.me/966556843732" class="whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> واتساب</a>
         </div>
     </header>
@@ -92,7 +86,6 @@
     </div>
 
     <div class="grid" id="mainMixedGrid"></div>
-
     <div id="customToast" class="custom-toast">رسالة تنبيه</div>
 
     <footer class="site-footer">
@@ -100,29 +93,35 @@
         <p style="margin-top: 8px; font-size: 0.78rem;">جميع الحقوق محفوظة © المتخصصون في صيانة الأجهزة</p>
     </footer>
 
+    <!-- نافذة إدخال كلمة المرور (3732) -->
+    <div id="passModal" class="pass-modal">
+        <div class="pass-box">
+            <h3><i class="fa-solid fa-lock"></i> لوحة التحكم السرية</h3>
+            <p style="font-size: 0.82rem; font-weight: 800;">أدخل رمز الدخول:</p>
+            <input type="password" id="adminPassInput" placeholder="****">
+            <button onclick="checkAdminPassword()" class="admin-btn">دخول</button>
+            <button onclick="closePasswordModal()" style="background: none; border: none; color: #2563eb; cursor: pointer; font-weight: 900; margin-top: 4px;">إلغاء</button>
+        </div>
+    </div>
+
     <!-- لوحة التحكم -->
     <div id="adminModal" class="admin-modal">
         <div class="admin-box">
             <div class="admin-header">
                 <h3>لوحة التحكم والإدارة</h3>
-                <button onclick="toggleAdminModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">&times;</button>
+                <button onclick="toggleAdminModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">×</button>
             </div>
-            <div class="admin-tabs">
-                <button class="admin-tab-btn active" onclick="switchAdminTab('tab-products', this)">إدارة المنتجات</button>
-            </div>
-            <div id="tab-products" class="admin-tab-content active">
-                <form id="addProductForm">
-                    <div class="form-group"><label>عنوان المنتج:</label><input type="text" id="pTitle" required></div>
-                    <div class="form-group"><label>القسم:</label><select id="pCategory" required></select></div>
-                    <div class="form-group"><label>السعر (ر.س):</label><input type="text" id="pPrice" required></div>
-                    <div class="form-group"><label>صور المنتج:</label><input type="file" id="pImageFiles" accept="image/*" multiple></div>
-                    <div class="form-group"><label>الوصف:</label><textarea id="pDesc" rows="2" required></textarea></div>
-                    <button type="submit" class="admin-btn">إضافة الإعلان الجديد</button>
-                </form>
-                <div>
-                    <label style="font-weight:900; margin-bottom:4px; display:block;">المنتجات الحالية:</label>
-                    <div id="adminItemsList" style="max-height: 180px; overflow-y: auto; display:flex; flex-direction:column; gap:6px;"></div>
-                </div>
+            <form id="addProductForm">
+                <div class="form-group"><label>عنوان المنتج / الإعلان:</label><input type="text" id="pTitle" required></div>
+                <div class="form-group"><label>القسم:</label><select id="pCategory" required></select></div>
+                <div class="form-group"><label>السعر (ر.س):</label><input type="text" id="pPrice" required></div>
+                <div class="form-group"><label>صورة المنتج:</label><input type="file" id="pImageFiles" accept="image/*"></div>
+                <div class="form-group"><label>الوصف:</label><textarea id="pDesc" rows="2" required></textarea></div>
+                <button type="submit" class="admin-btn">إضافة الإعلان الجديد</button>
+            </form>
+            <div style="margin-top:10px;">
+                <label style="font-weight:900; margin-bottom:4px; display:block;">المنتجات الحالية:</label>
+                <div id="adminItemsList" style="max-height: 160px; overflow-y: auto; display:flex; flex-direction:column; gap:6px;"></div>
             </div>
         </div>
     </div>
@@ -138,6 +137,8 @@
             db = firebase.database();
         } catch(err) { console.log(err); }
 
+        const ADMIN_PASSWORD = "3732";
+
         function showToast(msg) {
             let t = document.getElementById('customToast');
             if(!t) return;
@@ -145,20 +146,39 @@
             setTimeout(() => { t.style.display = 'none'; }, 2000);
         }
 
+        // تفعيل لوحة التحكم عبر الضغط 5 مرات على الشعار
         let count = 0, timer = null;
         function logoClicksTrigger() {
             count++;
             if (count === 1) { timer = setTimeout(() => { count = 0; }, 1200); }
-            else if (count === 5) { clearTimeout(timer); count = 0; document.getElementById('adminModal').style.display = 'flex'; loadAdminData(); }
-        }
-        function toggleAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
-        function switchAdminTab(id, btn) {
-            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active'); btn.classList.add('active');
+            else if (count === 5) { clearTimeout(timer); count = 0; openPasswordModal(); }
         }
 
-        // جلب الأقسام بدون تكرار
+        function openPasswordModal() {
+            document.getElementById('passModal').style.display = 'flex';
+            let input = document.getElementById('adminPassInput');
+            if(input) { input.value = ''; input.focus(); }
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passModal').style.display = 'none';
+        }
+
+        function checkAdminPassword() {
+            let pass = document.getElementById('adminPassInput').value;
+            if (pass === ADMIN_PASSWORD) {
+                closePasswordModal();
+                document.getElementById('adminModal').style.display = 'flex';
+                loadAdminData();
+            } else {
+                showToast('رمز الدخول غير صحيح!');
+                document.getElementById('adminPassInput').value = '';
+            }
+        }
+
+        function toggleAdminModal() { document.getElementById('adminModal').style.display = 'none'; }
+
+        // جلب الأقسام بمنع تام للتكرار
         function getCategories(callback) {
             if(!db) { callback([]); return; }
             db.ref('categories').once('value', snapshot => {
@@ -177,20 +197,20 @@
             });
         }
 
-        // جلب المنتجات مع منع التكرار تماماً بناءً على مفتاح فايربيس الفريد أو الـ ID
+        // جلب المنتجات مع فلترة نهائية لمنع أي تكرار نهائياً
         function getProducts(callback) {
             if(!db) { callback([]); return; }
             db.ref('products').once('value', snapshot => {
                 let data = snapshot.val();
-                let uniqueProds = [], keysMap = {};
+                let uniqueProds = [], titlesMap = {};
                 if(data) {
-                    // الـ data هنا عبارة عن كائن بمفاتيح push فريدة
                     Object.keys(data).forEach(key => {
                         let p = data[key];
-                        if(p) {
-                            p.firebaseKey = key; // حفظ المفتاح الحقيقي للحذف السليم بدون تعليق
-                            if(!keysMap[key]) {
-                                keysMap[key] = true;
+                        if(p && p.title) {
+                            let identifier = p.title.trim() + '_' + p.price;
+                            if(!titlesMap[identifier]) {
+                                titlesMap[identifier] = true;
+                                p.firebaseKey = key;
                                 uniqueProds.push(p);
                             }
                         }
@@ -274,7 +294,6 @@
             });
         }
 
-        // إضافة منتج جديد باستخدام push لمنع التكرار والحذف الخاطئ
         document.getElementById('addProductForm').addEventListener('submit', function(e) {
             e.preventDefault();
             let fileInput = document.getElementById('pImageFiles');
@@ -300,7 +319,6 @@
             } else { saveToFirebase([]); }
         });
 
-        // دالة الحذف المباشر عبر مفتاح فايربيس الفريد (Firebase Key) لمنع التعليق
         function deleteProduct(firebaseKey) {
             if(!firebaseKey || !db) return;
             db.ref('products/' + firebaseKey).remove().then(() => {
@@ -310,7 +328,32 @@
             });
         }
 
-        // التهيئة الأولية
+        function handleSearchInput() {
+            let query = document.getElementById('searchInput').value.trim().toLowerCase();
+            getProducts(products => {
+                let grid = document.getElementById('mainMixedGrid');
+                if(!grid) return;
+                grid.innerHTML = '';
+                let list = products.filter(p => p.title.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+                if(list.length === 0) {
+                    grid.innerHTML = '<p style="text-align:center; grid-column:span 2; font-weight:800; padding:30px;">لا توجد نتائج مطابقة</p>';
+                    return;
+                }
+                list.forEach(p => {
+                    let card = document.createElement('div');
+                    card.className = 'card';
+                    let img = (p.images && p.images[0]) ? p.images[0] : '';
+                    card.innerHTML = `
+                        <div class="card-img-container"><img src="${img}" alt=""></div>
+                        <span class="badge">إكسبرس</span>
+                        <h3>${p.title}</h3>
+                        <div class="card-price-main"><span class="price-currency">ر.س</span><span class="price-amount">${p.price}</span></div>
+                    `;
+                    grid.appendChild(card);
+                });
+            });
+        }
+
         renderCategoriesBar();
         renderProducts();
     </script>
