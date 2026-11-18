@@ -1700,7 +1700,7 @@
             });
         }
 
-        // دالة جلب الأقسام المُحدثة لحذف وتطهير أي تكرار نهائياً
+        // دالة جلب الأقسام المُحدثة لمنع التكرار نهائياً
         function getCategories(callback) {
             let localCats = localStorage.getItem('storeCategories');
             if (localCats) {
@@ -1774,29 +1774,28 @@
             }
         }
 
+        // دالة جلب المنتجات المحدثة لدعم نظام الفايربيس (سواء كانت مصفوفة أو قائمة معتمدة على مفاتيح فريدة)
         function getProducts(callback) {
             let localProds = localStorage.getItem('storeProducts');
             if (localProds) {
                 try { 
                     let parsed = JSON.parse(localProds);
                     let uniqueProducts = [], idsMap = {};
-                    if (Array.isArray(parsed)) {
-                        parsed.forEach(p => {
-                            if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
-                        });
-                    }
+                    let rawList = Array.isArray(parsed) ? parsed : Object.values(parsed);
+                    rawList.forEach(p => {
+                        if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
+                    });
                     if(uniqueProducts.length > 0) callback(uniqueProducts);
                 } catch(e) {}
             }
             if(db) {
-                db.ref('products').once('value', (snapshot) => {
+                db.ref('products').on('value', (snapshot) => {
                     const data = snapshot.val() || [];
                     let uniqueProducts = [], idsMap = {};
-                    if (Array.isArray(data)) {
-                        data.forEach(p => {
-                            if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
-                        });
-                    }
+                    let rawList = Array.isArray(data) ? data : Object.values(data);
+                    rawList.forEach(p => {
+                        if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
+                    });
                     localStorage.setItem('storeProducts', JSON.stringify(uniqueProducts));
                     callback(uniqueProducts);
                 });
@@ -1807,16 +1806,16 @@
 
         function saveProductsToCloud(products) {
             let uniqueProducts = [], idsMap = {};
-            if (Array.isArray(products)) {
-                products.forEach(p => {
-                    if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
-                });
-            }
+            let rawList = Array.isArray(products) ? products : Object.values(products);
+            rawList.forEach(p => {
+                if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
+            });
             localStorage.setItem('storeProducts', JSON.stringify(uniqueProducts));
             renderProducts();
             renderAdminProducts();
             showToast('تم حفظ المنتجات وتحديثها فوراً ✔️');
             if(db) {
+                // حفظ كقائمة مرتبة لمنع أي تداخل
                 db.ref('products').set(uniqueProducts).catch(err => console.log(err));
             }
         }
@@ -2568,8 +2567,9 @@
                     submitBtn.innerText = "إضافة المنتج/الخدمة للمتجر";
                     submitBtn.style.backgroundColor = "";
                     showToast('تم تحديث وحفظ المنتج بنجاح ✔️');
+                    saveProductsToCloud(currentProducts);
                 } else {
-                    currentProducts.push({
+                    let newProduct = {
                         id: Date.now(),
                         title: document.getElementById('pTitle').value,
                         type: document.getElementById('pType').value || 'physical',
@@ -2582,10 +2582,19 @@
                         images: imagesArray,
                         desc: document.getElementById('pDesc').value,
                         features: document.getElementById('pFeatures').value
-                    });
-                    showToast('تمت إضافة المنتج والمخزون سحابياً بنجاح ✔️');
+                    };
+                    // إضافته مباشرة عبر push في فايربيس لضمان عدم اختفائه
+                    if (db) {
+                        db.ref('products').push(newProduct).then(() => {
+                            showToast('تمت إضافة المنتج والمخزون سحابياً بنجاح ✔️');
+                            renderAdminProducts();
+                            renderProducts();
+                        });
+                    } else {
+                        currentProducts.push(newProduct);
+                        saveProductsToCloud(currentProducts);
+                    }
                 }
-                saveProductsToCloud(currentProducts);
                 let form = document.getElementById('addProductForm');
                 if(form) form.reset();
             });
