@@ -283,6 +283,14 @@
 
         .badge { background-color: #eff6ff; color: #1e40af; border: 1px solid #93c5fd; padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; width: fit-content; font-weight: 800; }
 
+        /* خيارات التنوعات في تفاصيل المنتج */
+        .variant-section { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+        .variant-label { font-size: 0.82rem; font-weight: 900; color: #0f172a; }
+        .variant-options { display: flex; gap: 6px; flex-wrap: wrap; }
+        .variant-chip { background: #f8fafc; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 800; cursor: pointer; color: #1e293b; transition: 0.2s; }
+        .variant-chip:hover { border-color: #2563eb; background: #eff6ff; }
+        .variant-chip.active { background: #2563eb; color: #ffffff; border-color: #2563eb; box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2); }
+
         .site-footer { background: #0f172a; color: #94a3b8; padding: 25px 15px; margin-top: auto; border-top: 2px solid #1e3a8a; text-align: center; width: 100%; }
         .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
         .footer-title { color: #ffffff; font-size: 1.05rem; font-weight: 800; }
@@ -647,7 +655,10 @@
         <div class="details-box">
             <div class="admin-header">
                 <h3 id="detTitle" style="color:#0f172a; font-size: 1.05rem;">تفاصيل المنتج</h3>
-                <button onclick="closeDetailsModal()" class="close-cart">×</button>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <button onclick="shareCurrentProduct()" title="مشاركة الإعلان" style="background:#eff6ff; border:1px solid #93c5fd; color:#2563eb; width:32px; height:32px; border-radius:6px; cursor:pointer; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-share-nodes"></i></button>
+                    <button onclick="closeDetailsModal()" class="close-cart">×</button>
+                </div>
             </div>
 
             <div class="product-tabs-header">
@@ -663,7 +674,7 @@
                         </div>
                         <div class="thumbnails" id="detThumbnails"></div>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
                         <span id="detBadge" class="badge"></span>
                         <div class="card-price-box">
                             <div class="card-price-main">
@@ -675,6 +686,10 @@
                                 <span id="detDiscountTag" class="discount-badge-tag"></span>
                             </div>
                         </div>
+
+                        <!-- خيارات التنوعات (الموديل، اللون، السعة، الإصدار) -->
+                        <div id="detVariantsContainer" style="display: flex; flex-direction: column; gap: 6px;"></div>
+
                         <p id="detDesc" style="color: #1e293b; font-weight: 800; font-size: 0.88rem; line-height: 1.4; white-space: pre-wrap;"></p>
                     </div>
                 </div>
@@ -850,7 +865,6 @@
                         <div>🏦 تحويل: <strong id="repTransferSales">0 ر.س</strong></div>
                     </div>
 
-                    <!-- أرباح كل مصدر -->
                     <div style="background:#ffffff; padding:10px; border-radius:6px; border:1px solid #cbd5e1; margin-top:4px;">
                         <span style="display:block; font-size:0.88rem; font-weight:900; color:#1e3a8a; margin-bottom:6px;"><i class="fa-solid fa-bullhorn"></i> الأرباح حسب مصدر الزبون:</span>
                         <div id="repSourcesBreakdown" style="display:flex; flex-direction:column; gap:4px; font-size:0.82rem; font-weight:800; color:#334155;">
@@ -946,11 +960,11 @@
             </div>
 
             <div id="tab-products" class="admin-tab-content">
-                <h4 class="admin-sec-title">📁 إدارة الأقسام (مع الصور الواضحة)</h4>
+                <h4 class="admin-sec-title">📁 إدارة الأقسام</h4>
                 <form id="addCategoryForm">
                     <div class="form-group">
                         <label id="catFormLabel">اسم القسم الجديد:</label>
-                        <input type="text" id="catName" required placeholder="مثال: قسم صيانة البلايستيشن">
+                        <input type="text" id="catName" required placeholder="مثال: قسم الجوالات والآيفون">
                     </div>
                     <div class="form-group">
                         <label><i class="fa-solid fa-camera"></i> صورة القسم (اختياري):</label>
@@ -963,11 +977,11 @@
                     <div id="adminCatsList" style="max-height: 120px; overflow-y: auto;"></div>
                 </div>
 
-                <h4 class="admin-sec-title">📦 إدارة المنتجات والمخزون والتكلفة والمميزات</h4>
+                <h4 class="admin-sec-title">📦 إدارة المنتجات والخيارات (الموديلات، الألوان، السعات)</h4>
                 <form id="addProductForm">
                     <div class="form-group">
                         <label>عنوان المنتج / الخدمة:</label>
-                        <input type="text" id="pTitle" required placeholder="مثال: فك أيكلاود / كمبيوتر ألعاب">
+                        <input type="text" id="pTitle" required placeholder="مثال: آيفون 18 برو ماكس">
                     </div>
                     <div class="form-group">
                         <label>نوع المنتج/الخدمة:</label>
@@ -983,17 +997,17 @@
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         <div class="form-group">
                             <label>سعر التكلفة (ر.س):</label>
-                            <input type="text" id="pCost" required placeholder="مثال: 80">
+                            <input type="text" id="pCost" required placeholder="مثال: 5000">
                         </div>
                         <div class="form-group">
-                            <label>سعر البيع (ر.س):</label>
-                            <input type="text" id="pPrice" required placeholder="مثال: 150">
+                            <label>سعر البيع الأساسي (ر.س):</label>
+                            <input type="text" id="pPrice" required placeholder="مثال: 6099">
                         </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                         <div class="form-group">
                             <label>السعر قبل الخصم (اختياري):</label>
-                            <input type="text" id="pOldPrice" placeholder="مثال: 200">
+                            <input type="text" id="pOldPrice" placeholder="مثال: 9699">
                         </div>
                         <div class="form-group">
                             <label>الكمية بالمخزون:</label>
@@ -1002,10 +1016,32 @@
                     </div>
                     <div class="form-group">
                         <label>الشارة (Badge):</label>
-                        <input type="text" id="pBadge" placeholder="مثال: خدمة فوريّة / إكسبرس">
+                        <input type="text" id="pBadge" placeholder="مثال: خصم 37% / جديد">
                     </div>
+
+                    <!-- إدخال الخيارات والتنوعات (حسب طلبك) -->
+                    <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:10px; margin-bottom:8px;">
+                        <h5 style="color:#1e3a8a; font-size:0.88rem; font-weight:900; margin-bottom:6px;"><i class="fa-solid fa-list-check"></i> خيارات الإعلان (الموديلات، الألوان، السعات، الإصدارات):</h5>
+                        <div class="form-group">
+                            <label style="font-size:0.8rem;">الموديلات (افصل بينها بفاصلة ,):</label>
+                            <input type="text" id="pModels" placeholder="مثال: iPhone 18 Pro Max, iPhone 18 Pro">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size:0.8rem;">الألوان (افصل بينها بفاصلة ,):</label>
+                            <input type="text" id="pColors" placeholder="مثال: black, Glacier, Burgundy">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size:0.8rem;">سعات التخزين (افصل بينها بفاصلة ,):</label>
+                            <input type="text" id="pStorages" placeholder="مثال: 256 GB, 512 GB, 1 TB, 2 TB">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size:0.8rem;">الإصدارات / النسخ (افصل بينها بفاصلة ,):</label>
+                            <input type="text" id="pEditions" placeholder="مثال: نسخة الشرق الأوسط (eSIM), نسخة عالمية">
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label>اختر الصور من الاستوديو (رفع صور متعددة بلا قيود):</label>
+                        <label><i class="fa-solid fa-images"></i> صور المنتج (أول صورة ترفعها ستكون الصورة الرئيسية للغلاف):</label>
                         <input type="file" id="pImageFiles" accept="image/*" multiple style="font-size:0.85rem;">
                     </div>
                     <div class="form-group">
@@ -1015,9 +1051,9 @@
                     <div class="form-group">
                         <label>⭐ المميزات الأساسية (اكتب كل ميزة في سطر مستقل):</label>
                         <textarea id="pFeatures" rows="3" placeholder="مثال:
-دعم دقة عالية وسرعة فائقة
-ضمان لمدة سنة
-مصنوع من مواد عالية الجودة"></textarea>
+ضمان حاسبات العرب سنتين
+شاشة فائقة الوضوح
+كاميرا أساسية 48 ميجابكسل"></textarea>
                     </div>
                     <button type="submit" id="submitProductBtn" class="admin-btn">إضافة المنتج/الخدمة للمتجر</button>
                 </form>
@@ -2044,7 +2080,7 @@
                 shippingFee: 0,
                 status: 'active',
                 payMethod: payMethod,
-                orderSource: 'موقع حراج', // المصدر الافتراضي للطلب الجديد
+                orderSource: 'موقع حراج',
                 items: cart,
                 createdAt: new Date().toISOString()
             };
@@ -2206,12 +2242,49 @@
             if(btnElem) btnElem.classList.add('active');
         }
 
+        let currentActiveProduct = null;
         function openDetailsModal(p) {
+            currentActiveProduct = p;
             document.getElementById('detTitle').innerText = p.title;
             document.getElementById('detBadge').innerText = p.badge || 'إكسبرس';
             document.getElementById('detPrice').innerText = p.price || '0';
             document.getElementById('detDesc').innerText = p.desc || '';
             
+            // رندر التنوعات والخيارات (الموديلات، الألوان، السعات، الإصدارات)
+            let variantsContainer = document.getElementById('detVariantsContainer');
+            if(variantsContainer) {
+                variantsContainer.innerHTML = '';
+                let hasVariants = false;
+
+                let createVariantGroup = (label, arr) => {
+                    if (!arr || !Array.isArray(arr) || arr.length === 0) return;
+                    hasVariants = true;
+                    let sec = document.createElement('div');
+                    sec.className = 'variant-section';
+                    sec.innerHTML = `<span class="variant-label">${label}:</span>`;
+                    let opts = document.createElement('div');
+                    opts.className = 'variant-options';
+                    arr.forEach((optVal, idx) => {
+                        let chip = document.createElement('button');
+                        chip.type = 'button';
+                        chip.className = `variant-chip ${idx === 0 ? 'active' : ''}`;
+                        chip.innerText = optVal;
+                        chip.onclick = function() {
+                            opts.querySelectorAll('.variant-chip').forEach(c => c.classList.remove('active'));
+                            chip.classList.add('active');
+                        };
+                        opts.appendChild(chip);
+                    });
+                    sec.appendChild(opts);
+                    variantsContainer.appendChild(sec);
+                };
+
+                createVariantGroup('الموديل', p.models);
+                createVariantGroup('اللون', p.colors);
+                createVariantGroup('الذاكرة الداخلية', p.storages);
+                createVariantGroup('الإصدار', p.editions);
+            }
+
             let featuresList = document.getElementById('detFeaturesList');
             let featuresBoxContainer = document.querySelector('.features-box');
             if (featuresList) {
@@ -2274,6 +2347,26 @@
         }
 
         function closeDetailsModal() { document.getElementById('detailsModal').style.display = 'none'; }
+
+        // زر مشاركة الإعلان
+        function shareCurrentProduct() {
+            if (!currentActiveProduct) return;
+            let baseUrl = window.location.href.split('?')[0];
+            let shareLink = `${baseUrl}?product_id=${currentActiveProduct.id}`;
+            let shareText = `🔥 اطلب الآن: ${currentActiveProduct.title}\n💰 السعر: ${currentActiveProduct.price} ر.س\n🔗 الرابط:\n${shareLink}`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: currentActiveProduct.title,
+                    text: shareText,
+                    url: shareLink,
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(shareLink).then(() => {
+                    showToast('تم نسخ رابط الإعلان بنجاح 📋');
+                });
+            }
+        }
 
         function updateCategorySelectOptions() {
             getCategories(cats => {
@@ -2363,6 +2456,10 @@
             document.getElementById('pBadge').value = p.badge || '';
             document.getElementById('pDesc').value = p.desc || '';
             document.getElementById('pFeatures').value = p.features || '';
+            document.getElementById('pModels').value = p.models ? p.models.join(', ') : '';
+            document.getElementById('pColors').value = p.colors ? p.colors.join(', ') : '';
+            document.getElementById('pStorages').value = p.storages ? p.storages.join(', ') : '';
+            document.getElementById('pEditions').value = p.editions ? p.editions.join(', ') : '';
 
             let submitBtn = document.getElementById('submitProductBtn');
             submitBtn.innerText = "حفظ تعديلات المنتج/الخدمة";
@@ -2458,7 +2555,17 @@
             });
         }
 
+        function parseCommaList(str) {
+            if (!str) return [];
+            return str.split(',').map(s => s.trim()).filter(s => s !== '');
+        }
+
         function saveProductData(imagesArray) {
+            let modelsArr = parseCommaList(document.getElementById('pModels').value);
+            let colorsArr = parseCommaList(document.getElementById('pColors').value);
+            let storagesArr = parseCommaList(document.getElementById('pStorages').value);
+            let editionsArr = parseCommaList(document.getElementById('pEditions').value);
+
             getProducts(products => {
                 let currentProducts = Array.isArray(products) ? products : [];
                 if (editingProductId) {
@@ -2476,7 +2583,11 @@
                             badge: document.getElementById('pBadge').value || 'إكسبرس',
                             images: imagesArray,
                             desc: document.getElementById('pDesc').value,
-                            features: document.getElementById('pFeatures').value
+                            features: document.getElementById('pFeatures').value,
+                            models: modelsArr,
+                            colors: colorsArr,
+                            storages: storagesArr,
+                            editions: editionsArr
                         };
                     }
                     editingProductId = null;
@@ -2497,7 +2608,11 @@
                         badge: document.getElementById('pBadge').value || 'إكسبرس',
                         images: imagesArray,
                         desc: document.getElementById('pDesc').value,
-                        features: document.getElementById('pFeatures').value
+                        features: document.getElementById('pFeatures').value,
+                        models: modelsArr,
+                        colors: colorsArr,
+                        storages: storagesArr,
+                        editions: editionsArr
                     });
                     showToast('تمت إضافة المنتج والمخزون سحابياً بنجاح ✔️');
                 }
