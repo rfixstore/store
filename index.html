@@ -1036,7 +1036,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <script>
-        // تفعيل التخزين الذكي (Service Worker) لفتح الموقع بشكل فوري وصاروخي
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('data:text/javascript;base64,').catch(() => {});
@@ -1701,35 +1700,50 @@
             });
         }
 
-        // تخزين فوري محلي لتسريع قراءة وعرض البيانات (سرعة صفر تأخير)
+        // تخزين فوري محلي مع منع تكرار الأقسام والمنتجات
         function getCategories(callback) {
             let localCats = localStorage.getItem('storeCategories');
             if (localCats) {
-                try { callback(JSON.parse(localCats)); } catch(e) { callback({}); }
+                try { 
+                    let parsed = JSON.parse(localCats);
+                    let uniqueCats = [], idsMap = {};
+                    if(Array.isArray(parsed)) {
+                        parsed.forEach(c => { if(c && c.id && !idsMap[c.id]) { idsMap[c.id] = true; uniqueCats.push(c); } });
+                    }
+                    callback(uniqueCats); 
+                } catch(e) { callback([]); }
             }
             if(db) {
                 db.ref('categories').once('value', (snapshot) => {
                     const data = snapshot.val();
                     if(data) {
-                        localStorage.setItem('storeCategories', JSON.stringify(data));
-                        callback(data);
+                        let uniqueCats = [], idsMap = {};
+                        if(Array.isArray(data)) {
+                            data.forEach(c => { if(c && c.id && !idsMap[c.id]) { idsMap[c.id] = true; uniqueCats.push(c); } });
+                        }
+                        localStorage.setItem('storeCategories', JSON.stringify(uniqueCats));
+                        callback(uniqueCats);
                     } else if(!localCats) {
-                        callback({});
+                        callback([]);
                     }
                 });
             } else if(!localCats) {
-                callback({});
+                callback([]);
             }
         }
 
         function saveCategoriesToCloud(cats) {
-            localStorage.setItem('storeCategories', JSON.stringify(cats));
+            let uniqueCats = [], idsMap = {};
+            if(Array.isArray(cats)) {
+                cats.forEach(c => { if(c && c.id && !idsMap[c.id]) { idsMap[c.id] = true; uniqueCats.push(c); } });
+            }
+            localStorage.setItem('storeCategories', JSON.stringify(uniqueCats));
             renderCategoriesBar();
             renderAdminCats();
             updateCategorySelectOptions();
             showToast('تم الحفظ والتحديث بشكل فوري ✔️');
             if(db) {
-                db.ref('categories').set(cats).catch(err => console.log(err));
+                db.ref('categories').set(uniqueCats).catch(err => console.log(err));
             }
         }
 
@@ -1738,7 +1752,13 @@
             if (localProds) {
                 try { 
                     let parsed = JSON.parse(localProds);
-                    if(Array.isArray(parsed) && parsed.length > 0) callback(parsed);
+                    let uniqueProducts = [], idsMap = {};
+                    if (Array.isArray(parsed)) {
+                        parsed.forEach(p => {
+                            if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
+                        });
+                    }
+                    if(uniqueProducts.length > 0) callback(uniqueProducts);
                 } catch(e) {}
             }
             if(db) {
@@ -1750,12 +1770,8 @@
                             if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
                         });
                     }
-                    if(uniqueProducts.length > 0) {
-                        localStorage.setItem('storeProducts', JSON.stringify(uniqueProducts));
-                        callback(uniqueProducts);
-                    } else if(!localProds) {
-                        callback([]);
-                    }
+                    localStorage.setItem('storeProducts', JSON.stringify(uniqueProducts));
+                    callback(uniqueProducts);
                 });
             } else if(!localProds) {
                 callback([]);
@@ -1763,12 +1779,18 @@
         }
 
         function saveProductsToCloud(products) {
-            localStorage.setItem('storeProducts', JSON.stringify(products));
+            let uniqueProducts = [], idsMap = {};
+            if (Array.isArray(products)) {
+                products.forEach(p => {
+                    if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
+                });
+            }
+            localStorage.setItem('storeProducts', JSON.stringify(uniqueProducts));
             renderProducts();
             renderAdminProducts();
             showToast('تم حفظ المنتجات وتحديثها فوراً ✔️');
             if(db) {
-                db.ref('products').set(products).catch(err => console.log(err));
+                db.ref('products').set(uniqueProducts).catch(err => console.log(err));
             }
         }
 
@@ -1813,7 +1835,11 @@
                 if(!container) return;
                 container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)">الكل</button>';
                 if (cats && Array.isArray(cats)) {
+                    let addedIds = {};
                     cats.forEach(c => {
+                        if (!c || !c.id || addedIds[c.id]) return;
+                        addedIds[c.id] = true;
+
                         const btn = document.createElement('button');
                         btn.className = 'category-btn';
                         let imgTag = c.image ? `<img src="${c.image}" alt="">` : '';
