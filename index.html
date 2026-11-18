@@ -1700,15 +1700,24 @@
             });
         }
 
-        // تخزين فوري محلي مع منع تكرار الأقسام والمنتجات
+        // دالة جلب الأقسام المُحدثة لحذف وتطهير أي تكرار نهائياً
         function getCategories(callback) {
             let localCats = localStorage.getItem('storeCategories');
             if (localCats) {
                 try { 
                     let parsed = JSON.parse(localCats);
-                    let uniqueCats = [], idsMap = {};
+                    let uniqueCats = [], namesMap = {}, idsMap = {};
                     if(Array.isArray(parsed)) {
-                        parsed.forEach(c => { if(c && c.id && !idsMap[c.id]) { idsMap[c.id] = true; uniqueCats.push(c); } });
+                        parsed.forEach(c => {
+                            if(c && c.name) {
+                                let cleanName = c.name.trim();
+                                if(!namesMap[cleanName] && !idsMap[c.id]) {
+                                    namesMap[cleanName] = true;
+                                    idsMap[c.id] = true;
+                                    uniqueCats.push(c);
+                                }
+                            }
+                        });
                     }
                     callback(uniqueCats); 
                 } catch(e) { callback([]); }
@@ -1717,12 +1726,21 @@
                 db.ref('categories').once('value', (snapshot) => {
                     const data = snapshot.val();
                     if(data) {
-                        let uniqueCats = [], idsMap = {};
-                        if(Array.isArray(data)) {
-                            data.forEach(c => { if(c && c.id && !idsMap[c.id]) { idsMap[c.id] = true; uniqueCats.push(c); } });
-                        }
+                        let uniqueCats = [], namesMap = {}, idsMap = {};
+                        let rawList = Array.isArray(data) ? data : Object.values(data);
+                        rawList.forEach(c => {
+                            if(c && c.name) {
+                                let cleanName = c.name.trim();
+                                if(!namesMap[cleanName] && !idsMap[c.id]) {
+                                    namesMap[cleanName] = true;
+                                    idsMap[c.id] = true;
+                                    uniqueCats.push(c);
+                                }
+                            }
+                        });
                         localStorage.setItem('storeCategories', JSON.stringify(uniqueCats));
                         callback(uniqueCats);
+                        db.ref('categories').set(uniqueCats);
                     } else if(!localCats) {
                         callback([]);
                     }
@@ -1733,9 +1751,18 @@
         }
 
         function saveCategoriesToCloud(cats) {
-            let uniqueCats = [], idsMap = {};
+            let uniqueCats = [], namesMap = {}, idsMap = {};
             if(Array.isArray(cats)) {
-                cats.forEach(c => { if(c && c.id && !idsMap[c.id]) { idsMap[c.id] = true; uniqueCats.push(c); } });
+                cats.forEach(c => {
+                    if(c && c.name) {
+                        let cleanName = c.name.trim();
+                        if(!namesMap[cleanName] && !idsMap[c.id]) {
+                            namesMap[cleanName] = true;
+                            idsMap[c.id] = true;
+                            uniqueCats.push(c);
+                        }
+                    }
+                });
             }
             localStorage.setItem('storeCategories', JSON.stringify(uniqueCats));
             renderCategoriesBar();
@@ -1835,10 +1862,13 @@
                 if(!container) return;
                 container.innerHTML = '<button class="category-btn active" onclick="filterCategory(\'all\', this)">الكل</button>';
                 if (cats && Array.isArray(cats)) {
-                    let addedIds = {};
+                    let addedIds = {}, addedNames = {};
                     cats.forEach(c => {
-                        if (!c || !c.id || addedIds[c.id]) return;
+                        if (!c || !c.name) return;
+                        let cleanName = c.name.trim();
+                        if (addedIds[c.id] || addedNames[cleanName]) return;
                         addedIds[c.id] = true;
+                        addedNames[cleanName] = true;
 
                         const btn = document.createElement('button');
                         btn.className = 'category-btn';
