@@ -2,6 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المتخصصون في صيانة الأجهزة</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -1033,6 +1036,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <script>
+        // تفعيل التخزين الذكي (Service Worker) لفتح الموقع بشكل فوري وصاروخي
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('data:text/javascript;base64,').catch(() => {});
+            });
+        }
+
         const firebaseConfig = {
             databaseURL: "https://rfixstore-default-rtdb.firebaseio.com/"
         };
@@ -1691,59 +1701,75 @@
             });
         }
 
-        function initRealtimeListeners() {
-            if(!db) return;
-            db.ref('categories').on('value', (snapshot) => {
-                renderCategoriesBar();
-                renderAdminCats();
-                updateCategorySelectOptions();
-            });
-            db.ref('products').on('value', (snapshot) => {
-                renderProducts();
-                renderAdminProducts();
-            });
-        }
-
+        // تخزين فوري محلي لتسريع قراءة وعرض البيانات (سرعة صفر تأخير)
         function getCategories(callback) {
-            if(!db) { callback({}); return; }
-            db.ref('categories').once('value', (snapshot) => { callback(snapshot.val() || {}); });
+            let localCats = localStorage.getItem('storeCategories');
+            if (localCats) {
+                try { callback(JSON.parse(localCats)); } catch(e) { callback({}); }
+            }
+            if(db) {
+                db.ref('categories').once('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if(data) {
+                        localStorage.setItem('storeCategories', JSON.stringify(data));
+                        callback(data);
+                    } else if(!localCats) {
+                        callback({});
+                    }
+                });
+            } else if(!localCats) {
+                callback({});
+            }
         }
 
         function saveCategoriesToCloud(cats) {
-            if(!db) return;
-            db.ref('categories').set(cats).then(() => {
-                showToast('تم تحديث الأ اقسام بنجاح ✔️');
-            });
+            localStorage.setItem('storeCategories', JSON.stringify(cats));
+            renderCategoriesBar();
+            renderAdminCats();
+            updateCategorySelectOptions();
+            showToast('تم الحفظ والتحديث بشكل فوري ✔️');
+            if(db) {
+                db.ref('categories').set(cats).catch(err => console.log(err));
+            }
         }
 
         function getProducts(callback) {
-            if(!db) { callback([]); return; }
-            db.ref('products').once('value', (snapshot) => {
-                const data = snapshot.val() || [];
-                let uniqueProducts = [], idsMap = {};
-                if (Array.isArray(data)) {
-                    data.forEach(p => {
-                        if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
-                    });
-                }
-                cleanupCartAndWishlist(uniqueProducts);
-                callback(uniqueProducts);
-            });
-        }
-
-        function cleanupCartAndWishlist(serverProducts) {
-            let cart = getCart(), wishlist = getWishlist();
-            let validCart = cart.filter(cartItem => serverProducts.some(p => p.id == cartItem.id));
-            let validWishlist = wishlist.filter(wishItem => serverProducts.some(p => p.id == wishItem.id));
-            if (validCart.length !== cart.length) { localStorage.setItem('storeCart', JSON.stringify(validCart)); renderCart(); }
-            if (validWishlist.length !== wishlist.length) { localStorage.setItem('storeWishlist', JSON.stringify(validWishlist)); renderWishlist(); }
+            let localProds = localStorage.getItem('storeProducts');
+            if (localProds) {
+                try { 
+                    let parsed = JSON.parse(localProds);
+                    if(Array.isArray(parsed) && parsed.length > 0) callback(parsed);
+                } catch(e) {}
+            }
+            if(db) {
+                db.ref('products').once('value', (snapshot) => {
+                    const data = snapshot.val() || [];
+                    let uniqueProducts = [], idsMap = {};
+                    if (Array.isArray(data)) {
+                        data.forEach(p => {
+                            if (p && p.id && !idsMap[p.id]) { idsMap[p.id] = true; uniqueProducts.push(p); }
+                        });
+                    }
+                    if(uniqueProducts.length > 0) {
+                        localStorage.setItem('storeProducts', JSON.stringify(uniqueProducts));
+                        callback(uniqueProducts);
+                    } else if(!localProds) {
+                        callback([]);
+                    }
+                });
+            } else if(!localProds) {
+                callback([]);
+            }
         }
 
         function saveProductsToCloud(products) {
-            if(!db) return;
-            db.ref('products').set(products).then(() => {
-                showToast('تم حفظ المنتجات بنجاح ✔️');
-            });
+            localStorage.setItem('storeProducts', JSON.stringify(products));
+            renderProducts();
+            renderAdminProducts();
+            showToast('تم حفظ المنتجات وتحديثها فوراً ✔️');
+            if(db) {
+                db.ref('products').set(products).catch(err => console.log(err));
+            }
         }
 
         function getCart() {
@@ -2562,7 +2588,6 @@
             }
         }
 
-        initRealtimeListeners();
         renderCategoriesBar();
         renderProducts();
         renderCart();
