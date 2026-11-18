@@ -578,7 +578,7 @@
         <div class="modal-card" style="height: 85vh; display: flex; flex-direction: column;">
             <h3>
                 <span><i class="fa-solid fa-star" style="color: #006400;"></i> التقييمات والآراء</span>
-                <button onclick="closePublicReviewsModal()" class="close-cart">&times;</button>
+                <button onclick="closePublicReviewsModal()" class="close-cart">×</button>
             </h3>
             
             <div id="approvedReviewsList" class="reviews-list" style="flex-grow: 1; overflow-y: auto;">
@@ -595,7 +595,7 @@
         <div class="add-review-box">
             <h3>
                 <span><i class="fa-solid fa-star" style="color: #006400;"></i> إضافة تقييم جديد</span>
-                <button onclick="closeAddReviewModal()" class="close-cart">&times;</button>
+                <button onclick="closeAddReviewModal()" class="close-cart">×</button>
             </h3>
             <div>
                 <label style="font-size:0.85rem; font-weight:900; color:#0f172a;">اسمك أو اسم مستخدم:</label>
@@ -623,7 +623,7 @@
         <div class="admin-reviews-box">
             <div class="admin-header">
                 <h3><i class="fa-solid fa-inbox"></i> إدارة التقييمات المعلقة</h3>
-                <button onclick="closeAdminReviewsModal()" class="close-cart">&times;</button>
+                <button onclick="closeAdminReviewsModal()" class="close-cart">×</button>
             </div>
             <div id="adminPendingReviewsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto;">
                 <p style="color:#0f172a; font-weight:800; text-align:center;">جاري التحميل...</p>
@@ -635,7 +635,7 @@
         <div class="admin-reviews-box">
             <div class="admin-header">
                 <h3><i class="fa-solid fa-star" style="color: #006400;"></i> إدارة التقييمات المنشورة</h3>
-                <button onclick="closeAdminApprovedModal()" class="close-cart">&times;</button>
+                <button onclick="closeAdminApprovedModal()" class="close-cart">×</button>
             </div>
             <div id="adminApprovedReviewsList" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto;">
                 <p style="color:#0f172a; font-weight:800; text-align:center;">جاري التحميل...</p>
@@ -647,7 +647,7 @@
         <div class="details-box">
             <div class="admin-header">
                 <h3 id="detTitle" style="color:#0f172a; font-size: 1.05rem;">تفاصيل المنتج</h3>
-                <button onclick="closeDetailsModal()" class="close-cart">&times;</button>
+                <button onclick="closeDetailsModal()" class="close-cart">×</button>
             </div>
 
             <div class="product-tabs-header">
@@ -703,7 +703,7 @@
         <div class="wishlist-content">
             <div class="wishlist-header">
                 <h3><i class="fa-solid fa-heart" style="color: #f87171;"></i> المنتجات المفضلة</h3>
-                <button onclick="toggleWishlistModal()" class="close-wishlist">&times;</button>
+                <button onclick="toggleWishlistModal()" class="close-wishlist">×</button>
             </div>
             <div class="wishlist-items-list" id="wishlistItemsList">
                 <p style="color:#0f172a; font-weight:800; text-align:center; margin-top:20px;">قائمة المفضلة فارغة</p>
@@ -715,7 +715,7 @@
         <div class="cart-content">
             <div class="cart-header">
                 <h3 id="txt-cart-title">سلة المشتريات</h3>
-                <button onclick="toggleCart()" class="close-cart">&times;</button>
+                <button onclick="toggleCart()" class="close-cart">×</button>
             </div>
             <div class="cart-items-list" id="cartItemsList">
                 <p id="txt-cart-empty" style="color:#0f172a; font-weight:800; text-align:center; margin-top:20px;">السلة فارغة حالياً</p>
@@ -813,7 +813,7 @@
         <div class="admin-box">
             <div class="admin-header">
                 <h3>لوحة التحكم والإدارة</h3>
-                <button onclick="toggleAdminModal()" class="close-cart">&times;</button>
+                <button onclick="toggleAdminModal()" class="close-cart">×</button>
             </div>
 
             <div class="admin-tabs">
@@ -850,7 +850,6 @@
                         <div>🏦 تحويل: <strong id="repTransferSales">0 ر.س</strong></div>
                     </div>
 
-                    <!-- أرباح كل مصدر -->
                     <div style="background:#ffffff; padding:10px; border-radius:6px; border:1px solid #cbd5e1; margin-top:4px;">
                         <span style="display:block; font-size:0.88rem; font-weight:900; color:#1e3a8a; margin-bottom:6px;"><i class="fa-solid fa-bullhorn"></i> الأرباح حسب مصدر الزبون:</span>
                         <div id="repSourcesBreakdown" style="display:flex; flex-direction:column; gap:4px; font-size:0.82rem; font-weight:800; color:#334155;">
@@ -1014,7 +1013,10 @@
                     </div>
                     <div class="form-group">
                         <label>⭐ المميزات الأساسية (اكتب كل ميزة في سطر مستقل):</label>
-                        <textarea id="pFeatures" rows="3" placeholder="مثال:&#10;دعم دقة عالية وسرعة فائقة&#10;ضمان لمدة سنة&#10;مصنوع من مواد عالية الجودة"></textarea>
+                        <textarea id="pFeatures" rows="3" placeholder="مثال:
+دعم دقة عالية وسرعة فائقة
+ضمان لمدة سنة
+مصنوع من مواد عالية الجودة"></textarea>
                     </div>
                     <button type="submit" id="submitProductBtn" class="admin-btn">إضافة المنتج/الخدمة للمتجر</button>
                 </form>
@@ -1492,7 +1494,7 @@
 
         function updateRatingCountUI() {
             if(!db) return;
-            db.ref('approvedReviews').once('value', snapshot => {
+            db.ref('approvedReviews').on('value', snapshot => {
                 let reviews = snapshot.val() ? Object.values(snapshot.val()) : [];
                 let countElem = document.getElementById('rating-count');
                 if (countElem) countElem.innerText = reviews.length;
@@ -1502,7 +1504,7 @@
 
         function updatePendingBadgeCount() {
             if(!db) return;
-            db.ref('pendingReviews').once('value', snapshot => {
+            db.ref('pendingReviews').on('value', snapshot => {
                 let data = snapshot.val();
                 let badge = document.getElementById('pendingBadgeCount');
                 if(badge) badge.innerText = data ? Object.keys(data).length : 0;
@@ -1512,7 +1514,7 @@
 
         function updateApprovedBadgeCount() {
             if(!db) return;
-            db.ref('approvedReviews').once('value', snapshot => {
+            db.ref('approvedReviews').on('value', snapshot => {
                 let data = snapshot.val();
                 let badge = document.getElementById('approvedBadgeCount');
                 if(badge) badge.innerText = data ? Object.keys(data).length : 0;
@@ -1540,7 +1542,7 @@
         function loadApprovedReviews() {
             const list = document.getElementById('approvedReviewsList');
             if(!list || !db) return;
-            db.ref('approvedReviews').once('value', snapshot => {
+            db.ref('approvedReviews').on('value', snapshot => {
                 let data = snapshot.val();
                 list.innerHTML = '';
                 if (!data) {
@@ -1592,7 +1594,6 @@
                             document.getElementById('revComment').value = '';
                             if(fileInput) fileInput.value = '';
                             closeAddReviewModal();
-                            updatePendingBadgeCount();
                         });
                     };
                     if (fileInput && fileInput.files && fileInput.files[0]) {
@@ -1607,7 +1608,7 @@
         function renderAdminPendingReviews() {
             const list = document.getElementById('adminPendingReviewsList');
             if(!list || !db) return;
-            db.ref('pendingReviews').once('value', snapshot => {
+            db.ref('pendingReviews').on('value', snapshot => {
                 let data = snapshot.val();
                 list.innerHTML = '';
                 if (!data) { list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات معلقة.</p>'; return; }
@@ -1642,10 +1643,6 @@
                     db.ref('approvedReviews').push().set(revData).then(() => {
                         db.ref('pendingReviews/' + key).remove().then(() => {
                             showToast('تم قبول ونشر التقييم بنجاح ✔️');
-                            renderAdminPendingReviews();
-                            updateRatingCountUI();
-                            updatePendingBadgeCount();
-                            updateApprovedBadgeCount();
                         });
                     });
                 }
@@ -1656,15 +1653,13 @@
             if(!db) return;
             db.ref('pendingReviews/' + key).remove().then(() => {
                 showToast('تم حذف التقييم');
-                renderAdminPendingReviews();
-                updatePendingBadgeCount();
             });
         }
 
         function renderAdminApprovedReviews() {
             const list = document.getElementById('adminApprovedReviewsList');
             if(!list || !db) return;
-            db.ref('approvedReviews').once('value', snapshot => {
+            db.ref('approvedReviews').on('value', snapshot => {
                 let data = snapshot.val();
                 list.innerHTML = '';
                 if (!data) { list.innerHTML = '<p style="color:#0f172a; font-weight:800; font-size:0.9rem; text-align:center; padding:20px;">لا توجد تقييمات منشورة.</p>'; return; }
@@ -1693,9 +1688,19 @@
             if(!db) return;
             db.ref('approvedReviews/' + key).remove().then(() => {
                 showToast('تم حذف التقييم بنجاح 🗑️');
-                renderAdminApprovedReviews();
-                updateRatingCountUI();
-                updateApprovedBadgeCount();
+            });
+        }
+
+        function initRealtimeListeners() {
+            if(!db) return;
+            db.ref('categories').on('value', (snapshot) => {
+                renderCategoriesBar();
+                renderAdminCats();
+                updateCategorySelectOptions();
+            });
+            db.ref('products').on('value', (snapshot) => {
+                renderProducts();
+                renderAdminProducts();
             });
         }
 
@@ -1707,9 +1712,7 @@
         function saveCategoriesToCloud(cats) {
             if(!db) return;
             db.ref('categories').set(cats).then(() => {
-                renderCategoriesBar();
-                renderAdminCats();
-                updateCategorySelectOptions();
+                showToast('تم تحديث الأ اقسام بنجاح ✔️');
             });
         }
 
@@ -1738,7 +1741,9 @@
 
         function saveProductsToCloud(products) {
             if(!db) return;
-            db.ref('products').set(products).then(() => { renderProducts(); renderAdminProducts(); });
+            db.ref('products').set(products).then(() => {
+                showToast('تم حفظ المنتجات بنجاح ✔️');
+            });
         }
 
         function getCart() {
@@ -2041,7 +2046,7 @@
                 shippingFee: 0,
                 status: 'active',
                 payMethod: payMethod,
-                orderSource: 'موقع حراج', // المصدر الافتراضي للطلب الجديد
+                orderSource: 'موقع حراج',
                 items: cart,
                 createdAt: new Date().toISOString()
             };
@@ -2557,6 +2562,7 @@
             }
         }
 
+        initRealtimeListeners();
         renderCategoriesBar();
         renderProducts();
         renderCart();
